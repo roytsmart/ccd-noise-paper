@@ -137,6 +137,45 @@ the \citet{Heymes2020} data.
     subsection_noise = aastex.Subsection("Noise")
     subsection_noise.append(ccd_snr.figures.noise_photon())
     subsection_noise.append(ccd_snr.figures.noise_electron())
+    subsection_noise.append(
+        r"""
+Our noise model will consider three sources:
+shot noise from the random arrival time of the photons striking the sensor,
+Fano noise due to inherent randomness in the process which converts photons
+to electrons,
+and noise due to electrons randomly recombining before they can be measured by
+the sensor.
+This section will describe the statistics of each noise source and demonstrate
+a simple algorithm which can simulate the noise measured by our model sensor
+for a given number of incident photons.
+
+Throughout this work, we will measure noise in terms of a \VSR,
+\begin{equation}
+    \text{VSR}(X) = \frac{\text{Var}(X)}{\langle X \rangle},
+\end{equation}
+where $X$ is a random variable,
+$\text{Var}()$ is the variance of the random variable,
+and $\langle \cdot \rangle$ denotes an expectation value.
+Using the \VSR\ to express the noise is convenient since it's constant as a 
+function of signal for most of the distributions studied here.
+For example, the \VSR\ of a Poisson process is always unity since its variance and
+expectation value are equal.
+A disadvantage of the \VSR\ is that it is not dimensionless 
+(it has the same units as $X$),
+so we must take care to interpret the \VSR\ in terms of the correct units.
+
+In Figures~\ref{fig:photonNoise}~and~\ref{fig:electronNoise} we've plotted
+the \VSR\ for the noise sources considered in this study in two different units:
+number of incident photons and number of measured electrons.
+Figure~\ref{fig:photonNoise} is useful if you're \textit{engineering} an instrument since
+you presumably know the radiance of the source and the effective area of the
+rest of your instrument, and you want to know how much noise to expect in
+terms of the number of photons incident on the sensor.
+Figure~\ref{fig:electronNoise} is useful if you're \textit{using} an instrument
+and want to know how much noise to expect for a given number of measured
+electrons.
+"""
+    )
     subsubsection_noise_shot = aastex.Subsubsection("Shot Noise")
     subsubsection_noise_shot.append(
         r"""
