@@ -54,10 +54,10 @@ def absorbance_and_cce() -> aastex.Figure:
     ax2.set_xscale("log")
     ax.set_xlabel(f"wavelength ({wavelength.unit:latex_inline})")
     ax2.set_xlabel(f"energy ({energy.unit:latex_inline})", labelpad=8)
-    ax.set_ylabel("probability")
+    ax.set_ylabel("efficiency")
     ax.legend()
 
-    result = aastex.Figure("absorbance-and-cce")
+    result = aastex.Figure("absorbanceAndCCE")
     result.append(aastex.NoEscape(r"\vspace{5pt}"))
     result.add_fig(fig, width=None)
 

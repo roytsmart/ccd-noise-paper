@@ -51,12 +51,15 @@ which uses the transfer matrix method described in \citet{Yeh1988}
 with the optical constants from \citet{Palik1997}, \citet{Henke1993}, and 
 \citet{Rodriguez-deMarcos2016} to compute the electric field for every interface
 in the sensor.
+In Figure \ref{fig:absorbanceAndCCE} we've plotted $A(\lambda)$ for the 
+\cite{Heymes2020} parameters in Table \ref{table:models}.
+
 In \citet{Stern1994}, the authors assume no reflections from the unilluminated
 side of the sensor for simplicity.
 In this work, we compute the total change in Poynting flux into and out of the 
 light-sensitive region of the sensor to determine $A(\lambda)$.
 This treatment introduces interference effects for infrared wavelengths, 
-which can be seen on the right side of Figure \ref{fig:eqe}.
+which can be seen on the right side of Figure \ref{fig:absorbanceAndCCE}.
 
 The ideal \QY\ is given by \citet{Janesick2001} as
 \begin{equation}
@@ -104,6 +107,8 @@ arithmetic expression for the \CCE,
     \text{CCE}(\lambda) = \eta_0 + \left( \frac{1 - \eta_0}{\alpha W} \right)(1 - e^{-\alpha W}),
 \end{equation}
 which can be used in Equation \ref{quantum-efficiency} to determine the \QE.
+In Figure \ref{fig:absorbanceAndCCE} we've plotted $\text{CCE}(\lambda)$ for
+the \citet{Heymes2020} parameters in Table \ref{table:models}.
 
 In \citet{Stern1994}, the authors define an effective \QE\ as
 \begin{equation} \label{eqe}
