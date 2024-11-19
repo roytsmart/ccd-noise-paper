@@ -27,11 +27,10 @@ def noise_photon() -> aastex.FigureStar:
 
     photons_measured = ccd_snr.simulations.photons_measured()
 
-    fano_shot = 1 * u.photon
-    fano_absorbance = (1 / absorbance.average - 1) * u.photon
+    fano_shot = 1 / absorbance.average * u.photon
     fano_recombination = (1 - cce) * u.electron / qe
     fano_fano = ccd.fano_noise / iqy / absorbance.average * u.photon
-    fano_total = fano_shot + fano_absorbance + fano_recombination + fano_fano
+    fano_total = fano_shot + fano_recombination + fano_fano
     fano_mc = ccd_snr.fano_factor(
         a=photons_measured,
         axis=ccd_snr.simulations.axis_xy,
@@ -48,13 +47,7 @@ def noise_photon() -> aastex.FigureStar:
         wavelength,
         fano_shot,
         ax=ax,
-        label="Poisson",
-    )
-    na.plt.plot(
-        wavelength,
-        fano_absorbance,
-        ax=ax,
-        label="absorbance",
+        label="shot",
     )
     na.plt.plot(
         wavelength,
@@ -99,7 +92,7 @@ def noise_photon() -> aastex.FigureStar:
     ax2.set_xscale("log")
     ax.set_xlabel(f"wavelength ({wavelength.unit:latex_inline})")
     ax2.set_xlabel(f"energy ({energy.unit:latex_inline})", labelpad=8)
-    ax.set_ylabel("variance-to-signal ratio")
+    ax.set_ylabel(f"variance-to-signal ratio ({fano_total.unit:latex_inline})")
     ax.legend(loc="upper left")
 
     result = aastex.FigureStar("photonNoise")
@@ -107,10 +100,10 @@ def noise_photon() -> aastex.FigureStar:
     result.add_caption(
         aastex.NoEscape(
             r"""
-The total and component-wise \VSR\ for photons incident on the sensor.
+The total and component-wise VSR for photons incident on the sensor.
 This plot is useful when designing an instrument since it demonstrates the
 noise to expect from the sensor for a given spectral radiance.
-Plotted for comparison (gray) is the \VSR\ from a naive model which assumes
+Plotted for comparison (gray) is the VSR from a naive model which assumes
 that the number of measured photons is proportional to the effective \QE.
 """
         )
