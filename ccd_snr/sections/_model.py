@@ -179,40 +179,23 @@ electrons.
     subsubsection_noise_shot = aastex.Subsubsection("Shot Noise")
     subsubsection_noise_shot.append(
         r"""
-\UV\ solar astronomy is often shot-noise limited \citep{Lemen2012, DePontieu2014}.
-The shot noise is described by a Poisson distribution with variance, 
-$\left< N_{\gamma,\text{m}} \right>$, 
-the expectation value of the number of photons measured by the sensor.
-A critical point of this study is that $\left< N_{\gamma,\text{m}} \right>$ 
-includes every photon for which at least one photoelectron is measured.
-        
-$\left< N_{\gamma,\text{m}} \right>$ can be expressed as a product of
-the fraction of incident energy absorbed by the light-sensitive layer,
-the probability that an absorbed photon will result in at least one electron
-being measured by the sensor, $P_\text{m}(\lambda)$,
-and the total number of incident photons, $N_\gamma$:
+Shot noise is often the leading noise contributor in \UV\ solar astronomy 
+\citep{Lemen2012, DePontieu2014}.
+The shot noise is described by a Poisson distribution with variance
 \begin{equation}
-    \left< N_{\gamma,\text{m}} \right> = N_\gamma A(\lambda) P_\text{m}(\lambda).
+    \langle N_\gamma' \rangle = A(\lambda) \langle N_\gamma \rangle,
 \end{equation}
-Partial charge collection raises the prospect that a photon absorbed in the 
-epitaxial layer might not be detected at all.
-The fraction of photons for which all photoelectrons are recombined before being 
-measured, $P_\text{r}(\lambda) = 1 - P_\text{m}(\lambda)$, is given by
-\begin{equation}
-    P_\text{r}(\lambda) = \left[ 1 - \text{CCE}(\lambda) \right]^{\text{IQY}(\lambda)}.
-\end{equation}
+where $\langle N_\gamma \rangle$ is the expected number of incident photons.
+and $\langle N_\gamma' \rangle$ is the expected number of photons absorbed
+by the light-sensitive layer.
 
-An example calculation of $P_\text{m}(\lambda)$ for the \AIA\ sensors is plotted 
-in Figure~\ref{fig:probability}.
-For long wavelengths,
-$P_\text{m}(\lambda) \approx \text{CCE}(\lambda)$
-since the ideal \QY\ is unity, and for short wavelengths, 
-$P_\text{m}(\lambda) \approx 1$ since the ideal \QY\ is large.
-However, in \UV\ wavelengths, $P_\text{m}(\lambda)$ is more complicated
-and smoothly connects these two extremes.
-Where $P_m < 1$ (in the \UV\ and visible) the Fano factor,
-as measured from the front face of the sensor,
-will be much larger than unity since fewer photons are detected in this region.
+In Figures~\ref{fig:photonNoise}~and~\ref{fig:electronNoise}
+we've plotted the \VSR\ of the shot noise in blue.
+In Figure~\ref{fig:photonNoise}, we can see that the \VSR\ of the shot noise
+relative to the number of incident photons is often unity since it is a Poisson
+process.
+It deviates from unity in the \UV\ since the sensor absorbs only a fraction
+of the incident light leading to more noise for a given number of incident photons.
 """
     )
     subsection_noise.append(subsubsection_noise_shot)
