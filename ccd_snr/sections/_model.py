@@ -203,12 +203,11 @@ of the incident light leading to more noise for a given number of incident photo
     subsubsection_noise_fano.append(
         r"""
 The energy resolution of silicon detectors is ultimately limited due to Fano
-noise \citep{Fano1947}, the unpredictable variation of \QY.
-Fano noise is usually expressed in terms of a Fano factor, 
+noise \citep{Fano1947}, the unpredictable variation of the ideal \QY.
+Fano noise is usually expressed in terms of the Fano factor, 
 $\mathcal{F} = \sigma^2 / \mu$,
-the ratio of the variance to the mean for some random process.
-Expressing noise in this fashion is convenient because for a Poisson random
-sampling, $\mathcal{F} = 1$ (which is signal-independent, unlike the \SNR).
+the ratio of the variance to the mean of some random process 
+(very similar to our definition of \VSR\ above).
 
 The Fano noise for silicon is commonly accepted to have a Fano factor of about 
 $\mathcal{F} \approx 0.1$ \citep{Janesick2001}.
@@ -231,18 +230,40 @@ which represents the best available measurement of $\mathcal{F}$ using $^{55}$Fe
 X-rays \citep{Rodrigues2021}, and uses a skipper CCD \citep{Janesick1990} to 
 minimize the effect of readout noise.
 
-At high energies, the \PDF\ of the Fano noise is well-described by a Gaussian
+At high energies, Fano noise is well-described by a Gaussian distribution
 \citep{Rodrigues2023}.
-At low energies, a Gaussian model is problematic since it becomes likely
-that $\text{IQY}(\lambda)$ will be negative for some samples.
-For this work, we will use a scaled Poisson distribution,
-\begin{equation}
-    P(\text{QY}=k) = \frac{[\text{IQY}(\lambda) / \mathcal{F}]^{\mathcal{F} k} e^{-\text{IQY}(\lambda) / \mathcal{F}}}
-                          {(\mathcal{F} k )!},
+At low energies, a Gaussian distribution is problematic since it becomes likely
+that $\text{QY}(\lambda)$ will be negative for some samples, which is unphsyical.
+For this work, we will use a scaled Poisson distribution to describe the
+the Fano noise,
+\begin{equation} \label{eq:scaled-poisson}
+    \langle\text{QY}\rangle \sim \text{Pois}(\text{IQY}(\lambda) / \mathcal{F}) \times \mathcal{F},
 \end{equation}
-which has the nice property of reproducing a Gaussian with the correct width
-at high energies while also being well-behaved around
+where $\text{Pois}()$ is a sample from the Poisson distribution.
+Equation \ref{eq:scaled-poisson} has the nice property of reproducing a Gaussian 
+with the correct width at high energies while also being well-behaved around
 $\text{IQY}(\lambda) \approx 1$.
+
+Unfortunately, Equation \ref{eq:scaled-poisson} does not yield an integer number of electrons,
+and as a last step we must randomly choose a nearby whole number in such a way 
+that the mean of the distribution is unchanged. 
+In this work, we used the simplest possible resolution to this problem
+by defining the \PMF\
+\begin{equation} \label{eq:discretization}
+    P(\text{QY} = k) = \begin{cases}
+        k - \lfloor \langle\text{QY}\rangle \rfloor, & k < \langle\text{QY}\rangle \\
+        \lceil \langle\text{QY}\rangle \rceil - k, & \langle\text{QY}\rangle < k,
+    \end{cases}
+\end{equation}
+where $\lfloor \cdot \rfloor$ denotes the floor function
+and $\lceil \cdot \rceil$ denotes the ceiling function.
+Equation \ref{eq:discretization} is a choice between the two closest integers 
+with the probabilities weighted to conserve the mean of the distribution.
+One consequence of this \PMF\ is that it increases the apparent Fano noise
+if $\langle \text{QY} \rangle$ is near unity due to discretization noise.
+This apparent increase in Fano noise for low \QY\ is not unprecedented and may
+explain the sawtooth variations in the Fano noise observed by \citet{Santos1991}.
+
 In Figures \ref{fig:photonNoise} and \ref{fig:electronNoise} we can see the 
 contribution of Fano noise to the total noise measured by our simulated sensor.
 Note how the Fano noise component is very small compared to the photon shot noise.
