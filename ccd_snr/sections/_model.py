@@ -239,7 +239,8 @@ the Fano noise,
 \begin{equation} \label{eq:scaled-poisson}
     \langle\text{QY}\rangle \sim \text{Pois}(\text{IQY}(\lambda) / \mathcal{F}) \times \mathcal{F},
 \end{equation}
-where $\text{Pois}()$ is a sample from the Poisson distribution.
+where $\langle\text{QY}\rangle$ is the expected quantum yield,
+and $\text{Pois}()$ is a sample from the Poisson distribution.
 Equation \ref{eq:scaled-poisson} has the nice property of reproducing a Gaussian 
 with the correct width at high energies while also being well-behaved around
 $\text{IQY}(\lambda) \approx 1$.
@@ -255,7 +256,8 @@ by defining the \PMF\
         \lceil \langle\text{QY}\rangle \rceil - k, & \langle\text{QY}\rangle < k,
     \end{cases}
 \end{equation}
-where $\lfloor \cdot \rfloor$ denotes the floor function
+where $\text{QY}$ is the actual quantum yield,
+$\lfloor \cdot \rfloor$ denotes the floor function,
 and $\lceil \cdot \rceil$ denotes the ceiling function.
 Equation \ref{eq:discretization} is a choice between the two closest integers 
 with the probabilities weighted to conserve the mean of the distribution.
@@ -275,13 +277,14 @@ Note how the Fano noise component is very small compared to the photon shot nois
         r"""
 Recombination of photoelectrons in the \PCC\ region is a significant source of noise in
 the \UV\ since the photons are absorbed so close to the surface,
-where the \CCE\ is relatively low (Figure \ref{fig:probability}).
-The probability of measuring an electron generated in the \PCC\ region is
-described by a binomial probability mass function,
+where the \CCE\ is relatively low (Figure \ref{fig:absorbanceAndCCE}).
+The probability of measuring electrons generated in the \PCC\ region is
+described by a binomial distribution,
 \begin{equation}
-    P(N_\text{e} = k) = \frac{\text{QY}!}{k! (\text{QY} - k)!} \text{CCE}^k (1 - \text{CCE})^{\text{QY} - k},
+    \text{MQY} \sim B(\text{QY}, \text{CCE}(\lambda))
 \end{equation}
-where $N_\text{e}$ is the number of electrons measured by the sensor.
+where $\text{MQY}$ is the measured quantum yield,
+and $B()$ is a sample from the binomial distribution.
 
 In Figures \ref{fig:photonNoise} and \ref{fig:electronNoise} we can see that the
 recombination noise is the dominant source of noise measured by the sensor
