@@ -118,10 +118,10 @@ We will use these fit parameters in the remainder of this article as a represent
 example.
 """
     )
+    subsection_qe.append(ccd_snr.figures.absorbance_and_cce())
     result.append(subsection_qe)
 
     subsection_noise = aastex.Subsection("Noise")
-    subsection_noise.append(ccd_snr.figures.probability_measurement())
     subsection_noise.append(ccd_snr.figures.noise_photon())
     subsection_noise.append(ccd_snr.figures.noise_electron())
     subsubsection_noise_shot = aastex.Subsubsection("Shot Noise")

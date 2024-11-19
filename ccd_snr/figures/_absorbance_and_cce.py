@@ -5,11 +5,11 @@ import aastex
 import ccd_snr
 
 __all__ = [
-    "probability_measurement",
+    "absorbance_and_cce",
 ]
 
 
-def probability_measurement() -> aastex.Figure:
+def absorbance_and_cce() -> aastex.Figure:
 
     wavelength = ccd_snr.wavelength()
     energy = ccd_snr.energy()
@@ -22,9 +22,8 @@ def probability_measurement() -> aastex.Figure:
     )
     normal = na.Cartesian3dVectorArray(0, 0, -1)
 
+    absorbance = ccd.absorbance(rays, normal).average
     cce = ccd.charge_collection_efficiency(rays, normal)
-
-    p_m = ccd.probability_measurement(rays, normal)
 
     fig, ax = plt.subplots(
         figsize=(aastex.column_width_inches, 2.5),
@@ -32,6 +31,13 @@ def probability_measurement() -> aastex.Figure:
     )
     ax2 = ax.twiny()
     ax2.invert_xaxis()
+    na.plt.plot(
+        wavelength,
+        absorbance,
+        ax=ax,
+        label=r"$A(\lambda)$",
+        zorder=10,
+    )
     na.plt.plot(
         wavelength,
         cce,
@@ -42,12 +48,7 @@ def probability_measurement() -> aastex.Figure:
         energy,
         cce,
         ax=ax2,
-    )
-    na.plt.plot(
-        wavelength,
-        p_m,
-        ax=ax,
-        label=r"$P_\mathrm{m}(\lambda)$",
+        linestyle="None",
     )
     ax.set_xscale("log")
     ax2.set_xscale("log")
@@ -56,15 +57,15 @@ def probability_measurement() -> aastex.Figure:
     ax.set_ylabel("probability")
     ax.legend()
 
-    result = aastex.Figure("probability")
+    result = aastex.Figure("absorbance-and-cce")
     result.append(aastex.NoEscape(r"\vspace{5pt}"))
     result.add_fig(fig, width=None)
 
     result.add_caption(
         aastex.NoEscape(
             r"""
-The probability of measuring a photon vs. wavelength for the \AIA\ \CCDs.
-Plotted for comparison is the \CCE\ for the \AIA\ \CCDs.
+The fraction of incident light absorbed by the light-sensitive silicon layer 
+and the \CCE\ as a function of wavelength for the \citet{Heymes2020} model.
 """
         )
     )
