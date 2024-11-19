@@ -116,11 +116,19 @@ In \citet{Stern1994}, the authors define an effective \QE\ as
 \end{equation}
 which is the quantity that is typically measured when calibrating a image sensor
 \citep{Stern1994,Stern2004,Boerner2012}.
-In Figure \ref{fig:eqe}, we've plotted the measured, effective \QE\ of the
-\AIA\ \CCDs, and a fit of Equation \ref{eqe} to the data, which varied $\eta_0$,
-$\delta$, and $W$, while holding $D$ constant.
-We will use these fit parameters in the remainder of this article as a representative
-example.
+In Figure~\ref{fig:eqe}, we've plotted the measured, effective \QE\ for two
+sources: \citet{Boerner2012} which measured the \AIA\ \CCDs\ at a few
+discrete wavelengths, and \citet{Heymes2020} which measured a Teledyne e2v CCD97
+sensor over a wide wavelength range with high resolution using a monochromator.
+
+Using the Nelder-Mead minimization algorithm \citep{Gao2010},
+we found the free parameters of our model which best fit the data in 
+\citet{Boerner2012} and \citet{Heymes2020}.
+These models are plotted as solid lines in Figure~\ref{fig:eqe},
+and the corresponding values of the free parameters are shown in 
+Table~\ref{table:models}.
+Throughout the remainder of this work we will use the model which best fits
+the \citet{Heymes2020} data.
 """
     )
     subsection_qe.append(ccd_snr.figures.absorbance_and_cce())
