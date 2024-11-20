@@ -83,7 +83,7 @@ def charge_diffusion() -> aastex.Figure:
         ax2.set_xlabel(f"wavelength ({ax2.get_xlabel()})")
         ax1_twin.set_xlabel(f"energy ({ax1_twin.get_xlabel()})", labelpad=8)
         ax1.set_ylabel("MCC")
-        ax2.set_ylabel(f"std. dev. ({ax2.get_ylabel()})")
+        ax2.set_ylabel(f"width ({ax2.get_ylabel()})")
         ax1.legend()
         ax2.legend()
 
