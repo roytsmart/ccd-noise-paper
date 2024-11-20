@@ -13,7 +13,7 @@ def fano_factor() -> pylatex.Table:
 
     ccd = ccd_snr.ccd()
 
-    num_experiment = 10000
+    num_experiment = 1000000
     shape_experiment = dict(experiment=num_experiment)
 
     wavelength_aia = [
@@ -47,9 +47,6 @@ def fano_factor() -> pylatex.Table:
     intensity = na.broadcast_to(100 * u.ph, shape_experiment)
     direction = na.Cartesian3dVectorArray(0, 0, 1)
     normal = na.Cartesian3dVectorArray(0, 0, -1)
-
-    # shape_aia = na.broadcast_shapes(wavelength_aia.shape, shape_experiment)
-    # shape_iris = na.broadcast_shapes(wavelength_iris.shape, shape_experiment)
 
     rays_aia = optika.rays.RayVectorArray(
         intensity=intensity,
@@ -89,7 +86,6 @@ def fano_factor() -> pylatex.Table:
 
     result = pylatex.Table()
     result.escape = False
-    result._star_latex_name = True
 
     caption = pylatex.NoEscape(
         r"""
@@ -103,9 +99,9 @@ in both incident photon and measured electron units."""
         tabular.escape = False
         row = [
             "Instrument",
-            f"Wavelength ({u.AA:latex_inline})",
-            f"Fano factor ({fano_photons_aia.unit:latex_inline})",
-            f"Fano factor ({fano_electrons_aia.unit:latex_inline})",
+            f"$\lambda$ ({u.AA:latex_inline})",
+            f"VSR ({fano_photons_aia.unit:latex_inline})",
+            f"VSR ({fano_electrons_aia.unit:latex_inline})",
         ]
         tabular.add_row(row)
         tabular.add_hline()
