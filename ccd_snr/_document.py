@@ -20,7 +20,6 @@ def document() -> aastex.Document:
     plt.rcParams["lines.linewidth"] = 1
 
     doc = aastex.Document(
-        documentclass="aastex631",
         document_options=[
             "twocolumn",
         ],
