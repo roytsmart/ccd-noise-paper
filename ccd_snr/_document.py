@@ -34,8 +34,7 @@ def document() -> aastex.Document:
     doc.variables += ccd_snr.variables()
 
     title = aastex.Title(
-        "On the Signal-to-Noise Ratio of Backilluminated Silicon Detectors in the "
-        "Ultraviolet Regime",
+        "The Noise Measured by Silicon Sensors",
     )
     doc.append(title)
 
