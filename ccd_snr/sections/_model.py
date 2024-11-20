@@ -334,6 +334,8 @@ For convenience, we've implemented this function as
     )
     subsection_noise.append(subsubsection_algorithm)
     subsubsection_charge_spreading = aastex.Subsubsection("Charge Diffusion")
+    subsubsection_charge_spreading.append(ccd_snr.figures.charge_diffusion())
+    subsubsection_charge_spreading.append(ccd_snr.figures.diffusion_kernel())
     subsubsection_charge_spreading.append(
         r"""
 In most backilluminated imaging sensors used for \UV\ astronomy,
@@ -422,7 +424,6 @@ reasonably constant over much of the soft X-ray and ultraviolet wavelengths
 since the penetration depth is low in this regime.
 """
     )
-    subsubsection_charge_spreading.append(ccd_snr.figures.charge_diffusion())
     subsection_noise.append(subsubsection_charge_spreading)
     result.append(subsection_noise)
     return result
