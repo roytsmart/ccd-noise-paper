@@ -55,4 +55,3 @@ The charge diffusion kernel convolved with a pixel.
     )
 
     return result
-
