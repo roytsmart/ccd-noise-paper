@@ -355,7 +355,7 @@ Using Monte Carlo modeling, \citet{Janesick2001} found the following analytic
 expression for the standard deviation of the charge diffusion kernel:
 \begin{equation}
     \label{eq:chargeDiffusion}
-    \sigma_\text{cd}(z) = \begin{cases}
+    \sigma(z) = \begin{cases}
         z_f \sqrt{1 - z / z_f}, & 0 < z < z_f \\
         0, & z_f < z < D,
     \end{cases}
@@ -371,7 +371,7 @@ we can find the mean variance of the charge diffusion kernel by taking an
 average across the entire thickness of the sensor weighted by the probability of
 a photon being absorbed at that depth,
 \begin{align}
-\overline{\sigma}_\text{cd}^2 &= \frac{\int_0^D \sigma_\text{cd}^2(z) e^{-\alpha z} dz}
+\langle\sigma^2\rangle &= \frac{\int_0^D \sigma^2(z) e^{-\alpha z} dz}
                                       {\int_0^D e^{-\alpha z} dz} \\
                               &= \frac{z_f \left( \alpha z_f + e^{-\alpha z_f} - 1 \right)}
                                       {\alpha \left( 1 - e^{-\alpha D} \right)}.
@@ -395,22 +395,19 @@ we need to convolve with a rectangle function the width of a pixel before
 integrating.
 So, our definition for the \MCC\ is
 \begin{equation}
-    P_\text{MCC} = \left\{ \frac{1}{d} \int_{-d/2}^{d/2} \left[ K(x') * \Pi \left( \frac{x'}{d} \right) \right](x) \, dx \right\}^2,
+    \text{MCC} = \left\{ \frac{1}{d} \int_{-d/2}^{d/2} \left[ K(x') * \Pi \left( \frac{x'}{d} \right) \right](x) \, dx \right\}^2,
 \end{equation}
 where $K(x)$ is the charge diffusion kernel,
 $\Pi(x)$ is the rectangle function,
 and $d$ is the width of a pixel.
-If we assume that the charge diffusion kernel is a Gaussian with standard
-deviation $\overline{\sigma}_\text{cd}$,
-\begin{equation}
-    K(x) = \frac{1}{\sqrt{2\pi} \overline{\sigma}_\text{cd}} \exp \left( -\frac{x^2}{2 \overline{\sigma}_\text{cd}^2} \right),
-\end{equation}
-then we can analytically solve for the \MCC,
+If we assume that the charge diffusion kernel is a Gaussian with variance 
+$\langle\sigma^2\rangle$, then we can analytically solve for the \MCC,
 \begin{equation}
     \label{eq:mcc}
-    P_\text{MCC} = \left\{ \sqrt{\frac{2}{\pi}} \frac{\overline{\sigma}_\text{cd}}{d} \left[ \exp \left( -\frac{d^2}{2 \overline{\sigma}_\text{cd}^2} \right) - 1 \right] + \text{erf} \left( \frac{d}{\sqrt{2} \overline{\sigma}_\text{cd}} \right) \right\}^2,
+    \text{MCC} = \left[ \frac{1}{\sqrt{\pi \alpha}} \left( e^{-\alpha} - 1 \right) + \text{erf} \left( \sqrt{\alpha} \right) \right]^2,
 \end{equation}
-where $\text{erf}(x)$ is the error function.
+where $\alpha = d^2 / 2 \langle\sigma^2\rangle$,
+and $\text{erf}(x)$ is the error function.
 
 In the top panel of Figure~\ref{fig:chargeDiffusion},
 we can have plotted a fit of Equation~\ref{eq:mcc} to the measurements in 
