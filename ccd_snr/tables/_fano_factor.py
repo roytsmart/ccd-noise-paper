@@ -94,6 +94,7 @@ wavelengths in selected solar observatories
 in both incident photon and measured electron units."""
     )
     result.add_caption(caption)
+    result.append(pylatex.Label("table:instrumentVSR"))
 
     with result.create(pylatex.Tabular("lr|rr")) as tabular:
         tabular.escape = False
