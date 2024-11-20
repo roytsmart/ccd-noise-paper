@@ -217,7 +217,7 @@ temperature \citep{Fraser1994},
 there is some disagreement in the literature around a more precise value for
 $\mathcal{F}$ 
 \citep[\& references therein]{Fraser1994,Lowe1997,Mazziotta2008,Kotov2018,Rodrigues2021,Rodrigues2023}.
-$\mathcal{F}$ is often measured in the soft X-ray region,
+$\mathcal{F}$ is often measured in the \SXR\ region,
 traditionally with $^{55}$Fe sources, which have a high \QY.
 For \UV\ wavelengths, where the \QY\ is near unity, it becomes impossible
 to construct a distribution narrow enough to be consistent with a Fano factor 
@@ -420,7 +420,7 @@ the fit is surprisingly much better than the models shown in \cite{Stern2004}.
 In the lower panel of Figure~\ref{fig:chargeDiffusion},
 we've plotted the corresponding standard deviation of the charge diffusion
 kernel as a function of wavelength which predicts that the charge diffusion is
-reasonably constant over much of the soft X-ray and ultraviolet wavelengths
+reasonably constant over much of the \SXR\ and ultraviolet wavelengths
 since the penetration depth is low in this regime.
 """
     )
