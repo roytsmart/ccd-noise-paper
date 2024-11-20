@@ -238,12 +238,12 @@ that it will be negative for some samples, which is unphsyical.
 For this work, we will use a scaled Poisson distribution to describe the
 the Fano noise,
 \begin{equation} \label{eq:scaled-poisson}
-    \langle\text{QY}\rangle \sim \text{Pois}(\text{IQY}(\lambda) / \mathcal{F}) \times \mathcal{F},
+    \langle\text{FY}\rangle \sim \text{Pois}(\text{IQY}(\lambda) / \mathcal{F}) \times \mathcal{F},
 \end{equation}
-where $\langle\text{QY}\rangle$ is the expected quantum yield,
+where $\langle\text{FY}\rangle$ is the expected fano-noise-perturbed quantum yield,
 and $\text{Pois}(x)$ is a sample from the Poisson distribution.
 Equation \ref{eq:scaled-poisson} has the nice property of reproducing a Gaussian 
-with the correct width at high energies while also being well-behaved around
+with the correct width at high energies while also being non-negative around
 $\text{IQY}(\lambda) \approx 1$.
 
 Unfortunately, Equation \ref{eq:scaled-poisson} does not yield an integer number of electrons,
@@ -252,19 +252,19 @@ that the mean of the distribution is unchanged.
 In this work, we used the simplest possible resolution to this problem
 by defining the \PMF\
 \begin{equation} \label{eq:discretization}
-    P(\text{QY} = k) = \begin{cases}
-        \langle\text{QY}\rangle - \lfloor \langle\text{QY}\rangle \rfloor, & k = \lfloor \langle\text{QY}\rangle \rfloor \\
-        \lceil \langle\text{QY}\rangle \rceil - \langle\text{QY}\rangle, & k = \lceil \langle\text{QY}\rangle \rceil,
+    P(\text{FY} = k) = \begin{cases}
+        \langle\text{FY}\rangle - \lfloor \langle\text{FY}\rangle \rfloor, & k = \lfloor \langle\text{FY}\rangle \rfloor \\
+        \lceil \langle\text{FY}\rangle \rceil - \langle\text{FY}\rangle, & k = \lceil \langle\text{FY}\rangle \rceil,
     \end{cases}
 \end{equation}
-where $\text{QY}$ is the actual quantum yield,
+where $\text{FY}$ is the final fano-noise-perturbed quantum yield,
 $\lfloor \cdot \rfloor$ denotes the floor function,
 and $\lceil \cdot \rceil$ denotes the ceiling function.
 Equation \ref{eq:discretization} is a choice between the two closest integers 
 with the probabilities weighted to conserve the mean of the distribution.
 One consequence of this \PMF\ is that it increases the apparent Fano noise
-if $\langle \text{QY} \rangle$ is near unity due to discretization noise.
-This apparent increase in Fano noise for low \QY\ is not unprecedented and may
+if $\text{IQY}(\lambda)$ is near unity due to discretization noise.
+This apparent increase in Fano noise is not unprecedented and may
 explain the sawtooth variations in the Fano noise observed by \citet{Santos1991}.
 
 In Figures \ref{fig:photonNoise} and \ref{fig:electronNoise} we can see the 
@@ -282,9 +282,9 @@ where the \CCE\ is relatively low (Figure \ref{fig:absorbanceAndCCE}).
 The probability of measuring electrons generated in the \PCC\ region is
 described by a binomial distribution,
 \begin{equation} \label{eq:recombination}
-    \text{MQY} \sim \text{B}(\text{QY}, \text{CCE}(\lambda))
+    \text{QY} \sim \text{B}(\text{FY}, \text{CCE}(\lambda))
 \end{equation}
-where $\text{MQY}$ is the measured quantum yield,
+where $\text{QY}$ is the actual, measured quantum yield,
 and $\text{B}(n, p)$ is a sample from the binomial distribution.
 
 In Figures \ref{fig:photonNoise} and \ref{fig:electronNoise} we can see that the
