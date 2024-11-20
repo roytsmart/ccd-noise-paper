@@ -66,6 +66,7 @@ def noise_electron() -> aastex.FigureStar:
         fano_total,
         ax=ax,
         label="total",
+        color="black",
     )
     na.plt.plot(
         wavelength,
