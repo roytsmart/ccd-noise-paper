@@ -137,6 +137,7 @@ the \citet{Heymes2020} data.
     subsection_noise = aastex.Subsection("Noise")
     subsection_noise.append(ccd_snr.figures.noise_photon())
     subsection_noise.append(ccd_snr.figures.noise_electron())
+    result.append(ccd_snr.tables.fano_factor())
     subsection_noise.append(
         r"""
 Our noise model will consider three sources:
@@ -182,7 +183,7 @@ electrons.
 Shot noise is often the leading noise contributor in \UV\ solar astronomy 
 \citep{Lemen2012, DePontieu2014}.
 The shot noise is described by a Poisson distribution with variance
-\begin{equation}
+\begin{equation} \label{eq:shot-noise-variance}
     \langle N_\gamma' \rangle = A(\lambda) \langle N_\gamma \rangle,
 \end{equation}
 where $\langle N_\gamma \rangle$ is the expected number of incident photons.
@@ -233,14 +234,14 @@ minimize the effect of readout noise.
 At high energies, Fano noise is well-described by a Gaussian distribution
 \citep{Rodrigues2023}.
 At low energies, a Gaussian distribution is problematic since it becomes likely
-that $\text{QY}(\lambda)$ will be negative for some samples, which is unphsyical.
+that it will be negative for some samples, which is unphsyical.
 For this work, we will use a scaled Poisson distribution to describe the
 the Fano noise,
 \begin{equation} \label{eq:scaled-poisson}
     \langle\text{QY}\rangle \sim \text{Pois}(\text{IQY}(\lambda) / \mathcal{F}) \times \mathcal{F},
 \end{equation}
 where $\langle\text{QY}\rangle$ is the expected quantum yield,
-and $\text{Pois}()$ is a sample from the Poisson distribution.
+and $\text{Pois}(x)$ is a sample from the Poisson distribution.
 Equation \ref{eq:scaled-poisson} has the nice property of reproducing a Gaussian 
 with the correct width at high energies while also being well-behaved around
 $\text{IQY}(\lambda) \approx 1$.
@@ -252,8 +253,8 @@ In this work, we used the simplest possible resolution to this problem
 by defining the \PMF\
 \begin{equation} \label{eq:discretization}
     P(\text{QY} = k) = \begin{cases}
-        k - \lfloor \langle\text{QY}\rangle \rfloor, & k < \langle\text{QY}\rangle \\
-        \lceil \langle\text{QY}\rangle \rceil - k, & \langle\text{QY}\rangle < k,
+        \langle\text{QY}\rangle - \lfloor \langle\text{QY}\rangle \rfloor, & k = \lfloor \langle\text{QY}\rangle \rfloor \\
+        \lceil \langle\text{QY}\rangle \rceil - \langle\text{QY}\rangle, & k = \lceil \langle\text{QY}\rangle \rceil,
     \end{cases}
 \end{equation}
 where $\text{QY}$ is the actual quantum yield,
@@ -280,11 +281,11 @@ the \UV\ since the photons are absorbed so close to the surface,
 where the \CCE\ is relatively low (Figure \ref{fig:absorbanceAndCCE}).
 The probability of measuring electrons generated in the \PCC\ region is
 described by a binomial distribution,
-\begin{equation}
-    \text{MQY} \sim B(\text{QY}, \text{CCE}(\lambda))
+\begin{equation} \label{eq:recombination}
+    \text{MQY} \sim \text{B}(\text{QY}, \text{CCE}(\lambda))
 \end{equation}
 where $\text{MQY}$ is the measured quantum yield,
-and $B()$ is a sample from the binomial distribution.
+and $\text{B}(n, p)$ is a sample from the binomial distribution.
 
 In Figures \ref{fig:photonNoise} and \ref{fig:electronNoise} we can see that the
 recombination noise is the dominant source of noise measured by the sensor
@@ -292,6 +293,46 @@ in the near/far \UV\ and remains non-negligible into the \EUV.
 """
     )
     subsection_noise.append(subsubsection_noise_recombination)
+    subsubsection_algorithm = aastex.Subsubsection("Sampling Algorithm")
+    subsubsection_algorithm.packages.append(
+        aastex.Package(name="algorithm2e", options="ruled"),
+    )
+    subsubsection_algorithm.append(
+        r"""
+Equations \ref{eq:scaled-poisson}, \ref{eq:discretization}, and \ref{eq:recombination}
+are written in terms of a single photon being absorbed by the sensor.
+What would be more useful for forward modeling is a way to draw samples from the 
+distribution of the number of measured electrons for a given number of expected 
+incident photons without needing to simulate every photon individually.
+Since the sum of $n$ independent Poisson distributions is another Poisson
+distribution and similarly for $n$ independent binomial distributions with
+the same probability,
+we can approximate Equations \ref{eq:shot-noise-variance}-\ref{eq:recombination} in
+terms of Numpy-like idioms using Algorithm \ref{alg:electron-sample},
+\begin{algorithm}
+\caption{
+A procedure to sample the distribution of the number of measured electrons
+given an expected number of incident photons.
+}
+\label{alg:electron-sample}
+    \DontPrintSemicolon
+    $\langle N_\gamma' \rangle \gets A(\lambda) \times \langle N_\gamma \rangle$\;
+    $N_\gamma' \gets \texttt{poisson}(\langle N_\gamma' \rangle)$\;
+    $\langle N_e \rangle \gets \text{IQY}(\lambda) \times N_\gamma'$\;
+    $\langle N_e' \rangle \gets \texttt{poisson}(\langle N_e \rangle / \mathcal{F}) \times \mathcal{F}$\;
+    $N_e' \gets \lfloor \langle N_e' \rangle \rfloor + \left[ \texttt{uniform}(0, 1) < (\langle N_e' \rangle - \lfloor \langle N_e' \rangle \rfloor) \right]$\;
+    $N_e'' \gets \texttt{binomial}(N_e', \text{CCE}(\lambda))$\;
+\end{algorithm}
+where $\langle N_\gamma \rangle$ is the number of incident photons,
+$N_\gamma'$ is the number of absorbed photons,
+$\langle N_e \rangle$ is the expected number of electrons,
+$N_e'$ is the number of electrons generated,
+and $N_e'$ is the number of electrons measured.
+For convenience, we've implemented this function as
+\href{https://optika.readthedocs.io/en/latest/_autosummary/optika.sensors.electrons_measured.html}{\texttt{optika.sensors.electrons\_measured()}}.
+"""
+    )
+    subsection_noise.append(subsubsection_algorithm)
     subsubsection_charge_spreading = aastex.Subsubsection("Charge Diffusion")
     subsubsection_charge_spreading.append(
         r"""
@@ -384,5 +425,4 @@ since the penetration depth is low in this regime.
     subsubsection_charge_spreading.append(ccd_snr.figures.charge_diffusion())
     subsection_noise.append(subsubsection_charge_spreading)
     result.append(subsection_noise)
-    result.append(ccd_snr.tables.fano_factor())
     return result
