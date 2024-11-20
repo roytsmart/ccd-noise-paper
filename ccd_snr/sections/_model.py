@@ -380,7 +380,7 @@ collected at the terminals \citep{Stern2004}.
 
 However, \citet{Stern2004} did measure the size of the charge diffusion kernel,
 for two discrete wavelengths, of a \goesCcdThickness-thick 
-(100 $\Omega$-cm resistivity) \CCD for the GOES Soft X-ray Imager.
+(100 $\Omega$-cm resistivity) \CCD\ for the GOES Soft X-ray Imager.
 We can use these measurements to estimate the size of the depletion region
 and model the size of the charge diffusion kernel as a function of wavelength.
 \cite{Stern2004} didn't directly measure the size of the charge diffusion kernel,
