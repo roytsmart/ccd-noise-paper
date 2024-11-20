@@ -21,6 +21,7 @@ __all__ = [
     "energy",
     "ccd",
     "ccd_aia",
+    "diffusion_kernel",
     "simulations",
     "acronyms",
     "variables",

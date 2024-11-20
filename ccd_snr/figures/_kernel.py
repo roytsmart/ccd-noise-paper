@@ -38,8 +38,8 @@ def diffusion_kernel() -> aastex.Figure:
         cmap=mappable.cmap,
         norm=mappable.norm,
     )
-    ax.set_xlabel(f"detector $x$ (pix)")
-    ax.set_ylabel(f"detector $y$ (pix)")
+    ax.set_xlabel("detector $x$ (pix)")
+    ax.set_ylabel("detector $y$ (pix)")
     fig.colorbar(mappable, ax=ax)
 
     result = aastex.Figure("chargeDiffusionKernel")
