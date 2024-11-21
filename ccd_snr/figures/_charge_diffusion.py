@@ -88,7 +88,7 @@ def charge_diffusion() -> aastex.Figure:
         ax2.legend()
 
         result = aastex.Figure("chargeDiffusion")
-        result.append(aastex.NoEscape(r"\vspace{5pt}"))
+        # result.append(aastex.NoEscape(r"\vspace{5pt}"))
         result.add_fig(fig, width=None)
 
         result.add_caption(

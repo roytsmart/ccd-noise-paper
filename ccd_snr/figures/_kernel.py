@@ -43,7 +43,7 @@ def diffusion_kernel() -> aastex.Figure:
     fig.colorbar(mappable, ax=ax)
 
     result = aastex.Figure("chargeDiffusionKernel")
-    result.append(aastex.NoEscape(r"\vspace{5pt}"))
+    # result.append(aastex.NoEscape(r"\vspace{5pt}"))
     result.add_fig(fig, width=None)
 
     result.add_caption(
