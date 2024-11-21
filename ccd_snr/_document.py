@@ -34,7 +34,7 @@ def document() -> aastex.Document:
     doc.variables += ccd_snr.variables()
 
     title = aastex.Title(
-        "The Noise Measured by Silicon Sensors",
+        "The Noise Measured by Backilluminated Silicon Sensors",
     )
     doc.append(title)
 
