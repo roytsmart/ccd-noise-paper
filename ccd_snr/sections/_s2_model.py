@@ -403,9 +403,9 @@ If we assume that the charge diffusion kernel is a Gaussian with variance
 $\langle\sigma^2\rangle$, then we can analytically solve for the \MCC,
 \begin{equation}
     \label{eq:mcc}
-    \text{MCC} = \left[ \frac{1}{\sqrt{\pi \alpha}} \left( e^{-\alpha} - 1 \right) + \text{erf} \left( \sqrt{\alpha} \right) \right]^2,
+    \text{MCC} = \left[ \frac{1}{\sqrt{\pi a}} \left( e^{-a} - 1 \right) + \text{erf} \left( \sqrt{a} \right) \right]^2,
 \end{equation}
-where $\alpha = d^2 / 2 \langle\sigma^2\rangle$,
+where $a = d^2 / 2 \langle\sigma^2\rangle$,
 and $\text{erf}(x)$ is the error function.
 
 In the top panel of Figure~\ref{fig:chargeDiffusion},
