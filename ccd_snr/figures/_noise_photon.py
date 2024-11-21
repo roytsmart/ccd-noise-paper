@@ -67,6 +67,7 @@ def noise_photon() -> aastex.FigureStar:
         ax=ax,
         label="total",
         color="black",
+        zorder=5,
     )
     na.plt.plot(
         wavelength,
