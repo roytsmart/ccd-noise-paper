@@ -137,7 +137,6 @@ the \citet{Heymes2020} data.
     subsection_noise = aastex.Subsection("Noise")
     subsection_noise.append(ccd_snr.figures.noise_photon())
     subsection_noise.append(ccd_snr.figures.noise_electron())
-    result.append(ccd_snr.tables.fano_factor())
     subsection_noise.append(
         r"""
 Our noise model will consider three sources:

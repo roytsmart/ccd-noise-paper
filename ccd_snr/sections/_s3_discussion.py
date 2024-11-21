@@ -1,4 +1,5 @@
 import aastex
+import ccd_snr
 
 
 def discussion() -> aastex.Section:
@@ -50,4 +51,5 @@ Algorithm~\ref{alg:electron-sample} and compute the expected number of
 incident photons given the number of measured electrons.
 """
     )
+    result.append(ccd_snr.tables.fano_factor())
     return result
