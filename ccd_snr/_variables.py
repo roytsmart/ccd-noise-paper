@@ -55,22 +55,25 @@ def variables() -> list[aastex.Command]:
         ),
         aastex.Variable(
             name="irisMeasuredVsr",
-            value=1.5 * u.electron
+            value=1.5 * u.electron,
         ),
         aastex.Variable(
             name="irisNaiveVsr",
-            value=2 * u.electron
+            value=2 * u.electron,
         ),
         aastex.Variable(
             name="irisModeledVsr",
-            value=np.round(ccd_snr.instruments.iris.fano_electron[
-                ccd_snr.instruments.iris.index_1330
-            ].ndarray, 2),
+            value=np.round(
+                a=ccd_snr.instruments.iris.fano_electron[
+                    ccd_snr.instruments.iris.index_1330
+                ].ndarray,
+                decimals=2,
+            ),
         ),
         aastex.Variable(
             name="irisWavelength",
             value=ccd_snr.instruments.iris.wavelength[
                 ccd_snr.instruments.iris.index_1330
             ].ndarray,
-        )
+        ),
     ]
