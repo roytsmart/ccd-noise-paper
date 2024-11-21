@@ -11,78 +11,17 @@ __all__ = [
 
 def fano_factor() -> pylatex.Table:
 
-    ccd = ccd_snr.ccd()
+    wavelength_aia = ccd_snr.instruments.aia.wavelength
+    wavelength_iris = ccd_snr.instruments.iris.wavelength
+    wavelength_muse = ccd_snr.instruments.muse.wavelength
 
-    num_experiment = 1000000
-    shape_experiment = dict(experiment=num_experiment)
+    fano_electrons_aia = ccd_snr.instruments.aia.fano_electron
+    fano_electrons_iris = ccd_snr.instruments.iris.fano_electron
+    fano_electrons_muse = ccd_snr.instruments.muse.fano_electron
 
-    wavelength_aia = [
-        94,
-        131,
-        171,
-        193,
-        211,
-        304,
-        335,
-        1600,
-        1700,
-    ] * u.AA
-    wavelength_aia = na.ScalarArray(wavelength_aia, axes="wavelength")
-
-    wavelength_iris = [
-        1330,
-        1400,
-        2796,
-        2832,
-    ] * u.AA
-    wavelength_iris = na.ScalarArray(wavelength_iris, axes="wavelength")
-
-    wavelength_muse = [
-        108,
-        171,
-        284,
-    ] * u.AA
-    wavelength_muse = na.ScalarArray(wavelength_muse, axes="wavelength")
-
-    intensity = na.broadcast_to(100 * u.ph, shape_experiment)
-    direction = na.Cartesian3dVectorArray(0, 0, 1)
-    normal = na.Cartesian3dVectorArray(0, 0, -1)
-
-    rays_aia = optika.rays.RayVectorArray(
-        intensity=intensity,
-        wavelength=wavelength_aia,
-        direction=direction,
-    )
-    rays_iris = optika.rays.RayVectorArray(
-        intensity=intensity,
-        wavelength=wavelength_iris,
-        direction=direction,
-    )
-    rays_muse = optika.rays.RayVectorArray(
-        intensity=intensity,
-        wavelength=wavelength_muse,
-        direction=direction,
-    )
-
-    electrons_aia = ccd.electrons_measured(rays_aia, normal).intensity
-    electrons_iris = ccd.electrons_measured(rays_iris, normal).intensity
-    electrons_muse = ccd.electrons_measured(rays_muse, normal).intensity
-
-    qe_aia = ccd.quantum_efficiency(rays_aia, normal)
-    qe_iris = ccd.quantum_efficiency(rays_iris, normal)
-    qe_muse = ccd.quantum_efficiency(rays_muse, normal)
-
-    photons_aia = electrons_aia / qe_aia
-    photons_iris = electrons_iris / qe_iris
-    photons_muse = electrons_muse / qe_muse
-
-    fano_electrons_aia = ccd_snr.fano_factor(electrons_aia, axis="experiment")
-    fano_electrons_iris = ccd_snr.fano_factor(electrons_iris, axis="experiment")
-    fano_electrons_muse = ccd_snr.fano_factor(electrons_muse, axis="experiment")
-
-    fano_photons_aia = ccd_snr.fano_factor(photons_aia, axis="experiment")
-    fano_photons_iris = ccd_snr.fano_factor(photons_iris, axis="experiment")
-    fano_photons_muse = ccd_snr.fano_factor(photons_muse, axis="experiment")
+    fano_photons_aia = ccd_snr.instruments.aia.fano_photon
+    fano_photons_iris = ccd_snr.instruments.iris.fano_photon
+    fano_photons_muse = ccd_snr.instruments.muse.fano_photon
 
     result = pylatex.Table()
     result.escape = False

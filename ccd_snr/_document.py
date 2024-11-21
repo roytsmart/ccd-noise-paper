@@ -43,6 +43,7 @@ def document() -> aastex.Document:
     doc.append(ccd_snr.sections.abstract())
     doc.append(ccd_snr.sections.introduction())
     doc.append(ccd_snr.sections.model())
+    doc.append(ccd_snr.sections.discussion())
 
     doc.append(aastex.Bibliography("sources"))
 

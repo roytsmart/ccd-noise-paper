@@ -1,4 +1,5 @@
 import numpy as np
+import astropy.units as u
 import optika
 import aastex
 import ccd_snr
@@ -52,4 +53,24 @@ def variables() -> list[aastex.Command]:
             name="depletionThickness",
             value=np.round(ccd.depletion.thickness, 1),
         ),
+        aastex.Variable(
+            name="irisMeasuredVsr",
+            value=1.5 * u.electron
+        ),
+        aastex.Variable(
+            name="irisNaiveVsr",
+            value=2 * u.electron
+        ),
+        aastex.Variable(
+            name="irisModeledVsr",
+            value=np.round(ccd_snr.instruments.iris.fano_electron[
+                ccd_snr.instruments.iris.index_1330
+            ].ndarray, 2),
+        ),
+        aastex.Variable(
+            name="irisWavelength",
+            value=ccd_snr.instruments.iris.wavelength[
+                ccd_snr.instruments.iris.index_1330
+            ].ndarray,
+        )
     ]

@@ -367,15 +367,13 @@ where $z$ is the distance from the back surface at which the photon is absorbed,
 is the thickness of the field-free region of the sensor,
 and $z_d$ is the thickness of the depletion region.
 Using Equation \ref{eq:chargeDiffusion},
-we can find the mean variance of the charge diffusion kernel by taking an
-average across the entire thickness of the sensor weighted by the probability of
+we can find the average variance of the charge diffusion kernel by taking an
+mean across the entire thickness of the sensor weighted by the probability of
 a photon being absorbed at that depth,
-\begin{align}
-\langle\sigma^2\rangle &= \frac{\int_0^D \sigma^2(z) e^{-\alpha z} dz}
-                                      {\int_0^D e^{-\alpha z} dz} \\
-                              &= \frac{z_f \left( \alpha z_f + e^{-\alpha z_f} - 1 \right)}
-                                      {\alpha \left( 1 - e^{-\alpha D} \right)}.
-\end{align}
+\begin{equation} \label{eq:chargeDiffusionWidth}
+\langle\sigma^2\rangle = \frac{z_f \left( \alpha z_f + e^{-\alpha z_f} - 1 \right)}
+                              {\alpha \left( 1 - e^{-\alpha D} \right)}.
+\end{equation}
 The thickness of the depletion region or the field-free region is difficult
 to measure, and depends on the voltage applied to the sensor and the charge
 collected at the terminals \citep{Stern2004}.

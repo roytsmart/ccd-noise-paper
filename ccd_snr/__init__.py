@@ -7,6 +7,7 @@ from ._wavelength import wavelength, energy
 from ._ccd import ccd, ccd_aia
 from ._diffusion import diffusion_kernel
 from . import simulations
+from . import instruments
 from ._acronyms import acronyms
 from ._variables import variables
 from ._authors import authors
@@ -23,6 +24,7 @@ __all__ = [
     "ccd_aia",
     "diffusion_kernel",
     "simulations",
+    "instruments",
     "acronyms",
     "variables",
     "authors",
