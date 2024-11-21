@@ -75,8 +75,8 @@ def diffusion_kernel(
         The width of a pixel.
     """
 
-    index_x = na.linspace(-2, 2, axis="kx", num=5)
-    index_y = na.linspace(-2, 2, axis="ky", num=5)
+    index_x = na.linspace(-1, 1, axis="kx", num=3)
+    index_y = na.linspace(-1, 1, axis="ky", num=3)
 
     output = _kernel_2d(
         width_diffusion=width_diffusion,
