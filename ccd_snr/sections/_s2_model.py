@@ -149,7 +149,10 @@ This section will describe the statistics of each noise source and demonstrate
 a simple algorithm which can simulate the noise measured by our model sensor
 for a given number of incident photons.
 
-Throughout this work, we will measure noise in terms of a \VSR,
+Throughout this work, we will measure noise in terms of a \VSR
+\footnote{statisticians might call the \VSR\ the Fano factor, but to avoid
+confusion with the Fano \textit{noise} we've chosen to use a different term
+to describe this quantity.},
 \begin{equation}
     \text{VSR}(X) = \frac{\text{Var}(X)}{\langle X \rangle},
 \end{equation}
