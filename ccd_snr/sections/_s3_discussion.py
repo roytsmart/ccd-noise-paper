@@ -24,7 +24,7 @@ range.
 In Table~\ref{table:instrumentVSR},
 we've calculated the \VSR\ in terms of incident photons and measured electrons
 for the target wavelengths of a few popular and upcoming solar instruments:
-\AIA, \IRIS, and \MUSE.
+\AIA, \IRIS, and \MUSE \citep{DePontieu2020}.
 The results show that for the \EUV\ channels, \AIA\ and \MUSE\ are nearly
 shot-noise-limited since the \VSR\ in units of incident photons is near unity.
 
