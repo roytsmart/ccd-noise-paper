@@ -1,7 +1,5 @@
 import astropy.units as u
 import pylatex
-import named_arrays as na
-import optika
 import ccd_snr
 
 __all__ = [
