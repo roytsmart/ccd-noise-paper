@@ -38,15 +38,15 @@ The remaining discrepancy may be due to charge diffusion as suggested by
 \citet{Wulser2018}.
 
 Taken together, Equation~\ref{eq:quantum-efficiency},
-Algorithm~\ref{alg:electron-sampling}, 
+Algorithm~\ref{alg:electron-sample}, 
 and Equation~\ref{eq:chargeDiffusionWidth} are enough to fully-describe our 
 model of the sensor.
-Algorithm~\ref{alg:electron-sampling} samples the distribution of the number
+Algorithm~\ref{alg:electron-sample} samples the distribution of the number
 of measured electrons given the expected number of incident photons.
 Equation~\ref{eq:chargeDiffusionWidth} defines the spatial resolution of the
 sensor,
 and Equation~\ref{eq:quantum-efficiency} is used to invert 
-Algorithm~\ref{alg:electron-sampling} and compute the expected number of 
+Algorithm~\ref{alg:electron-sample} and compute the expected number of 
 incident photons given the number of measured electrons.
 """
     )
