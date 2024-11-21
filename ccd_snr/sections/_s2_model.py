@@ -332,10 +332,12 @@ For convenience, we've implemented this function as
 """
     )
     subsection_noise.append(subsubsection_algorithm)
-    subsubsection_charge_spreading = aastex.Subsubsection("Charge Diffusion")
-    subsubsection_charge_spreading.append(ccd_snr.figures.charge_diffusion())
-    subsubsection_charge_spreading.append(ccd_snr.figures.diffusion_kernel())
-    subsubsection_charge_spreading.append(
+    result.append(subsection_noise)
+
+    subsection_charge_spreading = aastex.Subsection("Charge Diffusion")
+    subsection_charge_spreading.append(ccd_snr.figures.charge_diffusion())
+    subsection_charge_spreading.append(ccd_snr.figures.diffusion_kernel())
+    subsection_charge_spreading.append(
         r"""
 In most backilluminated imaging sensors used for \UV\ astronomy,
 the depletion region (the region with significant electric field) does not 
@@ -418,6 +420,6 @@ reasonably constant over much of the \SXR\ and ultraviolet wavelengths
 since the penetration depth is low in this regime.
 """
     )
-    subsection_noise.append(subsubsection_charge_spreading)
-    result.append(subsection_noise)
+    result.append(subsection_charge_spreading)
+
     return result
