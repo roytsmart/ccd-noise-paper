@@ -32,7 +32,7 @@ affects the variance of the signal measured by an imaging sensor.
 \QE\ is the average number of photoelectrons measured per photon and is a common 
 performance metric for measuring sensor sensitivity.
 It is given in \citet{Janesick2001} as
-\begin{equation} \label{quantum-efficiency}
+\begin{equation} \label{eq:quantum-efficiency}
     \text{QE}(\lambda) = \frac{N_{e}}{N_\gamma}
                        = A(\lambda) \times \text{IQY}(\lambda) \times \text{CCE}(\lambda),
 \end{equation}
@@ -106,7 +106,7 @@ arithmetic expression for the \CCE,
 \begin{equation}
     \text{CCE}(\lambda) = \eta_0 + \left( \frac{1 - \eta_0}{\alpha W} \right)(1 - e^{-\alpha W}),
 \end{equation}
-which can be used in Equation \ref{quantum-efficiency} to determine the \QE.
+which can be used in Equation \ref{eq:quantum-efficiency} to determine the \QE.
 In Figure \ref{fig:absorbanceAndCCE} we've plotted $\text{CCE}(\lambda)$ for
 the \citet{Heymes2020} parameters in Table \ref{table:models}.
 
