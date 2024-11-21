@@ -9,8 +9,6 @@ import ccd_snr.figures
 
 def model() -> aastex.Section:
     result = aastex.Section("CCD Model")
-    result.append(ccd_snr.figures.qe_effective())
-    result.append(ccd_snr.tables.models())
     result.append(
         r"""
 In this work, we will model the light-sensitive region of the backilluminated 
@@ -27,6 +25,9 @@ affects the variance of the signal measured by an imaging sensor.
 """
     )
     subsection_qe = aastex.Subsection("Quantum Efficiency")
+    subsection_qe.append(ccd_snr.figures.absorbance_and_cce())
+    subsection_qe.append(ccd_snr.figures.qe_effective())
+    subsection_qe.append(ccd_snr.tables.models())
     subsection_qe.append(
         r"""
 \QE\ is the average number of photoelectrons measured per photon and is a common 
@@ -131,7 +132,6 @@ Throughout the remainder of this work we will use the model which best fits
 the \citet{Heymes2020} data.
 """
     )
-    subsection_qe.append(ccd_snr.figures.absorbance_and_cce())
     result.append(subsection_qe)
 
     subsection_noise = aastex.Subsection("Noise")
