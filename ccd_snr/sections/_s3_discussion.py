@@ -30,8 +30,8 @@ shot-noise-limited since the \VSR\ in units of incident photons is near unity.
 
 Table~\ref{table:instrumentVSR} also partially resolves a discrepancy
 in the theoretical vs. measured noise in \IRIS.
-In \citet{Wulser2018}, the authors measured a \VSR\ of of \irisMeasuredVsr\
-expecting a \VSR\ of around \irisNaiveVsr.
+In \citet{Wulser2018}, the authors measured a \VSR\ of \irisMeasuredVsr\
+at \irisWavelength, expecting a \VSR\ of around \irisNaiveVsr.
 In Table~\ref{table:instrumentVSR} we find that the theoretical \VSR\ of the
 \IRIS\ sensor at \irisWavelength\ predicted by our model is \irisModeledVsr,
 which is much closer to the measured value.
