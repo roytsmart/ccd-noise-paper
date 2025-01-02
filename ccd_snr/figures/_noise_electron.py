@@ -27,15 +27,19 @@ def noise_electron() -> aastex.FigureStar:
 
     electrons_measured = ccd_snr.simulations.electrons_measured()
 
-    fano_shot = 1 / absorbance.average * u.photon * qe
-    fano_recombination = (1 - cce) * u.electron
-    fano_fano = ccd.fano_noise / iqy / absorbance.average * u.photon * qe
-    fano_total = fano_shot + fano_recombination + fano_fano
+    vsr_shot = 1 / absorbance.average * u.photon * qe
+    vsr_recombination = (1 - cce) * u.electron
+    f = ccd.fano_noise
+    f_a = f + (1 / 6) / iqy.value * iqy.unit
+    vsr_fano = f / iqy / absorbance.average * u.photon * qe
+    vsr_fano_a = f_a / iqy / absorbance.average * u.photon * qe
+    vsr_total = vsr_shot + vsr_recombination + vsr_fano_a
+
     fano_mc = ccd_snr.fano_factor(
         a=electrons_measured,
         axis=ccd_snr.simulations.axis_xy,
     )
-    fano_eqe = (1 / eqe) * u.photon * qe
+    fano_eqe = (1 / eqe) * u.photon * qe + vsr_fano
 
     fig, ax = plt.subplots(
         figsize=(aastex.text_width_inches, 2.5),
@@ -45,25 +49,25 @@ def noise_electron() -> aastex.FigureStar:
     ax2.invert_xaxis()
     na.plt.plot(
         wavelength,
-        fano_shot,
+        vsr_shot,
         ax=ax,
         label="shot",
     )
     na.plt.plot(
         wavelength,
-        fano_recombination,
+        vsr_recombination,
         ax=ax,
         label="recombination",
     )
     na.plt.plot(
         wavelength,
-        fano_fano,
+        vsr_fano_a,
         ax=ax,
         label="Fano",
     )
     na.plt.plot(
         wavelength,
-        fano_total,
+        vsr_total,
         ax=ax,
         label="total",
         color="black",
@@ -80,12 +84,12 @@ def noise_electron() -> aastex.FigureStar:
         wavelength,
         fano_eqe,
         ax=ax,
-        label="naive",
+        label="Stern et al. (1986)",
         color="gray",
     )
     na.plt.plot(
         energy,
-        fano_shot,
+        vsr_shot,
         ax=ax2,
         linestyle="None",
     )
@@ -96,7 +100,7 @@ def noise_electron() -> aastex.FigureStar:
     ax2.set_yscale("log")
     ax.set_xlabel(f"wavelength ({wavelength.unit:latex_inline})")
     ax2.set_xlabel(f"energy ({energy.unit:latex_inline})", labelpad=8)
-    ax.set_ylabel(f"variance-to-signal ratio ({fano_total.unit:latex_inline})")
+    ax.set_ylabel(f"variance-to-signal ratio ({vsr_total.unit:latex_inline})")
 
     result = aastex.FigureStar("electronNoise")
     result.add_fig(fig, width=None)

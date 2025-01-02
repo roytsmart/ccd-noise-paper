@@ -27,15 +27,19 @@ def noise_photon() -> aastex.FigureStar:
 
     photons_measured = ccd_snr.simulations.photons_measured()
 
-    fano_shot = 1 / absorbance.average * u.photon
-    fano_recombination = (1 - cce) * u.electron / qe
-    fano_fano = ccd.fano_noise / iqy / absorbance.average * u.photon
-    fano_total = fano_shot + fano_recombination + fano_fano
+    vsr_shot = 1 / absorbance.average * u.photon
+    vsr_recombination = (1 - cce) * u.electron / qe
+    f = ccd.fano_noise
+    f_a = f + (1 / 6) / iqy.value * iqy.unit
+    vsr_fano = f / iqy / absorbance.average * u.photon
+    vsr_fano_a = f_a / iqy / absorbance.average * u.photon
+    fano_total = vsr_shot + vsr_recombination + vsr_fano_a
+    # fano_total = ((iqy.value + f_a - 1) * cce + 1) * u.electron / qe
     fano_mc = ccd_snr.fano_factor(
         a=photons_measured,
         axis=ccd_snr.simulations.axis_xy,
     )
-    fano_eqe = (1 / eqe) * u.photon
+    fano_eqe = (1 / eqe) * u.photon + vsr_fano
 
     fig, ax = plt.subplots(
         figsize=(aastex.text_width_inches, 2.5),
@@ -45,19 +49,19 @@ def noise_photon() -> aastex.FigureStar:
     ax2.invert_xaxis()
     na.plt.plot(
         wavelength,
-        fano_shot,
+        vsr_shot,
         ax=ax,
         label="shot",
     )
     na.plt.plot(
         wavelength,
-        fano_recombination,
+        vsr_recombination,
         ax=ax,
         label="recombination",
     )
     na.plt.plot(
         wavelength,
-        fano_fano,
+        vsr_fano_a,
         ax=ax,
         label="Fano",
     )
@@ -80,12 +84,12 @@ def noise_photon() -> aastex.FigureStar:
         wavelength,
         fano_eqe,
         ax=ax,
-        label="naive",
+        label="Stern et al. (1986)",
         color="gray",
     )
     na.plt.plot(
         energy,
-        fano_shot,
+        vsr_shot,
         ax=ax2,
         linestyle="None",
     )
