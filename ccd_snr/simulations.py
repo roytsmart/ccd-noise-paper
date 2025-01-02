@@ -10,6 +10,7 @@ __all__ = [
     "axis_xy",
     "num_x",
     "num_y",
+    "shape",
     "photons_expected",
     "normal",
     "rays",
@@ -32,6 +33,9 @@ num_x = 128
 num_y = 128
 """The number of pixels in the vertical dimension."""
 
+shape = {axis_x: num_x, axis_y: num_y}
+"""The shape of the pixel grid."""
+
 photons_expected = 100 * u.photon
 """The expected number of photons measured by each pixel in the sensor."""
 
@@ -45,7 +49,7 @@ def rays() -> optika.rays.RayVectorArray:
     """
     intensity = na.broadcast_to(
         array=photons_expected,
-        shape={axis_x: num_x, axis_y: num_y},
+        shape=shape,
     )
     return optika.rays.RayVectorArray(
         intensity=intensity,
