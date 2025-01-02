@@ -30,10 +30,11 @@ def noise_fano() -> aastex.Figure:
 
     iqy = ccd.quantum_yield_ideal(wavelength)
 
-    q = na.random.poisson(
+    q = f * na.random.poisson(
         lam=iqy / f,
         shape_random=shape_xy | dict(photon=int(num_photons.to_value(u.ph))),
-    ) * f * u.photon
+    )
+    q = q * u.photon
 
     q_frac, q_int = np.modf(q.value)
     q2 = (q_int + na.random.binomial(1, q_frac)) << q.unit
@@ -43,10 +44,10 @@ def noise_fano() -> aastex.Figure:
     w = 2 / 12 * (u.electron / u.photon) ** 2
     f2 = f + w * (num_photons - 1 * u.ph) / (num_photons * iqy)
 
-    m = na.random.poisson(
+    m = f2 * na.random.poisson(
         lam=num_photons * iqy / f2,
         shape_random=shape_xy,
-    ) * f2
+    )
     m_frac, m_int = np.modf(m.value)
     m = (m_int + na.random.binomial(1, m_frac)) << m.unit
 
