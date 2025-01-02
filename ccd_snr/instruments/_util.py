@@ -28,6 +28,23 @@ def _fano_electron(wavelength: na.ScalarArray) -> na.ScalarArray:
     return result
 
 
+def _fano_electron_naive(wavelength: na.ScalarArray) -> na.ScalarArray:
+
+    rays = optika.rays.RayVectorArray(
+        intensity=intensity,
+        wavelength=wavelength,
+        direction=direction,
+    )
+
+    qe = ccd.quantum_efficiency(rays, normal)
+
+    eqe = ccd.quantum_efficiency_effective(rays, normal)
+
+    result = 1 / eqe * u.photon * qe
+
+    return result
+
+
 def _fano_photon(wavelength: na.ScalarArray) -> na.ScalarArray:
 
     rays = optika.rays.RayVectorArray(
@@ -43,5 +60,26 @@ def _fano_photon(wavelength: na.ScalarArray) -> na.ScalarArray:
     photons = electrons / qe
 
     result = ccd_snr.fano_factor(photons, axis="experiment")
+
+    return result
+
+
+def _fano_photon_naive(wavelength: na.ScalarArray) -> na.ScalarArray:
+
+    rays = optika.rays.RayVectorArray(
+        intensity=intensity,
+        wavelength=wavelength,
+        direction=direction,
+    )
+
+    iqy = ccd.quantum_yield_ideal(rays.wavelength)
+
+    absorbance = ccd.absorbance(rays, normal)
+
+    eqe = ccd.quantum_efficiency_effective(rays, normal)
+
+    fano = ccd.fano_noise / iqy / absorbance.average * u.photon
+
+    result = 1 / eqe * u.photon + fano
 
     return result

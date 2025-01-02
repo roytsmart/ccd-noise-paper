@@ -1,6 +1,11 @@
 import astropy.units as u
 import named_arrays as na
-from ._util import _fano_electron, _fano_photon
+from ._util import (
+    _fano_electron,
+    _fano_electron_naive,
+    _fano_photon,
+    _fano_photon_naive,
+)
 
 __all__ = [
     "index_1330",
@@ -21,4 +26,7 @@ index_1330 = dict(wavelength=wavelength.index(1330))
 wavelength = na.ScalarArray(wavelength * u.AA, axes="wavelength")
 
 fano_electron = _fano_electron(wavelength)
+fano_electron_naive = _fano_electron_naive(wavelength)
+
 fano_photon = _fano_photon(wavelength)
+fano_photon_naive = _fano_photon_naive(wavelength)
