@@ -65,7 +65,8 @@ def absorbance_and_cce() -> aastex.Figure:
         aastex.NoEscape(
             r"""
 The fraction of incident light absorbed by the light-sensitive silicon layer 
-and the \CCE\ as a function of wavelength for the \citet{Heymes2020} model.
+and the CCE as a function of wavelength for the parameters inferred from the 
+\citet{Heymes2020} measurements.
 """
         )
     )
