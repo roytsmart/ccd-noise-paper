@@ -105,8 +105,8 @@ def noise_photon() -> aastex.FigureStar:
 The total and component-wise VSR for photons incident on the sensor.
 This plot is useful when designing an instrument since it demonstrates the
 noise to expect from the sensor for a given spectral radiance.
-Plotted for comparison (gray) is the VSR from a naive model which assumes
-that the number of measured photons is proportional to the effective \QE.
+Plotted for comparison (gray) is the VSR of the \citet{Stern1986} noise
+model.
 """
         )
     )
