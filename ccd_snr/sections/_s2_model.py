@@ -63,7 +63,7 @@ This treatment introduces interference effects for infrared wavelengths,
 which can be seen on the right side of Figure \ref{fig:absorbanceAndCCE}.
 
 The ideal \QY\ is given by \citet{Janesick2001} as
-\begin{equation}
+\begin{equation} \label{eq:iqy}
     \text{IQY}(\lambda) = \begin{cases}
         0, & 0 < \epsilon < E_\text{g} \\
         1, & E_\text{g} < \epsilon < E_\text{eh} \\
@@ -157,8 +157,8 @@ to describe this quantity.},
     \text{VSR}(X) = \frac{\text{Var}(X)}{\langle X \rangle},
 \end{equation}
 where $X$ is a random variable,
-$\text{Var}()$ is the variance of the random variable,
-and $\langle \cdot \rangle$ denotes an expectation value.
+$\text{Var}(X)$ is the variance of $X$,
+and $\langle X \rangle$ denotes the expectation value of $X$.
 Using the \VSR\ to express the noise is convenient since it's constant as a 
 function of signal for most of the distributions studied here.
 For example, the \VSR\ of a Poisson process is always unity since its variance and
@@ -182,23 +182,26 @@ electrons.
     subsubsection_noise_shot = aastex.Subsubsection("Shot Noise")
     subsubsection_noise_shot.append(
         r"""
-Shot noise is often the leading noise contributor in \UV\ solar astronomy 
-\citep{Lemen2012, DePontieu2014}.
-The shot noise is described by a Poisson distribution with variance
+Shot noise from the random arrival time of each photon is often the leading 
+noise contributor in \UV\ solar astronomy \citep{Lemen2012, DePontieu2014}.
+It is described by a Poisson distribution,
 \begin{equation} \label{eq:shot-noise-variance}
-    \langle N_\gamma' \rangle = A(\lambda) \langle N_\gamma \rangle,
+    N_\gamma' = \text{Pois}(A(\lambda) \langle N_\gamma \rangle),
 \end{equation}
-where $\langle N_\gamma \rangle$ is the expected number of incident photons.
-and $\langle N_\gamma' \rangle$ is the expected number of photons absorbed
-by the light-sensitive layer.
+where $\langle N_\gamma \rangle$ is the expected number of incident photons,
+$N_\gamma'$ is the number of photons which interact with the light-sensitive
+region of the sensor,
+and $\text{Pois}(x)$ is a sample from the Poisson distribution.
 
 In Figures~\ref{fig:photonNoise}~and~\ref{fig:electronNoise}
 we've plotted the \VSR\ of the shot noise in blue.
 In Figure~\ref{fig:photonNoise}, we can see that the \VSR\ of the shot noise
-relative to the number of incident photons is often unity since it is a Poisson
-process.
-It deviates from unity in the \UV\ since the sensor absorbs only a fraction
-of the incident light leading to more noise for a given number of incident photons.
+relative to the number of incident photons is often unity since it's
+fundamentally a Poisson process.
+The shot noise only deviates from unity when $A(\lambda)$ is significantly
+less than one
+(like in the \UV),
+leading to more noise for a given number of incident photons.
 """
     )
     subsection_noise.append(subsubsection_noise_shot)
@@ -206,13 +209,14 @@ of the incident light leading to more noise for a given number of incident photo
     subsubsection_noise_fano.append(
         r"""
 The energy resolution of silicon detectors is ultimately limited due to Fano
-noise \citep{Fano1947}, the unpredictable variation of the ideal \QY.
+noise \citep{Fano1947}, the unpredictable variation of the number of electrons.
+generated per photon.
 Fano noise is usually expressed in terms of the Fano factor, 
 $\mathcal{F} = \sigma^2 / \mu$,
 the ratio of the variance to the mean of some random process 
 (very similar to our definition of \VSR\ above).
 
-The Fano noise for silicon is commonly accepted to have a Fano factor of about 
+The Fano noise for silicon is commonly accepted to have
 $\mathcal{F} \approx 0.1$ \citep{Janesick2001}.
 In part due to variations of the Fano noise as a function of wavelength and
 temperature \citep{Fraser1994}, 
@@ -220,10 +224,10 @@ there is some disagreement in the literature around a more precise value for
 $\mathcal{F}$ 
 \citep[\& references therein]{Fraser1994,Lowe1997,Mazziotta2008,Kotov2018,Rodrigues2021,Rodrigues2023}.
 $\mathcal{F}$ is often measured in the \SXR\ region,
-traditionally with $^{55}$Fe sources, which have a high \QY.
-For \UV\ wavelengths, where the \QY\ is near unity, it becomes impossible
-to construct a distribution narrow enough to be consistent with a Fano factor 
-that small.
+traditionally with $^{55}$Fe sources, which have a high $\text{IQY}(\lambda)$.
+For \UV\ wavelengths, where the $\text{IQY}(\lambda)$ is near unity,
+it becomes impossible to construct a distribution narrow enough to be consistent 
+with a Fano factor that small (Figure~\ref{fig:fanoNoise}).
 Because this distribution does not exist,
 and because $\mathcal{F}$ is so small compared to the other noise sources
 considered in this study, 
@@ -240,34 +244,82 @@ that it will be negative for some samples, which is unphsyical.
 For this work, we will use a scaled Poisson distribution to describe the
 the Fano noise,
 \begin{equation} \label{eq:scaled-poisson}
-    \langle\text{FY}\rangle \sim \text{Pois}(\text{IQY}(\lambda) / \mathcal{F}) \times \mathcal{F},
+    q_i \leftarrow \mathcal{F} \; \text{Pois}\left( \frac{\text{IQY}(\lambda)}{\mathcal{F}} \right),
 \end{equation}
-where $\langle\text{FY}\rangle$ is the expected fano-noise-perturbed quantum yield,
-and $\text{Pois}(x)$ is a sample from the Poisson distribution.
+where $q_i$ is the fano-noise-perturbed quantum yield of the $i$th photon.
 Equation \ref{eq:scaled-poisson} has the nice property of reproducing a Gaussian 
 with the correct width at high energies while also being non-negative around
 $\text{IQY}(\lambda) \approx 1$.
-
-Unfortunately, Equation \ref{eq:scaled-poisson} does not yield an integer number of electrons,
-and as a last step we must randomly choose a nearby whole number in such a way 
-that the mean of the distribution is unchanged. 
-In this work, we used the simplest possible resolution to this problem
-by defining the \PMF\
-\begin{equation} \label{eq:discretization}
-    P(\text{FY} = k) = \begin{cases}
-        \langle\text{FY}\rangle - \lfloor \langle\text{FY}\rangle \rfloor, & k = \lfloor \langle\text{FY}\rangle \rfloor \\
-        \lceil \langle\text{FY}\rangle \rceil - \langle\text{FY}\rangle, & k = \lceil \langle\text{FY}\rangle \rceil,
-    \end{cases}
+Obviously, Equation \ref{eq:scaled-poisson} does not yield an integer number of electrons,
+so it can't be a sample of the distribution, it still represents an intermediate 
+expectation value.
+In Section~\ref{subsec:QuantumEfficiency},
+we explained that Equation~\ref{eq:iqy} was an unreasonably good approximation
+over the entire wavelength range considered in this study.
+To satisfy Equation~\ref{eq:iqy},
+we must discretize Equation~\ref{eq:scaled-poisson} in such a way that the
+expectation value is unchanged.
+A simple distribution which has these properties is
+\begin{equation}
+    \label{eq:discretization}
+    q_i' \leftarrow \lfloor q_i \rfloor + \text{B}(1, \{ q_i \})
 \end{equation}
-where $\text{FY}$ is the final fano-noise-perturbed quantum yield,
-$\lfloor \cdot \rfloor$ denotes the floor function,
-and $\lceil \cdot \rceil$ denotes the ceiling function.
+where $q_i'$ is the total quantum yield of the $i$th photon,
+$\lfloor x \rfloor$ denotes the floor function,
+$\{ x \}$ is the fractional part of $x$, 
+and $\text{B}(n, p)$ is a sample from the binomial distribution
+for $n$ trials with probability $p$.
 Equation \ref{eq:discretization} is a choice between the two closest integers 
-with the probabilities weighted to conserve the mean of the distribution.
-One consequence of this \PMF\ is that it increases the apparent Fano noise
-if $\text{IQY}(\lambda)$ is near unity due to discretization noise.
+to $q_i$ with the probabilities weighted to conserve the mean of the distribution.
+One consequence of this distribution is that it increases the apparent Fano noise
+if $\text{IQY}(\lambda)$ is near unity due to discretization effects.
 This apparent increase in Fano noise is not unprecedented and may
 explain the sawtooth variations in the Fano noise observed by \citet{Santos1991}.
+
+To compute the total number of electrons generated given the number of photons absorbed, 
+we need to sum $q_i'$ over $N_\gamma'$ photons,
+\begin{equation} \label{eq:totalElectrons}
+    N_e' \leftarrow \sum_{i=0}^{N_\gamma'} \bigl[ \lfloor q_i \rfloor + \text{B}_i(1, \{ q_i \}) \bigr].
+\end{equation}
+However, a sum is inconvenient here since it increases the computation time as the
+incident flux increases.
+Since $\sum_i \text{Pois}(x_i) = \text{Pois}(\sum_i x_i)$ \citep{Lehmann1986}, 
+we can approximate Equation~\ref{eq:totalElectrons} using a variance-matching
+procedure as
+\begin{equation} \label{eq:approxTotalElectrons}
+    N_e' \simeq \lfloor N_e \rfloor + \text{B}_i(1, \{ N_e \}),
+\end{equation}
+where
+\begin{equation}
+    N_e \leftarrow \mathcal{F}' \; \text{Pois} \left(\frac{N_\gamma' \; \text{IQY}(\lambda)}{\mathcal{F}'} \right),
+\end{equation}
+and the effective Fano factor which accounts for discretization effects is
+\begin{equation}
+    \mathcal{F}' = \mathcal{F} + \frac{1}{6} \frac{N_\gamma' - 1}{N_\gamma' \; \text{IQY}(\lambda)}
+\end{equation}
+since each term in Equation~\ref{eq:totalElectrons} increases the variance
+of $N_e'$ by approximately twice the variance of the rectangle function.
+Equation~\ref{eq:approxTotalElectrons} approximates Equation~\ref{eq:totalElectrons}
+extremely well,
+only when $\text{IQY}(\lambda)$ is in the range 1.0 to 1.25 does this approximation
+deviate by a few percent from the exact expression.
+"""
+    )
+    subsubsection_noise_fano.append(ccd_snr.figures.noise_fano())
+    subsubsection_noise_fano.append(
+        r"""
+In Figure~\ref{fig:fanoNoise}, we've plotted the \VSR\ as a function of wavelength
+of a Monte Carlo sampling of
+Equations~\ref{eq:totalElectrons}~and~\ref{eq:approxTotalElectrons}
+to demonstrate the validity of our approximation.
+Note the tight agreement between the expressions in the \SXR/\UV\ 
+and the slight deviation in the visible, where $\text{IQY}(\lambda) = 1$.
+Figure~\ref{fig:fanoNoise} also demonstrates that it is impossible to create
+a discrete distribution consistent with the Fano factor in regions where
+$\text{IQY}(\lambda)$ is small. 
+The width of our distribution increases as 
+$\text{IQY}(\lambda)$ decreases and plateaus since $\text{IQY}(\lambda)$ can't
+go below unity for the wavelength range considered in this study. 
 
 In Figures \ref{fig:photonNoise} and \ref{fig:electronNoise} we can see the 
 contribution of Fano noise to the total noise measured by our simulated sensor.
@@ -281,13 +333,15 @@ Note how the Fano noise component is very small compared to the photon shot nois
 Recombination of photoelectrons in the \PCC\ region is a significant source of noise in
 the \UV\ since the photons are absorbed so close to the surface,
 where the \CCE\ is relatively low (Figure \ref{fig:absorbanceAndCCE}).
-The probability of measuring electrons generated in the \PCC\ region is
-described by a binomial distribution,
+In the \citet{Stern1994} model, 
+each photoelectron generated in the \PCC\ region has a probability 
+$\text{CCE}(\lambda)$ of \textit{not} recombining and subsequently being measured 
+by the sensor.
+We can express this using a binomial distribution,
 \begin{equation} \label{eq:recombination}
-    \text{QY} \sim \text{B}(\text{FY}, \text{CCE}(\lambda))
+    N_e'' \leftarrow \text{B}(N_e', \text{CCE}(\lambda)),
 \end{equation}
-where $\text{QY}$ is the actual, measured quantum yield,
-and $\text{B}(n, p)$ is a sample from the binomial distribution.
+where $N_e''$ is the actual number of electrons measured by the sensor.
 
 In Figures \ref{fig:photonNoise} and \ref{fig:electronNoise} we can see that the
 recombination noise is the dominant source of noise measured by the sensor
@@ -296,9 +350,6 @@ in the near/far \UV\ and remains non-negligible into the \EUV.
     )
     subsection_noise.append(subsubsection_noise_recombination)
     subsubsection_algorithm = aastex.Subsubsection("Sampling Algorithm")
-    subsubsection_algorithm.packages.append(
-        aastex.Package(name="algorithm2e", options="ruled"),
-    )
     subsubsection_algorithm.append(
         r"""
 Equations \ref{eq:scaled-poisson}, \ref{eq:discretization}, and \ref{eq:recombination}
@@ -321,8 +372,8 @@ given an expected number of incident photons.
     $\langle N_\gamma' \rangle \gets A(\lambda) \times \langle N_\gamma \rangle$\;
     $N_\gamma' \gets \texttt{poisson}(\langle N_\gamma' \rangle)$\;
     $\langle N_e \rangle \gets \text{IQY}(\lambda) \times N_\gamma'$\;
-    $\langle N_e' \rangle \gets \texttt{poisson}(\langle N_e \rangle / \mathcal{F}) \times \mathcal{F}$\;
-    $N_e' \gets \lfloor \langle N_e' \rangle \rfloor + \left[ \texttt{uniform}(0, 1) < (\langle N_e' \rangle - \lfloor \langle N_e' \rangle \rfloor) \right]$\;
+    $N_e \gets \texttt{poisson}(\langle N_e \rangle / \mathcal{F}') \times \mathcal{F}'$\;
+    $N_e' \gets \lfloor  N_e \rfloor + \texttt{binomial}(1, \{ N_e \})$\;
     $N_e'' \gets \texttt{binomial}(N_e', \text{CCE}(\lambda))$\;
 \end{algorithm}
 where $\langle N_\gamma \rangle$ is the number of incident photons,
@@ -334,7 +385,7 @@ For convenience, we've implemented this function as
 \href{https://optika.readthedocs.io/en/latest/_autosummary/optika.sensors.electrons_measured.html}{\texttt{optika.sensors.electrons\_measured()}}.
 """
     )
-    subsection_noise.append(subsubsection_algorithm)
+    # subsection_noise.append(subsubsection_algorithm)
     result.append(subsection_noise)
 
     subsection_charge_spreading = aastex.Subsection("Charge Diffusion")
@@ -412,7 +463,7 @@ where $a = d^2 / 2 \langle\sigma^2\rangle$,
 and $\text{erf}(x)$ is the error function.
 
 In the top panel of Figure~\ref{fig:chargeDiffusion},
-we can have plotted a fit of Equation~\ref{eq:mcc} to the measurements in 
+we've  plotted a fit of Equation~\ref{eq:mcc} to the measurements in 
 \citet{Stern2004} which found $z_d=\depletionThickness$ best matched the data.
 Given the simplicity of our model, 
 the fit is surprisingly much better than the models shown in \cite{Stern2004}.
