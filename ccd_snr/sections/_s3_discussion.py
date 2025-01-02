@@ -7,7 +7,7 @@ def discussion() -> aastex.Section:
     result.append(
         r"""     
 Since $\text{EQE}(\lambda)$ is a type of efficiency,
-it's tempting to treat the sensor like any other component in a given optical system
+it is tempting to treat the sensor like any other component in a given optical system
 and simply use $\text{EQE}(\lambda)$ as another factor in the effective
 area calculation.
 This simple noise model is formalized in Equations 9 and 10 of \citet{Stern1986},
@@ -26,7 +26,7 @@ where the apparent Fano factor,
 \end{equation}
 accounts for additional noise due to electron discretization effects.
 In Figures~\ref{fig:photonNoise} and~\ref{fig:electronNoise},
-we've compared Equation~\ref{eq:sternVSR} (gray) 
+we have compared Equation~\ref{eq:sternVSR} (gray) 
 to compare our model, Equation~\ref{eq:ourVSR} (black). 
 Over most of the \SXR\ and visible wavelengths,
 The \citet{Stern1986} model is a good approximation of the noise 
@@ -44,7 +44,7 @@ wavelength range."""
     result.append(
         r"""
 In Table~\ref{table:instrumentVSR},
-we've calculated the \VSR\ in terms of incident photons and measured electrons
+we have calculated the \VSR\ in terms of incident photons and measured electrons
 for the target wavelengths of a few popular and upcoming solar instruments:
 \AIA, \IRIS, and \MUSE\ \citep{DePontieu2020},
 The results show that for the \EUV\ channels, \AIA\ and \MUSE\ are nearly

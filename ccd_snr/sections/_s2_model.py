@@ -52,7 +52,7 @@ which uses the transfer matrix method described in \citet{Yeh1988}
 with the optical constants from \citet{Palik1997}, \citet{Henke1993}, and 
 \citet{Rodriguez-deMarcos2016} to compute the electric field for every interface
 in the sensor.
-In Figure \ref{fig:absorbanceAndCCE} we've plotted $A(\lambda)$ for the 
+In Figure \ref{fig:absorbanceAndCCE} we have plotted $A(\lambda)$ for the 
 \cite{Heymes2020} parameters in Table \ref{table:models}.
 
 In \citet{Stern1994}, the authors assume no reflections from the unilluminated
@@ -108,7 +108,7 @@ arithmetic expression for the \CCE,
     \text{CCE}(\lambda) = \eta_0 + \left( \frac{1 - \eta_0}{\alpha W} \right)(1 - e^{-\alpha W}),
 \end{equation}
 which can be used in Equation \ref{eq:quantum-efficiency} to determine the \QE.
-In Figure \ref{fig:absorbanceAndCCE} we've plotted $\text{CCE}(\lambda)$ for
+In Figure \ref{fig:absorbanceAndCCE} we have plotted $\text{CCE}(\lambda)$ for
 the \citet{Heymes2020} parameters in Table \ref{table:models}.
 
 In \citet{Stern1994}, the authors define an effective \QE\ as
@@ -117,7 +117,7 @@ In \citet{Stern1994}, the authors define an effective \QE\ as
 \end{equation}
 which is the quantity that is typically measured when calibrating a image sensor
 \citep{Stern1994,Stern2004,Boerner2012}.
-In Figure~\ref{fig:eqe}, we've plotted the measured, effective \QE\ for two
+In Figure~\ref{fig:eqe}, we have plotted the measured, effective \QE\ for two
 sources: \citet{Boerner2012} which measured the \AIA\ \CCDs\ at a few
 discrete wavelengths, and \citet{Heymes2020} which measured a Teledyne e2v CCD97
 sensor over a wide wavelength range with high resolution using a monochromator.
@@ -151,7 +151,7 @@ for a given number of incident photons.
 
 Throughout this work, we will measure noise in terms of a \VSR
 \footnote{statisticians might call the \VSR\ the Fano factor, but to avoid
-confusion with the Fano \textit{noise} we've chosen to use a different term
+confusion with the Fano \textit{noise} we have chosen to use a different term
 to describe this quantity.},
 \begin{equation}
     \text{VSR}(X) = \frac{\text{Var}(X)}{\langle X \rangle},
@@ -159,7 +159,7 @@ to describe this quantity.},
 where $X$ is a random variable,
 $\text{Var}(X)$ is the variance of $X$,
 and $\langle X \rangle$ denotes the expectation value of $X$.
-Using the \VSR\ to express the noise is convenient since it's constant as a 
+Using the \VSR\ to express the noise is convenient since it is constant as a 
 function of signal for most of the distributions studied here.
 For example, the \VSR\ of a Poisson process is always unity since its variance and
 expectation value are equal.
@@ -167,14 +167,14 @@ A disadvantage of the \VSR\ is that it is not dimensionless
 (it has the same units as $X$),
 so we must take care to interpret the \VSR\ in terms of the correct units.
 
-In Figures~\ref{fig:photonNoise}~and~\ref{fig:electronNoise} we've plotted
+In Figures~\ref{fig:photonNoise}~and~\ref{fig:electronNoise} we have plotted
 the \VSR\ for the noise sources considered in this study in two different units:
 number of incident photons and number of measured electrons.
-Figure~\ref{fig:photonNoise} is useful if you're \textit{engineering} an instrument since
+Figure~\ref{fig:photonNoise} is useful if you are \textit{engineering} an instrument since
 you presumably know the radiance of the source and the effective area of the
 rest of your instrument, and you want to know how much noise to expect in
 terms of the number of photons incident on the sensor.
-Figure~\ref{fig:electronNoise} is useful if you're \textit{using} an instrument
+Figure~\ref{fig:electronNoise} is useful if you are \textit{using} an instrument
 and want to know how much noise to expect for a given number of measured
 electrons.
 """
@@ -194,9 +194,9 @@ region of the sensor,
 and $\text{Pois}(x)$ is a sample from the Poisson distribution.
 
 In Figures~\ref{fig:photonNoise}~and~\ref{fig:electronNoise}
-we've plotted the \VSR\ of the shot noise in blue.
+we have plotted the \VSR\ of the shot noise in blue.
 In Figure~\ref{fig:photonNoise}, we can see that the \VSR\ of the shot noise
-relative to the number of incident photons is often unity since it's
+relative to the number of incident photons is often unity since it is
 fundamentally a Poisson process.
 The shot noise only deviates from unity when $A(\lambda)$ is significantly
 less than one
@@ -251,7 +251,7 @@ Equation \ref{eq:scaled-poisson} has the nice property of reproducing a Gaussian
 with the correct width at high energies while also being non-negative around
 $\text{IQY}(\lambda) \approx 1$.
 Obviously, Equation \ref{eq:scaled-poisson} does not yield an integer number of electrons,
-so it can't be a sample of the distribution, it still represents an intermediate 
+so it can not be a sample of the distribution, it still represents an intermediate 
 expectation value.
 In Section~\ref{subsec:QuantumEfficiency},
 we explained that Equation~\ref{eq:iqy} was an unreasonably good approximation
@@ -308,7 +308,7 @@ deviate by a few percent from the exact expression.
     subsubsection_noise_fano.append(ccd_snr.figures.noise_fano())
     subsubsection_noise_fano.append(
         r"""
-In Figure~\ref{fig:fanoNoise}, we've plotted the \VSR\ as a function of wavelength
+In Figure~\ref{fig:fanoNoise}, we have plotted the \VSR\ as a function of wavelength
 of a Monte Carlo sampling of
 Equations~\ref{eq:totalElectrons}~and~\ref{eq:approxTotalElectrons}
 to demonstrate the validity of our approximation.
@@ -318,7 +318,7 @@ Figure~\ref{fig:fanoNoise} also demonstrates that it is impossible to create
 a discrete distribution consistent with the Fano factor in regions where
 $\text{IQY}(\lambda)$ is small. 
 The width of our distribution increases as 
-$\text{IQY}(\lambda)$ decreases and plateaus since $\text{IQY}(\lambda)$ can't
+$\text{IQY}(\lambda)$ decreases and plateaus since $\text{IQY}(\lambda)$ can not
 go below unity for the wavelength range considered in this study. 
 
 In Figures \ref{fig:photonNoise} and \ref{fig:electronNoise} we can see the 
@@ -349,43 +349,6 @@ in the near/far \UV\ and remains non-negligible into the \EUV.
 """
     )
     subsection_noise.append(subsubsection_noise_recombination)
-    subsubsection_algorithm = aastex.Subsubsection("Sampling Algorithm")
-    subsubsection_algorithm.append(
-        r"""
-Equations \ref{eq:scaled-poisson}, \ref{eq:discretization}, and \ref{eq:recombination}
-are written in terms of a single photon being absorbed by the sensor.
-What would be more useful for forward modeling is a way to draw samples from the 
-distribution of the number of measured electrons for a given number of expected 
-incident photons without needing to simulate every photon individually.
-Since the sum of $n$ independent Poisson distributions is another Poisson
-distribution and similarly for $n$ independent binomial distributions with
-the same probability,
-we can approximate Equations \ref{eq:shot-noise-variance}-\ref{eq:recombination} in
-terms of Numpy-like idioms using Algorithm \ref{alg:electron-sample},
-\begin{algorithm}
-\caption{
-A procedure to sample the distribution of the number of measured electrons
-given an expected number of incident photons.
-}
-\label{alg:electron-sample}
-    \DontPrintSemicolon
-    $\langle N_\gamma' \rangle \gets A(\lambda) \times \langle N_\gamma \rangle$\;
-    $N_\gamma' \gets \texttt{poisson}(\langle N_\gamma' \rangle)$\;
-    $\langle N_e \rangle \gets \text{IQY}(\lambda) \times N_\gamma'$\;
-    $N_e \gets \texttt{poisson}(\langle N_e \rangle / \mathcal{F}') \times \mathcal{F}'$\;
-    $N_e' \gets \lfloor  N_e \rfloor + \texttt{binomial}(1, \{ N_e \})$\;
-    $N_e'' \gets \texttt{binomial}(N_e', \text{CCE}(\lambda))$\;
-\end{algorithm}
-where $\langle N_\gamma \rangle$ is the number of incident photons,
-$N_\gamma'$ is the number of absorbed photons,
-$\langle N_e \rangle$ is the expected number of electrons,
-$N_e'$ is the number of electrons generated,
-and $N_e'$ is the number of electrons measured.
-For convenience, we've implemented this function as
-\href{https://optika.readthedocs.io/en/latest/_autosummary/optika.sensors.electrons_measured.html}{\texttt{optika.sensors.electrons\_measured()}}.
-"""
-    )
-    # subsection_noise.append(subsubsection_algorithm)
     result.append(subsection_noise)
 
     subsection_charge_spreading = aastex.Subsection("Charge Diffusion")
@@ -396,7 +359,7 @@ For convenience, we've implemented this function as
 In most backilluminated imaging sensors used for \UV\ astronomy,
 the depletion region (the region with significant electric field) does not 
 penetrate all the way into the device.
-As a result, there's a so-called field-free region near the back of the sensor
+As a result, there is a so-called field-free region near the back of the sensor
 where photoelectrons must undergo a random walk to find their way to the
 depletion region where they can then be conducted to the terminals and measured
 \citep{Janesick2001}.
@@ -438,7 +401,7 @@ for two discrete wavelengths, of a \goesCcdThickness-thick
 (100 $\Omega$-cm resistivity) \CCD\ for the GOES Soft X-ray Imager.
 We can use these measurements to estimate the size of the depletion region
 and model the size of the charge diffusion kernel as a function of wavelength.
-\cite{Stern2004} didn't directly measure the size of the charge diffusion kernel,
+\cite{Stern2004} did not directly measure the size of the charge diffusion kernel,
 instead they measured a quantity they named the \MCC, the fraction of charge
 captured by the central pixel.
 Naively, the \MCC\ would be the integral of the charge diffusion kernel over the
@@ -463,12 +426,12 @@ where $a = d^2 / 2 \langle\sigma^2\rangle$,
 and $\text{erf}(x)$ is the error function.
 
 In the top panel of Figure~\ref{fig:chargeDiffusion},
-we've  plotted a fit of Equation~\ref{eq:mcc} to the measurements in 
+we have  plotted a fit of Equation~\ref{eq:mcc} to the measurements in 
 \citet{Stern2004} which found $z_d=\depletionThickness$ best matched the data.
 Given the simplicity of our model, 
 the fit is surprisingly much better than the models shown in \cite{Stern2004}.
 In the lower panel of Figure~\ref{fig:chargeDiffusion},
-we've plotted the corresponding standard deviation of the charge diffusion
+we have plotted the corresponding standard deviation of the charge diffusion
 kernel as a function of wavelength which predicts that the charge diffusion is
 reasonably constant over much of the \SXR\ and ultraviolet wavelengths
 since the penetration depth is low in this regime.

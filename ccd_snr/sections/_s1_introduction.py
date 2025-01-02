@@ -38,7 +38,7 @@ since \UV\ photons produce very few photoelectrons.
 
 We will use these two noise sources along with photon shot noise
 to predict the total noise we expect to measure using a silicon sensor.
-This work will not consider read noise since it's a quantity that depends on the
+This work will not consider read noise since it is a quantity that depends on the
 camera electronics.
 This model will be used to demonstrate the importance of modeling recombination by
 comparing it to the \citet{Stern1986} noise model which considers only shot noise

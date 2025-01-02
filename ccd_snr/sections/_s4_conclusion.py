@@ -16,13 +16,13 @@ This work tries to realistically model a backilluminated \CCD\ or \CMOS\ sensor
 in the simplest possible terms,
 and is designed to serve as a plausible benchmark for more complicated simulations.
 To model the noise intrinsic to the sensor, 
-we've developed an easy-to-implement procedure,
+we have developed an easy-to-implement procedure,
 Equations~\ref{eq:shot-noise-variance}
 and~\ref{eq:approxTotalElectrons}-\ref{eq:recombination}
 (summarized in Algorithm~\ref{alg:electron-sample}),
 which can sample the distribution of measured electrons with accuracy comparable 
 to the Fano noise.
-We've provided a reference implementation of Algorithm~\ref{alg:electron-sample} in Python,
+We have provided a reference implementation of Algorithm~\ref{alg:electron-sample} in Python,
 \href{https://optika.readthedocs.io/en/latest/_autosummary/optika.sensors.electrons_measured.html}{\texttt{optika.sensors.electrons\_measured()}},
 to make this noise model simple to integrate with existing instrument data
 processing pipelines.
@@ -31,7 +31,7 @@ processing pipelines.
 \caption{
 A procedure to sample the distribution of the number of measured electrons
 given an expected number of incident photons.
-We've provided a reference implementation in Python,
+We have provided a reference implementation in Python,
 \href{https://optika.readthedocs.io/en/latest/_autosummary/optika.sensors.electrons_measured.html}{\texttt{optika.sensors.electrons\_measured()}}.
 }
 \label{alg:electron-sample}
@@ -57,7 +57,7 @@ Real cameras introduce read noise which was not considered in this study.
 A complete noise model would include read noise, which is not well-described
 by a \VSR\ and depends on the exact details of the camera electronics.
 
-We've also provided an estimate of the charge diffusion in a typical
+We have also provided an estimate of the charge diffusion in a typical
 backilluminated silicon sensor.
 This is intended to be used along with the noise model in a forward model
 of an astronomical instrument.
