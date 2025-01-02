@@ -27,7 +27,7 @@ sensor.
 Another source of noise which is even less understood than \PCC\ is
 Fano noise \citep{Fano1947}, 
 the unavoidable variation in the number of electrons measured per photon.
-Fano noise is routinely measured in soft X-ray regime \citep{Rodrigues2023},
+Fano noise is routinely measured in the soft X-ray regime \citep{Rodrigues2023},
 but is rarely measured in the \UV\ despite being predicted to
 have significant width \citep{Santos1991} and skew \citep{Fraser1994}
 variations as a function of wavelength.
@@ -36,11 +36,13 @@ this work will use a very simple model of constant Fano noise,
 which still exhibits the width variations observed in \citet{Santos1991}
 since \UV\ photons produce very few photoelectrons.
 
-We will use these two noise sources along with a simple absorbance calculation
-to model a silicon imaging sensor and estimate the amount of noise as a function
-of wavelength.
-This model will be used to demonstrate the importance of recombination by
-comparing it to a model which considers only photon shot noise.
+We will use these two noise sources along with photon shot noise
+to predict the total noise we expect to measure using a silicon sensor.
+This work will not consider read noise since it's a quantity that depends on the
+camera electronics.
+This model will be used to demonstrate the importance of modeling recombination by
+comparing it to the \citet{Stern1986} noise model which considers only shot noise
+and Fano noise.
 We will then evaluate this model for several popular solar \UV\ instruments
 and predict the amount of noise for the nominal wavelengths of each instrument.
 Finally, we will possibly resolve a discrepancy described in \citep{Wulser2018}
