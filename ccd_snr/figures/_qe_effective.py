@@ -116,7 +116,7 @@ def qe_effective() -> aastex.Figure:
     result.add_caption(
         aastex.NoEscape(
             r"""
-A comparison of the effective \QE\ measured by \citet{Boerner2012} and \citet{Heymes2020},
+A comparison of $\text{EQE}(\lambda)$ measured by \citet{Boerner2012} and \citet{Heymes2020},
 along with the best-fit models described in Table \ref{table:models} plotted
 as lines with the same color as the data.
 The inset zooms into the ultraviolet to better visualize the difference between
