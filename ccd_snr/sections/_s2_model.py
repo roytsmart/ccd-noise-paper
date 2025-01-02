@@ -305,7 +305,7 @@ only when $\text{IQY}(\lambda)$ is in the range 1.0 to 1.25 does this approximat
 deviate by a few percent from the exact expression.
 """
     )
-    # subsubsection_noise_fano.append(ccd_snr.figures.noise_fano())
+    subsubsection_noise_fano.append(ccd_snr.figures.noise_fano())
     subsubsection_noise_fano.append(
         r"""
 In Figure~\ref{fig:fanoNoise}, we've plotted the \VSR\ as a function of wavelength

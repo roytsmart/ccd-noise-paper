@@ -23,8 +23,8 @@ def noise_fano() -> aastex.Figure:
     axis_xy = ccd_snr.simulations.axis_xy
     shape_xy = ccd_snr.simulations.shape
 
-    wavelength = ccd_snr.wavelength()
-    energy = ccd_snr.energy()
+    wavelength = na.geomspace(1.5, 10000, axis="wavelength", num=101) * u.AA
+    energy = wavelength.to(u.eV, equivalencies=u.spectral())
 
     f = ccd.fano_noise
 
