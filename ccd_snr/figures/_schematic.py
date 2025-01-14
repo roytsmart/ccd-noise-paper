@@ -28,7 +28,7 @@ def schematic() -> aastex.Figure:
     thickness_fieldfree = thickness_epitaxial - thickness_depletion
 
     z = na.linspace(0, thickness_epitaxial, axis="z", num=1001)
-    potential_recombination = np.exp(-(z - thickness_pcc) ** 2 / 2 / (1 / 2) ** 2)
+    potential_recombination = np.exp(-((z - thickness_pcc) ** 2) / 2 / (1 / 2) ** 2)
     potential_depletion = np.minimum(
         1,
         -(1 / thickness_depletion) * (z - thickness_epitaxial),
@@ -37,7 +37,7 @@ def schematic() -> aastex.Figure:
 
     cce = np.minimum(
         1,
-        cce_backsurface + (1 - cce_backsurface) * z / thickness_pcc
+        cce_backsurface + (1 - cce_backsurface) * z / thickness_pcc,
     )
 
     fig, ax = plt.subplots(
@@ -62,7 +62,7 @@ def schematic() -> aastex.Figure:
         ymax=ymax,
         facecolor="lightgray",
         edgecolor="black",
-        label=r"Si"
+        label=r"Si",
     )
     ax.axvspan(
         xmin=0,
@@ -133,7 +133,7 @@ def schematic() -> aastex.Figure:
         ha="center",
         va="center",
         transform=transform,
-        bbox=bbox
+        bbox=bbox,
     )
     ax.arrow(
         x=x_D,
@@ -200,7 +200,7 @@ def schematic() -> aastex.Figure:
         ha="center",
         va="center",
         transform=transform,
-        bbox=bbox
+        bbox=bbox,
     )
     ax.arrow(
         x=x_W,
@@ -230,7 +230,7 @@ def schematic() -> aastex.Figure:
         ha="center",
         va="center",
         transform=transform,
-        bbox=bbox
+        bbox=bbox,
     )
     ax.arrow(
         x=x_zd,
@@ -260,7 +260,7 @@ def schematic() -> aastex.Figure:
         ha="center",
         va="center",
         transform=transform,
-        bbox=bbox
+        bbox=bbox,
     )
     ax.arrow(
         x=x_zf,
@@ -280,18 +280,15 @@ def schematic() -> aastex.Figure:
         y=0.35,
         dx=3,
         dy=0,
-
         head_width=0.04,
         head_length=1,
-        # overhang=1,
         transform=transform,
         facecolor="black",
-        # edgecolor="none",
         linewidth=0.5,
     )
     ax.text(
         x=-4,
-        y=.4,
+        y=0.4,
         s="incident\nlight",
         va="bottom",
         ha="center",
@@ -304,7 +301,7 @@ def schematic() -> aastex.Figure:
         s="PCC\nregion",
         transform=transform,
         ha="center",
-        bbox=dict(facecolor="lightgray", edgecolor="none", boxstyle="square,pad=0.1")
+        bbox=dict(facecolor="lightgray", edgecolor="none", boxstyle="square,pad=0.1"),
     )
     ax.text(
         x=thickness_fieldfree + thickness_depletion / 2,
@@ -312,7 +309,7 @@ def schematic() -> aastex.Figure:
         s="depletion\nregion",
         transform=transform,
         ha="center",
-        bbox=dict(facecolor="lightgray", edgecolor="none", boxstyle="square,pad=0.1")
+        bbox=dict(facecolor="lightgray", edgecolor="none", boxstyle="square,pad=0.1"),
     )
     ax.text(
         x=thickness_pcc + (thickness_fieldfree - thickness_pcc) / 2,
@@ -320,7 +317,7 @@ def schematic() -> aastex.Figure:
         s="field-free\nregion",
         transform=transform,
         ha="center",
-        bbox=dict(facecolor="lightgray", edgecolor="none", boxstyle="square,pad=0.1")
+        bbox=dict(facecolor="lightgray", edgecolor="none", boxstyle="square,pad=0.1"),
     )
 
     ax.legend(loc="lower left", handlelength=1)
@@ -329,8 +326,8 @@ def schematic() -> aastex.Figure:
     ax.set_ylabel("electric potential (arb. units)", color=color_potential)
     ax2.set_ylabel("differential CCE", color=color_cce)
 
-    ax.tick_params(axis='y', labelcolor=color_potential)
-    ax2.tick_params(axis='y', labelcolor=color_cce)
+    ax.tick_params(axis="y", labelcolor=color_potential)
+    ax2.tick_params(axis="y", labelcolor=color_cce)
 
     ax.set_ylim(top=3)
     ax2.set_ylim(0, 1.5)
