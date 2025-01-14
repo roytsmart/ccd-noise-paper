@@ -73,8 +73,8 @@ The ideal \QY\ is given by \citet{Janesick2001} as
 \end{equation}
 where $\epsilon$ is the energy of an incident photon, 
 $E_\text{g} = \bandgapEnergy$ is the bandgap energy of silicon,
-and $E_\text{eh} = \electronHoleEnergy$ is the energy required to generate one
-electron-hole pair at room temperature.
+and $E_\text{eh} = \electronHoleEnergy$ is the mean energy required to generate
+one electron-hole pair at room temperature.
 Surprisingly, despite initial results to the contrary \citep{Fraser1994},
 this simple relation is a good approximation across the entire wavelength range
 considered \citep{Geist1996,Scholze1998,Fang2019}.
