@@ -2,6 +2,7 @@
 Create the figures used in the article.
 """
 
+from ._schematic import schematic
 from ._qe_effective import qe_effective
 from ._absorbance_and_cce import absorbance_and_cce
 from ._noise_photon import noise_photon

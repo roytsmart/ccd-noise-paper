@@ -24,6 +24,7 @@ In Section \ref{subsec:Noise} we will see how \PCC\
 affects the variance of the signal measured by an imaging sensor.
 """
     )
+    result.append(ccd_snr.figures.schematic())
     subsection_qe = aastex.Subsection("Quantum Efficiency")
     subsection_qe.append(ccd_snr.figures.absorbance_and_cce())
     subsection_qe.append(ccd_snr.figures.qe_effective())
