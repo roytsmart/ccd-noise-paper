@@ -12,6 +12,7 @@ from ._charge_diffusion import charge_diffusion
 from ._kernel import diffusion_kernel
 
 __all__ = [
+    "schematic",
     "qe_effective",
     "absorbance_and_cce",
     "noise_photon",
