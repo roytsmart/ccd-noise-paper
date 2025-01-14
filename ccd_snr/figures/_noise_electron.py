@@ -42,7 +42,7 @@ def noise_electron() -> aastex.FigureStar:
     fano_eqe = (1 / eqe) * u.photon * qe + vsr_fano
 
     fig, ax = plt.subplots(
-        figsize=(aastex.text_width_inches, 2.5),
+        figsize=(aastex.text_width_inches, 3.5),
         constrained_layout=True,
     )
     ax2 = ax.twiny()
