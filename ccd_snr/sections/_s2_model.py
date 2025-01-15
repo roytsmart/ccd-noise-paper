@@ -16,16 +16,18 @@ sensor as a epitaxial silicon layer with a thickness $D$, which is coated
 with a thin oxide layer of thickness $\delta$ to provide a realistic transmission 
 coefficient.
 The illuminated side of the epitaxial layer is considered to have a \PCC\ region
-of width $W$, where some of the generated photoelectrons recombine before being
+of width $W$, where some of the generated electron-hole pairs recombine before being
 measured by the sensor.
-\PCC\ is usually described by quantity called \CCE, the fraction of 
-photoelectrons which do \textit{not} recombine and are measured by the sensor.
-In Section \ref{subsec:Noise} we will see how \PCC\
-affects the variance of the signal measured by an imaging sensor.
+In Section~\ref{subsec:Signal} we will model the \QE\ of a silicon sensor using 
+the method described in \citet{Stern1994},
+in Section~\ref{subsec:Noise} we will see how the \citet{Stern1994} \QE\ model
+affects the variance of the signal measured by the sensor,
+and in Section~\ref{subsec:ChargeDiffusion} we will model the charge diffusion
+of the sensor which is needed for a complete description of the noise.
 """
     )
     result.append(ccd_snr.figures.schematic())
-    subsection_qe = aastex.Subsection("Quantum Efficiency")
+    subsection_qe = aastex.Subsection("Signal")
     subsection_qe.append(ccd_snr.figures.absorbance_and_cce())
     subsection_qe.append(ccd_snr.figures.qe_effective())
     subsection_qe.append(ccd_snr.tables.models())
@@ -42,8 +44,10 @@ where $N_e$ is the number of electrons measured by the sensor for a
 given wavelength $\lambda$,
 $N_\gamma$ is the total number of photons incident on the sensor,
 $A(\lambda)$ is the fraction of incident energy absorbed by the epitaxial layer, 
-and $\text{IQY}(\lambda)$ is the ideal \QY, the number of photoelectrons generated 
-per absorbed photon.
+$\text{IQY}(\lambda)$ is the ideal \QY,
+the number of photoelectrons generated per absorbed photon,
+and $\text{CCE}(\lambda)$ is the charge-collection efficiency,
+the fraction of generated photoelectrons measured by the sensor.
 
 The absorbance $A(\lambda)$ can be determined from the optical constants of Si 
 and $\text{SiO}_2$, using, for example, the popular IMD code \citep{Windt1998}.
@@ -79,10 +83,10 @@ Surprisingly, despite initial results to the contrary \citep{Fraser1994},
 this simple relation is a good approximation across the entire wavelength range
 considered \citep{Geist1996,Scholze1998,Fang2019}.
 
-In \citet{Stern1994}, the \CCE\ is expressed in terms of a differential \CCE,
+In \citet{Stern1994}, the CCE is expressed in terms of a differential CCE,
 $\eta(z)$, which is the fraction of photoelectrons collected for a photon 
 absorbed at a depth $z$ into the epitaxial layer.
-The total \CCE\ is then the average differential \CCE\ weighted by 
+The total CCE is then the average differential CCE weighted by 
 the probability of absorbing a photon at a depth $z$,
 \begin{equation} \label{cce}
     \text{CCE}(\lambda) = \frac{\int_0^\infty \eta(z) \exp(-\alpha z) \, dz}
@@ -95,16 +99,16 @@ usually impractical to measure, but see \cite{Stern2004,Boerner2012} for a case
 where the authors did have a measurement of the exact implant profile provided 
 by the manufacturer.
 In \citet{Stern1994}, the authors instead adopt a piecewise-linear approximation 
-of the differential \CCE,
+of the differential CCE,
 \begin{equation} \label{differential-cce}
     \eta(z) = \begin{cases}
         \eta_0 + (1 - \eta_0) z / W, & 0 < z < W \\
         1, & W < z < \infty
     \end{cases}
 \end{equation}
-where $\eta_0$ is the differential \CCE\ at the back surface of the sensor.
+where $\eta_0$ is the differential CCE at the back surface of the sensor.
 Plugging Equation \ref{differential-cce} into Equation \ref{cce} yields an
-arithmetic expression for the \CCE,
+arithmetic expression for the CCE,
 \begin{equation}
     \text{CCE}(\lambda) = \eta_0 + \left( \frac{1 - \eta_0}{\alpha W} \right)(1 - e^{-\alpha W}),
 \end{equation}
@@ -254,7 +258,7 @@ $\text{IQY}(\lambda) \approx 1$.
 Obviously, Equation \ref{eq:scaled-poisson} does not yield an integer number of electrons,
 so it can not be a sample of the distribution, it still represents an intermediate 
 expectation value.
-In Section~\ref{subsec:QuantumEfficiency},
+In Section~\ref{subsec:Signal},
 we explained that Equation~\ref{eq:iqy} was an unreasonably good approximation
 over the entire wavelength range considered in this study.
 To satisfy Equation~\ref{eq:iqy},
@@ -333,7 +337,7 @@ Note how the Fano noise component is very small compared to the photon shot nois
         r"""
 Recombination of photoelectrons in the \PCC\ region is a significant source of noise in
 the \UV\ since the photons are absorbed so close to the surface,
-where the \CCE\ is relatively low (Figure \ref{fig:absorbanceAndCCE}).
+where the CCE is relatively low (Figure \ref{fig:absorbanceAndCCE}).
 In the \citet{Stern1994} model, 
 each photoelectron generated in the \PCC\ region has a probability 
 $\text{CCE}(\lambda)$ of \textit{not} recombining and subsequently being measured 
