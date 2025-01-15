@@ -166,9 +166,9 @@ $\text{Var}(X)$ is the variance of $X$,
 and $\langle X \rangle$ denotes the expectation value of $X$.
 Using the \VSR\ to express the noise is convenient since it is constant as a 
 function of signal for most of the distributions studied here.
-For example, the \VSR\ of a Poisson process is always unity since its variance and
-expectation value are equal.
-A disadvantage of the \VSR\ is that it is not dimensionless 
+For example, the \VSR\ of a Poisson random variable is always unity since its 
+variance and expectation value are equal.
+The \VSR\ is not dimensionless
 (it has the same units as $X$),
 so we must take care to interpret the \VSR\ in terms of the correct units.
 
