@@ -182,6 +182,8 @@ terms of the number of photons incident on the sensor.
 Figure~\ref{fig:electronNoise} is useful if you are \textit{calibrating} an instrument
 and want to know how much noise to expect for a given number of measured
 electrons.
+The details of the calculations for Figures~\ref{fig:photonNoise}
+and~\ref{fig:electronNoise} are presented in the subsections below.
 """
     )
     subsubsection_noise_shot = aastex.Subsubsection("Shot Noise")
