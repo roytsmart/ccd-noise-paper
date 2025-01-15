@@ -108,7 +108,7 @@ def noise_electron() -> aastex.FigureStar:
         aastex.NoEscape(
             r"""
 The total and component-wise VSR for electrons measured by the sensor.
-This plot is useful when using an instrument since it demonstrates the
+This plot is useful when calibrating an instrument since it demonstrates the
 noise to expect from the sensor for a given number of electrons measured.
 Plotted for comparison (gray) is the VSR of the \citet{Stern1986} noise
 model.

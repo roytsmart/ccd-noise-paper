@@ -175,11 +175,11 @@ so we must take care to interpret the \VSR\ in terms of the correct units.
 In Figures~\ref{fig:photonNoise}~and~\ref{fig:electronNoise} we have plotted
 the \VSR\ for the noise sources considered in this study in two different units:
 number of incident photons and number of measured electrons.
-Figure~\ref{fig:photonNoise} is useful if you are \textit{engineering} an instrument since
+Figure~\ref{fig:photonNoise} is useful if you are \textit{designing} an instrument since
 you presumably know the radiance of the source and the effective area of the
 rest of your instrument, and you want to know how much noise to expect in
 terms of the number of photons incident on the sensor.
-Figure~\ref{fig:electronNoise} is useful if you are \textit{using} an instrument
+Figure~\ref{fig:electronNoise} is useful if you are \textit{calibrating} an instrument
 and want to know how much noise to expect for a given number of measured
 electrons.
 """
