@@ -189,14 +189,13 @@ electrons.
         r"""
 Shot noise from the random arrival time of each photon is often the leading 
 noise contributor in \UV\ solar astronomy \citep{Lemen2012, DePontieu2014}.
-It is described by a Poisson distribution,
+The number of photons that interact with the silicon, 
+$N_\gamma'$, is drawn from a Poisson distribution,
 \begin{equation} \label{eq:shot-noise-variance}
     N_\gamma' = \text{Pois}(A(\lambda) \langle N_\gamma \rangle),
 \end{equation}
-where $\langle N_\gamma \rangle$ is the expected number of incident photons,
-$N_\gamma'$ is the number of photons which interact with the light-sensitive
-region of the sensor,
-and $\text{Pois}(x)$ is a sample from the Poisson distribution.
+where the expected value is the product of absorbance $A(\lambda)$ 
+and the expected number of \textit{incident} photons, $\langle N_\gamma \rangle$.
 
 In Figures~\ref{fig:photonNoise}~and~\ref{fig:electronNoise}
 we have plotted the \VSR\ of the shot noise in blue.
