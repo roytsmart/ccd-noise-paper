@@ -13,7 +13,7 @@ such as \AIA\ \citep{Lemen2012} and \IRIS\ \citep{DePontieu2014}.
 Despite their popularity,
 understanding the \QE\ and noise statistics of these sensors in the \UV\
 is challenging due to the phenomenon of \PCC,
-where photoelectrons generated near the back surface of the sensor
+where electron-hole pairs generated near the back surface of the sensor
 (due to the shallow penetration depth of \UV\ photons)
 recombine before they can be measured \citep{Janesick2001}.
 \PCC\ can be difficult to quantify since it depends on how the back surface
