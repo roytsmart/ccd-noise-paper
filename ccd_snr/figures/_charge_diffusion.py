@@ -69,7 +69,6 @@ def charge_diffusion() -> aastex.Figure:
             wavelength_fit,
             width,
             ax=ax2,
-            label="Heymes et al. (2020)",
         )
         # na.plt.plot(
         #     wavelength_fit,
