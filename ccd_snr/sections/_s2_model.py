@@ -286,8 +286,6 @@ Equation \ref{eq:discretization} is a choice between the two closest integers
 to $q_i$ with the probabilities weighted to conserve the mean of the distribution.
 One consequence of this distribution is that it increases the apparent Fano noise
 if $\text{IQY}(\lambda)$ is near unity due to discretization effects.
-This apparent increase in Fano noise is not unprecedented and may
-explain the sawtooth variations in the Fano noise observed by \citet{Santos1991}.
 
 To compute the total number of electrons generated given the number of photons absorbed, 
 we need to sum $q_i'$ over $N_\gamma'$ photons,
