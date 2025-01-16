@@ -438,9 +438,8 @@ and $\text{erf}(x)$ is the error function.
 
 In the top panel of Figure~\ref{fig:chargeDiffusion},
 we have  plotted a fit of Equation~\ref{eq:mcc} to the measurements in 
-\citet{Stern2004} which found $z_d=\depletionThickness$ best matched the data.
-Given the simplicity of our model, 
-the fit is surprisingly much better than the models shown in \cite{Stern2004}.
+\citet{Stern2004} which found $z_d=\depletionThickness$ best matched the data. 
+The fit is qualitatively better than the models shown in \cite{Stern2004}.
 In the lower panel of Figure~\ref{fig:chargeDiffusion},
 we have plotted the corresponding standard deviation of the charge diffusion
 kernel as a function of wavelength which predicts that the charge diffusion is
