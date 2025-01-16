@@ -84,7 +84,6 @@ def charge_diffusion() -> aastex.Figure:
         ax1.set_ylabel("MCC")
         ax2.set_ylabel(f"width ({ax2.get_ylabel()})")
         ax1.legend()
-        ax2.legend()
 
         result = aastex.Figure("chargeDiffusion")
         # result.append(aastex.NoEscape(r"\vspace{5pt}"))
