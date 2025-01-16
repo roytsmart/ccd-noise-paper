@@ -215,33 +215,37 @@ leading to more noise for a given number of incident photons.
     subsubsection_noise_fano.append(
         r"""
 The energy resolution of silicon detectors is ultimately limited due to Fano
-noise \citep{Fano1947}, the unpredictable variation of the number of electrons.
+noise \citep{Fano1947}, the unpredictable variation of the number of electrons
 generated per photon.
 Fano noise is usually expressed in terms of the Fano factor, 
 $\mathcal{F} = \sigma^2 / \mu$,
 the ratio of the variance to the mean of some random process 
 (very similar to our definition of \VSR\ above).
-
-The Fano noise for silicon is commonly accepted to have
-$\mathcal{F} \approx 0.1$ \citep{Janesick2001}.
+Silicon is commonly accepted to have $\mathcal{F} \approx 0.1$ \citep{Janesick2001}.
 In part due to variations of the Fano noise as a function of wavelength and
 temperature \citep{Fraser1994}, 
 there is some disagreement in the literature around a more precise value for
 $\mathcal{F}$ 
 \citep[\& references therein]{Fraser1994,Lowe1997,Mazziotta2008,Kotov2018,Rodrigues2021,Rodrigues2023}.
-$\mathcal{F}$ is often measured in the \SXR\ region,
-traditionally with $^{55}$Fe sources, which have a high $\text{IQY}(\lambda)$.
-For \UV\ wavelengths, where the $\text{IQY}(\lambda)$ is near unity,
-it becomes impossible to construct a distribution narrow enough to be consistent 
-with a Fano factor that small (Figure~\ref{fig:fanoNoise}).
-Because this distribution does not exist,
-and because $\mathcal{F}$ is so small compared to the other noise sources
-considered in this study, 
-we have decided to ignore the wavelength variation of $\mathcal{F}$,
-and adopt a Fano noise model with constant $\mathcal{F} = \fanoFactor$,
-which represents the best available measurement of $\mathcal{F}$ using $^{55}$Fe
-X-rays \citep{Rodrigues2021}, and uses a skipper CCD \citep{Janesick1990} to 
-minimize the effect of readout noise.
+
+$\mathcal{F}$ is routinely measured to be consistent with the accepted value in the \SXR\ region
+(typically with \SI{6}{\kilo\electronvolt} photons emitted from $^{55}$Fe sources) 
+where the Fano noise is much larger than the typical readout noise
+and $\text{CCE}(\lambda)$ is nearly unity.
+However, we know that $\mathcal{F}$ must be larger than the accepted value in the \UV\
+(where $\text{IQY}(\lambda)$ is near unity)
+since it is impossible to construct any distribution narrow enough to be 
+consistent with $\mathcal{F} \approx 0.1$ due to the discrete nature of electrons.
+Unfortunately, measuring $\mathcal{F}$ in the \UV\ is difficult since the 
+Fano noise is comparable to the readout noise,
+and we were not able to find any \UV\ measurements of $\mathcal{F}$
+in the literature.
+So, we've adopted an ad-hoc model of the Fano noise,
+described in the following paragraphs, 
+which aims to be the simplest-possible model with the correct limiting behavior.
+Because the Fano noise is so small compared to the other noise sources
+considered in this study, the precise form of this noise model does not
+have much influence over our conclusions.
 
 At high energies, Fano noise is well-described by a Gaussian distribution
 \citep{Rodrigues2023}.
@@ -252,7 +256,10 @@ the Fano noise,
 \begin{equation} \label{eq:scaled-poisson}
     q_i \leftarrow \mathcal{F} \; \text{Pois}\left( \frac{\text{IQY}(\lambda)}{\mathcal{F}} \right),
 \end{equation}
-where $q_i$ is the fano-noise-perturbed quantum yield of the $i$th photon.
+where $q_i$ is the fano-noise-perturbed quantum yield of the $i$th photon,
+and $\mathcal{F} = \fanoFactor$,
+which is the best available measurement of $\mathcal{F}$ at 
+\SI{6}{\kilo\electronvolt} \citep{Rodrigues2021}.
 Equation \ref{eq:scaled-poisson} has the nice property of reproducing a Gaussian 
 with the correct width at high energies while also being non-negative around
 $\text{IQY}(\lambda) \approx 1$.
@@ -261,7 +268,7 @@ so it can not be a sample of the distribution, it still represents an intermedia
 expectation value.
 In Section~\ref{subsec:Signal},
 we explained that Equation~\ref{eq:iqy} was an unreasonably good approximation
-over the entire wavelength range considered in this study.
+of $\text{IQY}(\lambda)$ over the entire wavelength range considered in this study.
 To satisfy Equation~\ref{eq:iqy},
 we must discretize Equation~\ref{eq:scaled-poisson} in such a way that the
 expectation value is unchanged.
