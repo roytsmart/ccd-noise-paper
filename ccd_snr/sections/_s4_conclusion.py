@@ -44,7 +44,7 @@ We have provided a reference implementation in Python,
     $N_e'' \gets \texttt{binomial}(N_e', \text{CCE}(\lambda))$\;
 \end{algorithm}
 
-Our noise model shows that noise from \PCC\ effects is comparable
+Our model shows that noise from \PCC\ effects is comparable
 to the photon shot noise measured by the sensor in the \UV\ wavelength regime.
 It also shows that current \CCD\ noise models,
 such as \citet{Stern1986},
