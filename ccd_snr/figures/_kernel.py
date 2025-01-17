@@ -8,21 +8,7 @@ import ccd_snr
 
 def diffusion_kernel() -> aastex.Figure:
 
-    ccd = ccd_snr.ccd()
-
-    wavelength = 1400 * u.AA
-
-    width_pixel = 15 * u.um
-
-    kernel = ccd_snr.diffusion_kernel(
-        width_diffusion=ccd.width_charge_diffusion(
-            rays=optika.rays.RayVectorArray(
-                wavelength=wavelength,
-            ),
-            normal=na.Cartesian3dVectorArray(0, 0, -1),
-        ),
-        width_pixel=width_pixel,
-    )
+    kernel = ccd_snr.diffusion.kernel()
 
     mappable = plt.cm.ScalarMappable(
         norm=plt.Normalize(0, 1),
@@ -65,8 +51,9 @@ def diffusion_kernel() -> aastex.Figure:
     result.add_caption(
         aastex.NoEscape(
             rf"""
-The charge diffusion kernel at {wavelength:latex_inline} convolved with a 
-{width_pixel:latex_inline} pixel.
+The charge diffusion kernel at \diffusionWavelength\ convolved with a 
+\diffusionPixelSize\ IRIS pixel and integrated over the extent of each
+pixel.
 """
         )
     )

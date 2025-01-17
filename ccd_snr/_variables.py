@@ -76,4 +76,12 @@ def variables() -> list[aastex.Command]:
                 ccd_snr.instruments.iris.index_1330
             ].ndarray,
         ),
+        aastex.Variable(
+            name="diffusionWavelength",
+            value=ccd_snr.diffusion.wavelength,
+        ),
+        aastex.Variable(
+            name="diffusionPixelSize",
+            value=ccd_snr.diffusion.width_pixel,
+        ),
     ]

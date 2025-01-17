@@ -5,7 +5,7 @@ Create the figures and compile the LaTeX files for this article.
 from ._fano_factor import fano_factor
 from ._wavelength import wavelength, energy
 from ._ccd import ccd, ccd_aia
-from ._diffusion import diffusion_kernel
+from . import diffusion
 from . import simulations
 from . import instruments
 from ._acronyms import acronyms
@@ -22,7 +22,7 @@ __all__ = [
     "energy",
     "ccd",
     "ccd_aia",
-    "diffusion_kernel",
+    "diffusion",
     "simulations",
     "instruments",
     "acronyms",

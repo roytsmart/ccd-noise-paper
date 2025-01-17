@@ -2,6 +2,18 @@ import numpy as np
 import scipy.special
 import astropy.units as u
 import named_arrays as na
+import optika
+import ccd_snr
+
+__all__ = [
+    "wavelength",
+    "width_pixel",
+    "kernel",
+]
+
+wavelength = 1400 * u.AA
+
+width_pixel = 13 * u.um
 
 
 def _kernel_1d(
@@ -60,7 +72,7 @@ def _kernel_2d(
     return kx * ky
 
 
-def diffusion_kernel(
+def _kernel(
     width_diffusion: u.Quantity,
     width_pixel: u.Quantity,
 ) -> na.FunctionArray:
@@ -88,4 +100,19 @@ def diffusion_kernel(
     return na.FunctionArray(
         inputs=na.Cartesian2dVectorArray(index_x, index_y),
         outputs=output,
+    )
+
+
+def kernel():
+
+    ccd = ccd_snr.ccd()
+
+    return _kernel(
+        width_diffusion=ccd.width_charge_diffusion(
+            rays=optika.rays.RayVectorArray(
+                wavelength=wavelength,
+            ),
+            normal=na.Cartesian3dVectorArray(0, 0, -1),
+        ),
+        width_pixel=width_pixel,
     )

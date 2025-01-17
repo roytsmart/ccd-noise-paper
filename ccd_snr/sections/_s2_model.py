@@ -376,7 +376,7 @@ depletion region where they can then be conducted to the terminals and measured
 \citep{Janesick2001}.
 This random walk generally leads to a loss of spatial resolution measured by
 the sensor since electrons can diffuse to adjacent pixels.
-It also leads to an apparent reduction in the noise measured by the sensor since
+It also leads to an apparent reduction in the noise of a flat field measured by the sensor since
 the blurring due to this diffusion induces a correlation between neighboring 
 pixels.
 
@@ -422,6 +422,7 @@ we need to convolve with a rectangle function the width of a pixel before
 integrating.
 So, our definition for the \MCC\ is
 \begin{equation}
+    \label{eq:mccIntegral}
     \text{MCC} = \left\{ \frac{1}{d} \int_{-d/2}^{d/2} \left[ K(x') * \Pi \left( \frac{x'}{d} \right) \right](x) \, dx \right\}^2,
 \end{equation}
 where $K(x)$ is the charge diffusion kernel,
@@ -445,6 +446,17 @@ we have plotted the corresponding standard deviation of the charge diffusion
 kernel as a function of wavelength which predicts that the charge diffusion is
 reasonably constant over much of the \SXR\ and ultraviolet wavelengths
 since the penetration depth is low in this regime.
+
+To forward model this charge diffusion in a practical way,
+we've included Figure~\ref{fig:chargeDiffusionKernel},
+a $3 \times 3$ kernel where the value in each pixel has been computed in
+a manner similar to Equation~\ref{eq:mccIntegral},
+just with different limits of integration.
+We used the \IRIS\ pixel size of \diffusionPixelSize\ and a wavelength of
+\diffusionWavelength\ to demonstrate the worst-case scenario for \IRIS.
+This kernel is intended to be convolved with an input image after the noise
+model (described above) has been applied to approximate the effects of charge
+diffusion and complete the forward model of the sensor.
 """
     )
     result.append(subsection_charge_spreading)
