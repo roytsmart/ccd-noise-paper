@@ -1,8 +1,6 @@
 import matplotlib.pyplot as plt
 import aastex
-import astropy.units as u
 import named_arrays as na
-import optika
 import ccd_snr
 
 
@@ -50,7 +48,7 @@ def diffusion_kernel() -> aastex.Figure:
 
     result.add_caption(
         aastex.NoEscape(
-            rf"""
+            r"""
 The charge diffusion kernel at \diffusionWavelength\ convolved with a 
 \diffusionPixelSize\ IRIS pixel and integrated over the extent of each
 pixel.
