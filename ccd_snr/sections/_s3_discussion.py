@@ -27,7 +27,7 @@ where the apparent Fano factor,
 accounts for additional noise due to electron discretization effects.
 In Figures~\ref{fig:photonNoise} and~\ref{fig:electronNoise},
 we have compared Equation~\ref{eq:sternVSR} (gray) 
-to compare our model, Equation~\ref{eq:ourVSR} (black). 
+to our model, Equation~\ref{eq:ourVSR} (black). 
 Over most of the \SXR\ and visible wavelengths,
 The \citet{Stern1986} model is a good approximation of the noise 
 model developed in this work.
