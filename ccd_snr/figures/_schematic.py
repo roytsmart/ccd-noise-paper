@@ -14,7 +14,7 @@ def schematic() -> aastex.Figure:
 
     thickness_oxide = 1 * u.um
     thickness_epitaxial = 16 * u.um
-    thickness_pcc = 4 * u.um
+    thickness_pcc = 2.6 * u.um
     thickness_depletion = 6 * u.um
 
     cce_backsurface = ccd_snr.ccd().cce_backsurface
@@ -43,6 +43,9 @@ def schematic() -> aastex.Figure:
         figsize=(aastex.column_width_inches, 2.5),
         constrained_layout=True,
     )
+
+    ax.margins(0.01)
+
     transform = ax.get_xaxis_transform()
 
     ymax = 0.7
@@ -96,6 +99,14 @@ def schematic() -> aastex.Figure:
         zorder=10,
         color=color_potential,
     )
+    ax.text(
+        x=thickness_pcc + (thickness_fieldfree - thickness_pcc) / 2,
+        y=1.03,
+        s="electric\npotential",
+        ha="center",
+        va="bottom",
+        color=color_potential,
+    )
 
     color_cce = "tab:orange"
     ax2 = ax.twinx()
@@ -105,6 +116,14 @@ def schematic() -> aastex.Figure:
         ax=ax2,
         color=color_cce,
         zorder=10,
+    )
+    ax2.text(
+        x=thickness_pcc + (thickness_fieldfree - thickness_pcc) / 2,
+        y=.98,
+        s="differential CCE",
+        ha="center",
+        va="top",
+        color=color_cce,
     )
 
     kwargs_arrow = dict(
@@ -331,16 +350,20 @@ def schematic() -> aastex.Figure:
     ax.set_ylim(top=3)
     ax2.set_ylim(0, 1.5)
 
+    ax.set_axis_off()
+    ax2.set_axis_off()
+
     result = aastex.Figure("schematic")
     result.add_fig(fig, width=None)
 
     result.add_caption(
         aastex.NoEscape(
             r"""
-A schematic (not to scale) of the backilluminated sensor model used in this work.
-Overplotted using the left vertical axis is a \textit{qualitative} description of the 
+A schematic (not to scale) of the backilluminated sensor model used in this work,
+labeled with the thicknesses of each layer.
+Plotted in blue is a \textit{qualitative} example of the 
 electric potential within the sensor that motivates the differential CCE,
-plotted using the right vertical axis.
+plotted in orange.
 """
         )
     )
