@@ -119,7 +119,7 @@ def schematic() -> aastex.Figure:
     )
     ax2.text(
         x=thickness_pcc + (thickness_fieldfree - thickness_pcc) / 2,
-        y=.98,
+        y=0.98,
         s="differential CCE",
         ha="center",
         va="top",
