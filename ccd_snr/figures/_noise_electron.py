@@ -1,7 +1,6 @@
-import matplotlib.pyplot as plt
+import matplotlib.axes
 import astropy.units as u
 import named_arrays as na
-import aastex
 import ccd_snr
 
 __all__ = [
@@ -9,7 +8,9 @@ __all__ = [
 ]
 
 
-def noise_electron() -> aastex.FigureStar:
+def noise_electron(
+    ax: matplotlib.axes.Axes,
+) -> None:
 
     ccd = ccd_snr.ccd()
 
@@ -41,10 +42,6 @@ def noise_electron() -> aastex.FigureStar:
     )
     fano_eqe = (1 / eqe) * u.photon * qe + vsr_fano
 
-    fig, ax = plt.subplots(
-        figsize=(aastex.text_width_inches, 3.5),
-        constrained_layout=True,
-    )
     ax2 = ax.twiny()
     ax2.invert_xaxis()
     na.plt.plot(
@@ -99,22 +96,15 @@ def noise_electron() -> aastex.FigureStar:
     ax.set_yscale("log")
     ax2.set_yscale("log")
     ax.set_xlabel(f"wavelength ({wavelength.unit:latex_inline})")
-    ax2.set_xlabel(f"energy ({energy.unit:latex_inline})", labelpad=8)
+    ax2.set_xticklabels([])
     ax.set_ylabel(f"variance-to-signal ratio ({vsr_total.unit:latex_inline})")
+    ax.legend(loc="upper right")
 
-    result = aastex.FigureStar("electronNoise")
-    result.add_fig(fig, width=None)
-    result.add_caption(
-        aastex.NoEscape(
-            r"""
-The total and component-wise VSR for electrons measured by the sensor.
-This plot is useful when calibrating an instrument since it demonstrates the
-noise to expect from the sensor for a given number of electrons measured.
-Plotted for comparison (gray) is the VSR of the \citet{Stern1986} noise
-model.
-Line colors have the same meaning as Figure \ref{fig:photonNoise}.
-"""
-        )
+    ax.text(
+        x=0.01,
+        y=0.98,
+        s="(b)",
+        transform=ax.transAxes,
+        ha="left",
+        va="top",
     )
-
-    return result

@@ -1,7 +1,6 @@
-import matplotlib.pyplot as plt
+import matplotlib.axes
 import astropy.units as u
 import named_arrays as na
-import aastex
 import ccd_snr
 
 __all__ = [
@@ -9,7 +8,9 @@ __all__ = [
 ]
 
 
-def noise_photon() -> aastex.FigureStar:
+def noise_photon(
+    ax: matplotlib.axes.Axes,
+) -> None:
 
     ccd = ccd_snr.ccd()
 
@@ -41,10 +42,6 @@ def noise_photon() -> aastex.FigureStar:
     )
     fano_eqe = (1 / eqe) * u.photon + vsr_fano
 
-    fig, ax = plt.subplots(
-        figsize=(aastex.text_width_inches, 2.5),
-        constrained_layout=True,
-    )
     ax2 = ax.twiny()
     ax2.invert_xaxis()
     na.plt.plot(
@@ -96,23 +93,14 @@ def noise_photon() -> aastex.FigureStar:
 
     ax.set_xscale("log")
     ax2.set_xscale("log")
-    ax.set_xlabel(f"wavelength ({wavelength.unit:latex_inline})")
     ax2.set_xlabel(f"energy ({energy.unit:latex_inline})", labelpad=8)
     ax.set_ylabel(f"variance-to-signal ratio ({fano_total.unit:latex_inline})")
-    ax.legend(loc="upper left")
 
-    result = aastex.FigureStar("photonNoise")
-    result.add_fig(fig, width=None)
-    result.add_caption(
-        aastex.NoEscape(
-            r"""
-The total and component-wise VSR for photons incident on the sensor.
-This plot is useful when designing an instrument since it demonstrates the
-noise to expect from the sensor for a given spectral radiance.
-Plotted for comparison (gray) is the VSR of the \citet{Stern1986} noise
-model.
-"""
-        )
+    ax.text(
+        x=0.01,
+        y=0.96,
+        s="(a)",
+        transform=ax.transAxes,
+        ha="left",
+        va="top",
     )
-
-    return result

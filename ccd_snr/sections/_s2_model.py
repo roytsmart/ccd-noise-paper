@@ -140,8 +140,7 @@ the \citet{Heymes2020} data.
     result.append(subsection_qe)
 
     subsection_noise = aastex.Subsection("Noise")
-    subsection_noise.append(ccd_snr.figures.noise_photon())
-    subsection_noise.append(ccd_snr.figures.noise_electron())
+    subsection_noise.append(ccd_snr.figures.noise())
     subsection_noise.append(
         r"""
 Our noise model will consider three sources:
@@ -172,18 +171,18 @@ The \VSR\ is not dimensionless
 (it has the same units as $X$),
 so we must take care to interpret the \VSR\ in terms of the correct units.
 
-In Figures~\ref{fig:photonNoise}~and~\ref{fig:electronNoise} we have plotted
+In Figure~\ref{fig:Noise} we have plotted
 the \VSR\ for the noise sources considered in this study in two different units:
 number of incident photons and number of measured electrons.
-Figure~\ref{fig:photonNoise} is useful if you are \textit{designing} an instrument since
+Figure~\ref{fig:Noise}a is useful if you are \textit{designing} an instrument since
 you presumably know the radiance of the source and the effective area of the
 rest of your instrument, and you want to know how much noise to expect in
 terms of the number of photons incident on the sensor.
-Figure~\ref{fig:electronNoise} is useful if you are \textit{calibrating} an instrument
+Figure~\ref{fig:Noise}b is useful if you are \textit{calibrating} an instrument
 and want to know how much noise to expect for a given number of measured
 electrons.
-The details of the calculations for Figures~\ref{fig:photonNoise}
-and~\ref{fig:electronNoise} are presented in the subsections below.
+The details of the calculations for Figure~\ref{fig:Noise} are presented in the 
+subsections below.
 """
     )
     subsubsection_noise_shot = aastex.Subsubsection("Shot Noise")
@@ -199,9 +198,9 @@ $N_\gamma'$, is drawn from a Poisson distribution,
 where the expected value is the product of absorbance $A(\lambda)$ 
 and the expected number of \textit{incident} photons, $\langle N_\gamma \rangle$.
 
-In Figures~\ref{fig:photonNoise}~and~\ref{fig:electronNoise}
+In Figure~\ref{fig:Noise}
 we have plotted the \VSR\ of the shot noise in blue.
-In Figure~\ref{fig:photonNoise}, we can see that the \VSR\ of the shot noise
+In Figure~\ref{fig:Noise}a, we can see that the \VSR\ of the shot noise
 relative to the number of incident photons is often unity since it is
 fundamentally a Poisson process.
 The shot noise only deviates from unity when $A(\lambda)$ is significantly
@@ -332,7 +331,7 @@ The width of our distribution increases as
 $\text{IQY}(\lambda)$ decreases and plateaus since $\text{IQY}(\lambda)$ can not
 go below unity for the wavelength range considered in this study. 
 
-In Figures \ref{fig:photonNoise} and \ref{fig:electronNoise} we can see the 
+In Figure~\ref{fig:Noise} we can see the 
 contribution of Fano noise to the total noise measured by our simulated sensor.
 Note how the Fano noise component is very small compared to the photon shot noise.
 """
@@ -354,7 +353,7 @@ We can express this using a binomial distribution,
 \end{equation}
 where $N_e''$ is the actual number of electrons measured by the sensor.
 
-In Figures \ref{fig:photonNoise} and \ref{fig:electronNoise} we can see that the
+In Figure~\ref{fig:Noise} we can see that the
 recombination noise is the dominant source of noise measured by the sensor
 in the near/far \UV\ and remains non-negligible into the \EUV.
 """

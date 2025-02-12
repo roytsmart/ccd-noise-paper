@@ -25,7 +25,7 @@ where the apparent Fano factor,
     \mathcal{F}_a = \mathcal{F} + \frac{1/6}{\text{IQY}(\lambda)},
 \end{equation}
 accounts for additional noise due to electron discretization effects.
-In Figures~\ref{fig:photonNoise} and~\ref{fig:electronNoise},
+In Figure~\ref{fig:Noise},
 we have compared Equation~\ref{eq:sternVSR} (gray) 
 to our model, Equation~\ref{eq:ourVSR} (black). 
 Over most of the \SXR\ and visible wavelengths,
