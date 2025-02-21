@@ -2,6 +2,7 @@
 Create the figures and compile the LaTeX files for this article.
 """
 
+from . import random
 from ._fano_factor import fano_factor
 from ._wavelength import wavelength, energy
 from ._ccd import ccd, ccd_aia
@@ -17,6 +18,7 @@ from . import sections
 from ._document import document, pdf
 
 __all__ = [
+    "random",
     "fano_factor",
     "wavelength",
     "energy",
