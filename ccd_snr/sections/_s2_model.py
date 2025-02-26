@@ -214,12 +214,12 @@ leading to more noise for a given number of incident photons.
     subsubsection_noise_fano.append(
         r"""
 The energy resolution of silicon detectors is ultimately limited due to Fano
-noise \citep{Fano1947}, the unpredictable variation of the number of electrons
-generated per photon.
+noise \citep{Fano1947}, the unpredictable variation of \QY, 
+the number of electrons generated per absorbed photon.
 Fano noise is usually expressed in terms of the Fano factor, 
-$\mathcal{F} = \sigma^2 / \mu$,
-the ratio of the variance to the mean of some random process 
-(very similar to our definition of \VSR\ above).
+$\mathcal{F} = \text{VSR}(q)$,
+where $q$ is a random variable representing a sample from the distribution
+of \QY.
 Silicon is commonly accepted to have $\mathcal{F} \approx 0.1$ \citep{Janesick2001}.
 In part due to variations of the Fano noise as a function of wavelength and
 temperature \citep{Fraser1994}, 
@@ -227,83 +227,80 @@ there is some disagreement in the literature around a more precise value for
 $\mathcal{F}$ 
 \citep[\& references therein]{Fraser1994,Lowe1997,Mazziotta2008,Kotov2018,Rodrigues2021,Rodrigues2023}.
 
-$\mathcal{F}$ is routinely measured to be consistent with the accepted value in the \SXR\ region
-(typically with \SI{6}{\kilo\electronvolt} photons emitted from $^{55}$Fe sources) 
+$\mathcal{F}$ is routinely measured in the \SXR\ region
+(typically with \SI{6}{\kilo\electronvolt} photons emitted from $^{55}$Fe sources),
 where the Fano noise is much larger than the typical readout noise
 and $\text{CCE}(\lambda)$ is nearly unity.
-However, we know that $\mathcal{F}$ must be larger than the accepted value in the \UV\
+However, $\mathcal{F}$ must be larger than the accepted value in the \UV\
 (where $\text{IQY}(\lambda)$ is near unity)
 since it is impossible to construct any distribution narrow enough to be 
 consistent with $\mathcal{F} \approx 0.1$ due to the discrete nature of electrons.
+Moreover, this problem apparently cannot be solved by rounding $\text{IQY}(\lambda)$
+to the nearest integer, 
+because this would conflict with Equation~\ref{eq:iqy},
+which is well-supported in the literature.
 Unfortunately, measuring $\mathcal{F}$ in the \UV\ is difficult since the 
 Fano noise is comparable to the readout noise,
 and we were not able to find any \UV\ measurements of $\mathcal{F}$
 in the literature.
-So, we've adopted an ad-hoc model of the Fano noise,
-described in the following paragraphs, 
-which aims to be the simplest-possible model with the correct limiting behavior.
+So, we adopt a simple, ad-hoc model of the Fano noise with the correct limiting
+behavior, 
+described in the following paragraphs.
 Because the Fano noise is so small compared to the other noise sources
 considered in this study, the precise form of this noise model does not
-have much influence over our conclusions.
+appreciably influence our conclusions.
 
 At high energies, Fano noise is well-described by a Gaussian distribution
-\citep{Rodrigues2023}.
-At low energies, a Gaussian distribution is problematic since it becomes likely
-that it will be negative for some samples, which is unphsyical.
-For this work, we will use a scaled Poisson distribution to describe the
-the Fano noise,
-\begin{equation} \label{eq:scaled-poisson}
-    q_i \leftarrow \mathcal{F} \; \text{Pois}\left( \frac{\text{IQY}(\lambda)}{\mathcal{F}} \right),
+\citep{Rodrigues2023},
+but at low energies, a Gaussian distribution is problematic since it becomes likely
+that it will be negative for some samples (which is unphysical).
+So, we desire an underdispersed (\VSR\ < 1), discrete distribution supported on 
+the natural numbers which tends towards a Gaussian as its expectation value 
+approaches infinity.
+Perhaps the most well-studied distribution which has these properties is the
+Conway-Maxwell-Poisson distribution \citep{Huang2020},
+but the parameters of this distribution can be difficult to interpret 
+and it does not have an implementation in the standard scientific Python ecosystem.
+Instead, we will use the following compound distribution,
+parameterized by the mean $\mu$ and the asymptotic \VSR\ $\nu$,
+\begin{equation} \label{eq:discrete-gamma}
+    \text{SR}\Gamma(\mu, \nu) = \text{SR}(\Gamma(\mu / \nu, \nu)),
 \end{equation}
-where $q_i$ is the fano-noise-perturbed quantum yield of the $i$th photon,
-and $\mathcal{F} = \fanoFactor$,
-which is the best available measurement of $\mathcal{F}$ at 
-\SI{6}{\kilo\electronvolt} \citep{Rodrigues2021}.
-Equation \ref{eq:scaled-poisson} has the nice property of reproducing a Gaussian 
-with the correct width at high energies while also being non-negative around
-$\text{IQY}(\lambda) \approx 1$.
-Obviously, Equation \ref{eq:scaled-poisson} does not yield an integer number of electrons,
-so it can not be a sample of the distribution, it still represents an intermediate 
-expectation value.
-In Section~\ref{subsec:Signal},
-we explained that Equation~\ref{eq:iqy} was an unreasonably good approximation
-of $\text{IQY}(\lambda)$ over the entire wavelength range considered in this study.
-To satisfy Equation~\ref{eq:iqy},
-we must discretize Equation~\ref{eq:scaled-poisson} in such a way that the
-expectation value is unchanged.
-A simple distribution which has these properties is
-\begin{equation}
-    \label{eq:discretization}
-    q_i' \leftarrow \lfloor q_i \rfloor + \text{B}(1, \{ q_i \})
+where $\Gamma(k, \theta)$ is the gamma distribution with shape parameter
+$k$ and scale parameter $\theta$, and
+\begin{equation} \label{eq:stochastic-rounding}
+    \text{SR}(x) = \begin{cases}
+        \lfloor x \rfloor, \quad \text{with probability $\lceil x \rceil - x$} \\
+        \lceil x \rceil, \quad \text{with probability $x - \lfloor x \rfloor$},
+    \end{cases}
 \end{equation}
-where $q_i'$ is the total quantum yield of the $i$th photon,
-$\lfloor x \rfloor$ denotes the floor function,
-$\{ x \}$ is the fractional part of $x$, 
-and $\text{B}(n, p)$ is a sample from the binomial distribution
-for $n$ trials with probability $p$.
-Equation \ref{eq:discretization} is a choice between the two closest integers 
-to $q_i$ with the probabilities weighted to conserve the mean of the distribution.
-One consequence of this distribution is that it increases the apparent Fano noise
-if $\text{IQY}(\lambda)$ is near unity due to discretization effects.
+is a stochastic rounding function \citep{Croci2022} which randomly discretizes
+a continuous random variable $x$ onto the integers without changing the mean of $x$.
+We chose to use Equation~\ref{eq:stochastic-rounding} instead of a deterministic
+rounding scheme so that our distribution will satisfy Equation~\ref{eq:iqy},
+which as we explained in Section~\ref{subsec:Signal},
+is an unreasonably good approximation of $\text{IQY}(\lambda)$ over the entire 
+wavelength range considered in this study.
 
-To compute the total number of electrons generated given the number of photons absorbed, 
-we need to sum $q_i'$ over $N_\gamma'$ photons,
+So, if we approximate the quantum yield of the $i$th photon absorbed by the
+sensor as
+\begin{equation}
+    q_i \leftarrow \text{SR}\Gamma(\text{IQY}(\lambda), \mathcal{F}),
+\end{equation}
+where $\mathcal{F} = \fanoFactor$ is the best available measurement of $\mathcal{F}$ at 
+\SI{6}{\kilo\electronvolt} \citep{Rodrigues2021},
+then the total number of electrons generated given $N_\gamma'$ absorbed photons is simply
 \begin{equation} \label{eq:totalElectrons}
-    N_e' \leftarrow \sum_{i=0}^{N_\gamma'} \bigl[ \lfloor q_i \rfloor + \text{B}_i(1, \{ q_i \}) \bigr].
+    N_e' = \sum_{i=0}^{N_\gamma'} q_i.
 \end{equation}
 However, a sum is inconvenient here since it increases the computation time as the
 incident flux increases.
-Since $\sum_i \text{Pois}(x_i) = \text{Pois}(\sum_i x_i)$ \citep{Lehmann1986}, 
-we can approximate Equation~\ref{eq:totalElectrons} using a variance-matching
-procedure as
+Therefore, we will approximate Equation~\ref{eq:totalElectrons} using a 
+variance-matching procedure as
 \begin{equation} \label{eq:approxTotalElectrons}
-    N_e' \simeq \lfloor N_e \rfloor + \text{B}_i(1, \{ N_e \}),
+    N_e' \simeq \text{SR}\Gamma(N_\gamma' \; \text{IQY}(\lambda), \mathcal{F}'),
 \end{equation}
-where
-\begin{equation}
-    N_e \leftarrow \mathcal{F}' \; \text{Pois} \left(\frac{N_\gamma' \; \text{IQY}(\lambda)}{\mathcal{F}'} \right),
-\end{equation}
-and the effective Fano factor which accounts for discretization effects is
+where the effective Fano factor which accounts for discretization effects is
 \begin{equation}
     \mathcal{F}' = \mathcal{F} + \frac{1}{6} \frac{N_\gamma' - 1}{N_\gamma' \; \text{IQY}(\lambda)}
 \end{equation}
