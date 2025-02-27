@@ -25,6 +25,9 @@ compared to a model which does not consider recombination.
 We will evaluate this model for the \AIA, \IRIS, and \MUSE\ solar instruments and find that, 
 our model predicts a significant improvement in the expected \SNR\ of some 
 channels of each instrument.
+We will also develop a procedure which can efficiently sample the distribution
+of measured electrons and is suitable for use in forward models of astronomical
+instruments
 """
     )
     return result
