@@ -45,7 +45,7 @@ given wavelength $\lambda$,
 $N_\gamma$ is the total number of photons incident on the sensor,
 $A(\lambda)$ is the fraction of incident energy absorbed by the epitaxial layer, 
 $\text{IQY}(\lambda)$ is the ideal \QY,
-the number of photoelectrons generated per absorbed photon,
+the average number of photoelectrons generated per absorbed photon,
 and $\text{CCE}(\lambda)$ is the charge-collection efficiency,
 the fraction of generated photoelectrons measured by the sensor.
 
@@ -150,7 +150,7 @@ to electrons,
 and noise due to electrons randomly recombining before they can be measured by
 the sensor.
 This section will describe the statistics of each noise source and demonstrate
-a simple algorithm which can simulate the noise measured by our model sensor
+a fast algorithm which can simulate the noise measured by our model sensor
 for a given number of incident photons.
 
 Throughout this work, we will measure noise in terms of a \VSR
@@ -160,7 +160,7 @@ to describe this quantity.},
 \begin{equation}
     \text{VSR}(X) = \frac{\text{Var}(X)}{\langle X \rangle},
 \end{equation}
-where $X$ is a random variable,
+where $X$ is some random variable,
 $\text{Var}(X)$ is the variance of $X$,
 and $\langle X \rangle$ denotes the expectation value of $X$.
 Using the \VSR\ to express the noise is convenient since it is constant as a 
@@ -193,7 +193,7 @@ noise contributor in \UV\ solar astronomy \citep{Lemen2012, DePontieu2014}.
 The number of photons that interact with the silicon, 
 $N_\gamma'$, is drawn from a Poisson distribution,
 \begin{equation} \label{eq:shot-noise-variance}
-    N_\gamma' = \text{Pois}(A(\lambda) \langle N_\gamma \rangle),
+    N_\gamma' \leftarrow \text{Pois}(A(\lambda) \langle N_\gamma \rangle),
 \end{equation}
 where the expected value is the product of absorbance $A(\lambda)$ 
 and the expected number of \textit{incident} photons, $\langle N_\gamma \rangle$.
@@ -234,12 +234,11 @@ and $\text{CCE}(\lambda)$ is nearly unity.
 However, $\mathcal{F}$ must be larger than the accepted value in the \UV\
 (where $\text{IQY}(\lambda)$ is near unity)
 since it is impossible to construct any distribution narrow enough to be 
-consistent with $\mathcal{F} \approx 0.1$ due to the discrete nature of electrons.
-Moreover, this problem apparently cannot be solved by rounding $\text{IQY}(\lambda)$
-to the nearest integer, 
-because this would conflict with Equation~\ref{eq:iqy},
-which is well-supported in the literature.
-Unfortunately, measuring $\mathcal{F}$ in the \UV\ is difficult since the 
+consistent with both Equation~\ref{eq:iqy}
+(which is well-supported in the literature)
+and $\mathcal{F} \approx 0.1$ due to the discrete nature of electrons.
+Unfortunately, resolving this inconsistency by measuring
+$\mathcal{F}$ in this regime is difficult since the 
 Fano noise is comparable to the readout noise,
 and we were not able to find any \UV\ measurements of $\mathcal{F}$
 in the literature.
@@ -282,7 +281,7 @@ which as we explained in Section~\ref{subsec:Signal},
 is an unreasonably good approximation of $\text{IQY}(\lambda)$ over the entire 
 wavelength range considered in this study.
 
-So, if we approximate the quantum yield of the $i$th photon absorbed by the
+Therefore, if we approximate the quantum yield of the $i$th photon absorbed by the
 sensor as
 \begin{equation}
     q_i \leftarrow \text{SR}\Gamma(\text{IQY}(\lambda), \mathcal{F}),
