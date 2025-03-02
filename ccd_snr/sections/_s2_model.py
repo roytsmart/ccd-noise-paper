@@ -335,6 +335,7 @@ Note how the Fano noise component is very small compared to the photon shot nois
     )
     subsection_noise.append(subsubsection_noise_fano)
     subsubsection_noise_recombination = aastex.Subsubsection("Recombination Noise")
+    subsubsection_noise_recombination.append(ccd_snr.figures.energy_spectrum())
     subsubsection_noise_recombination.append(
         r"""
 Recombination of photoelectrons in the \PCC\ region is a significant source of noise in
@@ -342,13 +343,98 @@ the \UV\ since the photons are absorbed so close to the surface,
 where the CCE is relatively low (Figure \ref{fig:absorbanceAndCCE}).
 In the \citet{Stern1994} model, 
 each photoelectron generated in the \PCC\ region has a probability 
-$\text{CCE}(\lambda)$ of \textit{not} recombining and subsequently being measured 
+$\eta(x)$ of \textit{not} recombining and subsequently being measured 
 by the sensor.
-We can express this using a binomial distribution,
-\begin{equation} \label{eq:recombination}
-    N_e'' \leftarrow \text{B}(N_e', \text{CCE}(\lambda)),
+We can express this using a binomial distribution, 
+\begin{equation}
+    q_i'' \leftarrow \text{B}(q_i', \eta(z_i)),
 \end{equation}
-where $N_e''$ is the actual number of electrons measured by the sensor.
+where $q_i''$ is the measured quantum yield of the $i$th photon,
+$z_i$ is the penetration depth of the $i$th photon.
+and $\text{B}(n, p)$ is a sample from the binomial distribution
+with $n$ trials and probability of success $p$.
+The total number of measured electrons given $N_\gamma'$ absorbed photons is then
+\begin{equation} \label{eq:measuredElectrons}
+    N_e'' = \sum_{i=0}^{N_\gamma'} q_i''.
+\end{equation}
+We can remove the sum in Equation~\ref{eq:measuredElectrons} in a similar 
+way to Equation~\ref{eq:approxTotalElectrons} by treating the \PCC\ region and 
+its complement, the \CCC\ region, separately so that
+\begin{equation}
+    N_e'' = n_e'' + m_e'',
+\end{equation}
+where $n_e''$ is the number of electrons measured from the \CCC\ region
+and $m_e''$ is the number of electrons measured from the \PCC\ region.
+We can easily compute the signal generated in the \CCC\ region using
+Equation~\ref{eq:approxTotalElectrons},
+\begin{equation}
+    n_e'' = \text{SR}\Gamma(n_\gamma' \, \text{IQY}(\lambda), \mathcal{F}'),
+\end{equation}
+where the number of photons absorbed in the \CCC\ region, $n_\gamma'$, 
+is found by drawing from a binomial distribution,
+\begin{equation}
+    n_\gamma' = \text{B}(N_\gamma', p_c),
+\end{equation}
+with a probability $p_c = e^{-\alpha W}$ of a photon being absorbed in
+the \CCC\ region.
+
+In the \PCC\ region,
+the distribution of measured electrons is a sum of binomial distributions,
+where each term of the sum has a different number of trials and probability
+of success,
+\begin{equation} \label{eq:partialElectrons}
+    m_e'' = \sum_{i=0}^{m_\gamma'} \text{B}(q_i', \eta(z_i)),
+\end{equation}
+where $m_\gamma' = N_\gamma' - n_\gamma'$ is the number of photons absorbed in
+the \PCC\ region.
+Using Equation~\ref{differential-cce},
+we can apply a change of variables to the exponentially-distributed
+penetration depth, $z_i$, to find the \PDF\ of $\eta(z_i)$ as
+\begin{equation}
+    p_\eta = \frac{\alpha W e^{\frac{\alpha W (1 - \eta)}{1 - \eta_0}}}{(1 - \eta_0)(e^{\alpha W} - 1)} .
+\end{equation}
+Given this distribution of $\eta(z_i)$, 
+it is not possible to solve the sum in Equation~\ref{eq:partialElectrons} analytically,
+but we can compute the mean and \VSR\ of this sum using the expressions
+given by \citet{heropup2019}:
+\begin{equation} \label{eq:signalMean}
+    \langle m_e'' \rangle = m_\gamma'' \mu_q \mu_\eta
+\end{equation}
+and
+\begin{equation} \label{eq:signalVSR}
+    \text{VSR}(m_e'') = \frac{\sigma_q^2 \sigma_\eta^2 + \sigma_q^2 \mu_\eta^2 + \mu_q^2 \sigma_\eta^2 + \mu_q (\mu_\eta - \sigma_\eta^2 - \mu_\eta^2)}
+                                {\mu_q \mu_\eta},
+\end{equation}
+where
+\begin{equation}
+    \mu_q = \text{IQY}(\lambda)
+\end{equation}
+is the mean of $q_i$,
+\begin{equation}
+    \sigma_q^2 = \mathcal{F}' \mu_q
+\end{equation}
+is the variance of $q_i$,
+\begin{equation}
+    \mu_\eta = \eta_0 + \frac{1 - \eta_0}{\alpha W} + \frac{1 - \eta_0}{1 - e^{\alpha W}}
+\end{equation}
+is the mean of $\eta(z_i)$, and
+\begin{equation}
+    \sigma_\eta^2 = \frac{1}{4} (1 - \eta_0)^2 \left[ \frac{4}{\alpha^2 W^2} - \text{csch}^2 \left( \frac{\alpha W}{2} \right) \right]
+\end{equation}
+is the variance of $\eta(z_i)$.
+Using Equations~\ref{eq:signalMean} and~\ref{eq:signalVSR},
+we can crudely approximate Equation~\ref{eq:partialElectrons} using another
+$\text{SR}\Gamma(\mu, \nu)$ distribution,
+\begin{equation} \label{eq:approxPartialElectrons}
+    m_e'' \simeq \text{SR}\Gamma(\langle m_e'' \rangle, \text{VSR}(m_e'') - 1/6 \langle m_e'' \rangle),
+\end{equation}
+which has the same mean and variance as Equation~\ref{eq:partialElectrons}.
+In Figure~\ref{fig:energySpectrum},
+we have plotted the distribution of measured electrons for three discrete wavelengths
+to demonstrate the quality of this approximation.
+In the \FUV\ and \EUV\ we can see that this is approximation is extremely accurate,
+only in the \SXR\ regime does this approximation deviate slightly from the true
+distribution.
 
 In Figure~\ref{fig:Noise} we can see that the
 recombination noise is the dominant source of noise measured by the sensor

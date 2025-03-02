@@ -7,6 +7,7 @@ from ._qe_effective import qe_effective
 from ._absorbance_and_cce import absorbance_and_cce
 from ._noise import noise
 from ._noise_fano import noise_fano
+from ._energy_spectrum import energy_spectrum
 from ._charge_diffusion import charge_diffusion
 from ._kernel import diffusion_kernel
 
@@ -16,6 +17,7 @@ __all__ = [
     "absorbance_and_cce",
     "noise",
     "noise_fano",
+    "energy_spectrum",
     "charge_diffusion",
     "diffusion_kernel",
 ]
