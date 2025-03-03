@@ -121,11 +121,11 @@ def energy_spectrum() -> aastex.FigureStar:
     result.add_caption(
         aastex.NoEscape(
             rf"""
-A Monte-Carlo simulation of the number of measured electrons calculated using
-{num_experiments} samples of
-Equation~\ref{{eq:partialElectrons}} (individual photons)
-and Equation~\ref{{eq:approxPartialElectrons}} (ensemble approximation)
-given {num_photons} absorbed photons for each wavelength."""
+The probability distribution of the number of measured electrons calculated using
+a Monte-Carlo simulation of
+Equation~\ref{{eq:measuredElectrons}} (individual photons)
+and Equation~\ref{{eq:approxMeasuredElectrons}} (ensemble approximation)
+with {num_experiments} samples and {num_photons} absorbed photons for each wavelength."""
         )
     )
 
