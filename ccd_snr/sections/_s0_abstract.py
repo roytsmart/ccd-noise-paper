@@ -10,11 +10,11 @@ def abstract() -> aastex.Abstract:
     result.append(
         r"""
 Silicon-based imaging sensors are a critical component for \UV\ astronomy.
-Their high sensitivity and low noise are a vital part of making solar
+Their high sensitivity and low noise are a vital part of making
 \UV\ telescopes practical to build.
 However, \UV\ light is unique compared to other components of the
 electromagnetic spectrum since it has a shallow penetration depth
-into the silicon substrate, where the corresponding electron-hole pairs
+into the silicon substrate, where the electron-hole pairs corresponding to an absorbed photon
 have a significant chance of recombination before being measured.
 In this article, we will use the theoretical sensor described in \citet{Stern1994}
 as the basis for a noise model which accounts for the effect of recombination,
@@ -27,7 +27,7 @@ our model predicts a significant improvement in the expected \SNR\ of some
 channels of each instrument.
 We will also develop a procedure which can efficiently sample the distribution
 of measured electrons and is suitable for use in forward models of astronomical
-instruments
+instruments.
 """
     )
     return result
