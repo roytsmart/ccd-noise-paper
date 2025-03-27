@@ -21,7 +21,7 @@ def _fano_electron(wavelength: na.ScalarArray) -> na.ScalarArray:
         direction=direction,
     )
 
-    electrons = ccd.electrons_measured(rays, normal).intensity
+    electrons = ccd.signal(rays, normal).intensity
 
     result = ccd_snr.fano_factor(electrons, axis="experiment")
 
@@ -53,7 +53,7 @@ def _fano_photon(wavelength: na.ScalarArray) -> na.ScalarArray:
         direction=direction,
     )
 
-    electrons = ccd.electrons_measured(rays, normal).intensity
+    electrons = ccd.signal(rays, normal).intensity
 
     qe = ccd.quantum_efficiency(rays, normal)
 

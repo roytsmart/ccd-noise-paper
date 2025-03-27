@@ -11,22 +11,27 @@ def fano_factor() -> str:
     wavelength_aia = ccd_snr.instruments.aia.wavelength
     wavelength_iris = ccd_snr.instruments.iris.wavelength
     wavelength_muse = ccd_snr.instruments.muse.wavelength
+    wavelength_wfc3 = ccd_snr.instruments.wfc3.wavelength
 
     fano_electrons_aia = ccd_snr.instruments.aia.fano_electron
     fano_electrons_iris = ccd_snr.instruments.iris.fano_electron
     fano_electrons_muse = ccd_snr.instruments.muse.fano_electron
+    fano_electrons_wfc3 = ccd_snr.instruments.wfc3.fano_electron
 
     fano_photons_aia = ccd_snr.instruments.aia.fano_photon
     fano_photons_iris = ccd_snr.instruments.iris.fano_photon
     fano_photons_muse = ccd_snr.instruments.muse.fano_photon
+    fano_photons_wfc3 = ccd_snr.instruments.wfc3.fano_photon
 
     fano_photons_aia_naive = ccd_snr.instruments.aia.fano_photon_naive
     fano_photons_iris_naive = ccd_snr.instruments.iris.fano_photon_naive
     fano_photons_muse_naive = ccd_snr.instruments.muse.fano_photon_naive
+    fano_photons_wfc3_naive = ccd_snr.instruments.wfc3.fano_photon_naive
 
     improvement_aia = fano_photons_aia_naive / fano_photons_aia
     improvement_iris = fano_photons_iris_naive / fano_photons_iris
     improvement_muse = fano_photons_muse_naive / fano_photons_muse
+    improvement_wfc3 = fano_photons_wfc3_naive / fano_photons_wfc3
 
     result = r"""\begin{deluxetable}{lrrrr}
 \tablecaption{
@@ -93,6 +98,22 @@ and our noise model to demonstrate the improvement in VSR predicted by our model
             f"{fano_photons_muse[index].ndarray.real.to_value(u.ph):.2f}",
             f"{fano_electrons_muse[index].ndarray.to_value(u.electron):.2f}",
             f"{improvement_muse[index].ndarray.to_value(u.dimensionless_unscaled):.2f}",
+        ]
+        result += f"{'&'.join(row)} \\\\\n"
+
+    result += "\\tableline\n"
+
+    for i, index in enumerate(fano_photons_wfc3.ndindex()):
+        if i == 0:
+            instrument = r"WFC3"
+        else:
+            instrument = ""
+        row = [
+            instrument,
+            f"{wavelength_wfc3[index].ndarray.to_value(u.AA):.0f}",
+            f"{fano_photons_wfc3[index].ndarray.real.to_value(u.ph):.2f}",
+            f"{fano_electrons_wfc3[index].ndarray.to_value(u.electron):.2f}",
+            f"{improvement_wfc3[index].ndarray.to_value(u.dimensionless_unscaled):.2f}",
         ]
         result += f"{'&'.join(row)} \\\\\n"
 

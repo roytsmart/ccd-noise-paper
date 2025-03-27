@@ -10,21 +10,34 @@ Since $\text{EQE}(\lambda)$ is a type of efficiency,
 it is tempting to treat the sensor like any other component in a given optical system
 and simply use $\text{EQE}(\lambda)$ as another factor in the effective
 area calculation.
+However, using $\text{EQE}(\lambda)$ in this way is equivalent to an
+all-or-nothing charge collection model where either all the electrons associated
+with an absorbed photon are measured or none of them are.
 This simple noise model is formalized in Equations 9 and 10 of \citet{Stern1986},
 which gives the \VSR\ of the number of measured electrons as
 \begin{equation} \label{eq:sternVSR}
     \text{VSR}(N_e'') = \text{IQY}(\lambda) + \mathcal{F} \quad \text{(incomplete!).}
 \end{equation}
-This is presumably the noise model used by most solar instrument teams.
+In the absence of evidence to the contrary,
+this is presumably the noise model used by most solar instrument teams.
 For comparison, the \VSR\ predicted by our noise model is
 \begin{equation} \label{eq:ourVSR}
-    \text{VSR}(N_e'') = \left( \text{IQY}(\lambda) + \mathcal{F}_a - 1 \right) \text{CCE}(\lambda) + 1,
+    \text{VSR}(N_e'') = \text{IQY}(\lambda) + \frac{\text{VBS}(\mu_Q, \mu_H, \sigma_Q^2, \sigma_H^2)}{\text{EBS}(\mu_Q, \mu_H)},
 \end{equation}
-where the apparent Fano factor,
+where
 \begin{equation}
-    \mathcal{F}_a = \mathcal{F} + \frac{1/6}{\text{IQY}(\lambda)},
+    \mu_Q = \text{IQY}(\lambda),
 \end{equation}
-accounts for additional noise due to electron discretization effects.
+\begin{equation}
+    \sigma_Q^2 = \mu_Q \mathcal{F} + \frac{1}{6},
+\end{equation}
+\begin{equation}
+    \mu_H = \text{CCE}(\lambda),
+\end{equation}
+and
+\begin{equation}
+    \sigma_H^2 = 2 e^{-\alpha W} \left( \frac{1 - \eta_0}{\alpha W} \right)^2 \bigl( \sinh(\alpha W) - \alpha W \bigr).
+\end{equation}
 In Figure~\ref{fig:Noise},
 we have compared Equation~\ref{eq:sternVSR} (gray) 
 to our model, Equation~\ref{eq:ourVSR} (black). 
@@ -33,20 +46,21 @@ The \citet{Stern1986} model is a good approximation of the noise
 model developed in this work.
 However, the effect of \PCC\ violates the assumptions of \citet{Stern1986}
 and Equation~\ref{eq:sternVSR} overestimates the variance
-predicted by our model by up to a factor of ${\sim}2$ in the \UV\ since the 
-binomial distribution is narrower than the equivalent Poisson distribution,
-especially as $\text{IQY}(\lambda)$ (the number of trials) approaches unity.
+predicted by our model by up to a factor of ${\sim}2$ in the \UV\ since treating
+each photon as a binary choice introduces more noise than treating each electron
+as a binary choice.
 This is good news for engineers building \UV\ astronomical instruments since
 there is much less noise than expected from the \citet{Stern1986} model in this 
 wavelength range."""
     )
     result.append(ccd_snr.tables.fano_factor())
+    result.append(ccd_snr.tables.measurements())
     result.append(
         r"""
 In Table~\ref{table:instrumentVSR},
 we have calculated the \VSR\ in terms of incident photons and measured electrons
 for the target wavelengths of a few popular and upcoming solar instruments:
-\AIA, \IRIS, and \MUSE\ \citep{DePontieu2020},
+\AIA\ \citep{Lemen2012}, \IRIS\ \citep{DePontieu2014}, and \MUSE\ \citep{DePontieu2020}.
 The results show that for the \EUV\ channels, \AIA\ and \MUSE\ are nearly
 shot noise limited since the \VSR\ in units of incident photons is near unity.
 
@@ -69,10 +83,6 @@ In Table~\ref{table:instrumentVSR} we find that the theoretical \VSR\ of the
 which is much closer to the measured value.
 The remaining discrepancy may be due to charge diffusion as suggested by
 \citet{Wulser2018}.
-
-In retrospect, if we had grouped IQY and CCE together into an effecdtive QY, instead of A and CCE,
-this confusion may not have happened.
-ADD FIGURE SUPPORTING THIS.
 """
     )
     return result
