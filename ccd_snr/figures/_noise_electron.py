@@ -50,9 +50,6 @@ def noise_electron(
     var_i = var_exp + exp_var
 
     vsr_shot = 1 / absorbance.average * u.photon * qe
-    vsr_recombination = (1 - cce) * u.electron
-    f = ccd.fano_noise
-    f_a = f + (1 / 6) / iqy.value * iqy.unit
     vsr_fano = f / iqy / absorbance.average * u.photon * qe
     vsr_fano_a = f_a / iqy / absorbance.average * u.photon * qe
     vsr_recombination = var_i / mean_i * u.photon - vsr_fano_a
@@ -121,7 +118,7 @@ def noise_electron(
     ax2.set_xticklabels([])
     ax.set_ylabel(f"variance-to-signal ratio ({vsr_total.unit:latex_inline})")
     ax.legend(loc="upper right")
-    ax.set_ylim(bottom=.03)
+    ax.set_ylim(bottom=0.03)
 
     ax.text(
         x=0.01,
