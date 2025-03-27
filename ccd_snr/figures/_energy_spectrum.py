@@ -32,7 +32,7 @@ def energy_spectrum() -> aastex.FigureStar:
     rays = optika.rays.RayVectorArray(
         intensity=na.broadcast_to(
             array=num_photons * u.photon,
-            shape=dict(experiment=num_experiments)
+            shape=dict(experiment=num_experiments),
         ).astype(int),
         wavelength=wavelength,
         direction=na.Cartesian3dVectorArray(0, 0, 1),
@@ -59,7 +59,8 @@ def energy_spectrum() -> aastex.FigureStar:
         mean=iqy,
         vmr=fano_factor,
         shape_random=shape,
-    ) * u.photon
+    )
+    q = q * u.photon
     differential_cce = np.where(
         condition=z < thickness_implant,
         x=cce_backsurface + (1 - cce_backsurface) * z / thickness_implant,
@@ -71,14 +72,20 @@ def energy_spectrum() -> aastex.FigureStar:
     )
     signal_exact = qy.sum("photon")
 
+    dither1 = na.random.uniform(-.5, .5, shape_random=rays.intensity.shape)
+    dither2 = na.random.uniform(-.5, .5, shape_random=rays.intensity.shape)
+
+    dither1 = dither1 * u.electron
+    dither2 = dither2 * u.electron
+
     hist = na.histogram(
-        a=signal + na.random.uniform(-.5, .5, shape_random=rays.intensity.shape) * u.electron,
+        a=signal + dither1,
         bins=dict(bin=51),
         axis="experiment",
         density=True,
     )
     hist_exact = na.histogram(
-        a=signal_exact + na.random.uniform(-.5, .5, shape_random=rays.intensity.shape) * u.electron,
+        a=signal_exact + dither2,
         bins=dict(bin=51),
         axis="experiment",
         density=True,
@@ -100,14 +107,14 @@ def energy_spectrum() -> aastex.FigureStar:
             hist_exact.outputs,
             axis="bin",
             ax=ax,
-            label="individual\nphotons"
+            label="individual\nphotons",
         )
         na.plt.stairs(
             hist.inputs,
             hist.outputs,
             axis="bin",
             ax=ax,
-            label="ensemble\napproximation"
+            label="ensemble\napproximation",
         )
         na.plt.set_title(
             label=title,
