@@ -284,13 +284,13 @@ wavelength range considered in this study.
 Therefore, if we approximate the quantum yield of the $i$th photon absorbed by the
 sensor as
 \begin{equation}
-    q_i \leftarrow \text{SR}\Gamma(\text{IQY}(\lambda), \mathcal{F}),
+    q_i' \leftarrow \text{SR}\Gamma(\text{IQY}(\lambda), \mathcal{F}),
 \end{equation}
 where $\mathcal{F} = \fanoFactor$ is the best available measurement of $\mathcal{F}$ at 
 \SI{6}{\kilo\electronvolt} \citep{Rodrigues2021},
 then the total number of electrons generated given $N_\gamma'$ absorbed photons is simply
 \begin{equation} \label{eq:totalElectrons}
-    N_e' = \sum_{i=0}^{N_\gamma'} q_i.
+    N_e' = \sum_{i=0}^{N_\gamma'} q_i'.
 \end{equation}
 However, a sum is inconvenient here since it increases the computation time as the
 incident flux increases.
@@ -359,7 +359,7 @@ The total number of measured electrons given $N_\gamma'$ absorbed photons is the
 We can remove the sum in Equation~\ref{eq:measuredElectrons} in a similar 
 way to Equation~\ref{eq:approxTotalElectrons} by treating the \PCC\ region and 
 its complement, the \CCC\ region, separately so that
-\begin{equation}
+\begin{equation} \label{eq:approxMeasuredElectrons}
     N_e'' = n_e'' + m_e'',
 \end{equation}
 where $n_e''$ is the number of electrons measured from the \CCC\ region
@@ -372,7 +372,7 @@ Equation~\ref{eq:approxTotalElectrons},
 where the number of photons absorbed in the \CCC\ region, $n_\gamma'$, 
 is found by drawing from a binomial distribution,
 \begin{equation}
-    n_\gamma' = \text{B}(N_\gamma', p_c),
+    n_\gamma' \leftarrow \text{B}(N_\gamma', p_c),
 \end{equation}
 with a probability $p_c = e^{-\alpha W}$ of a photon being absorbed in
 the \CCC\ region.
@@ -394,50 +394,74 @@ penetration depth, $z_i$, to find the \PDF\ of $\eta(z_i)$ as
 \end{equation}
 Given this distribution of $\eta(z_i)$, 
 it is not possible to solve the sum in Equation~\ref{eq:partialElectrons} analytically,
-but we can compute the mean and \VSR\ of this sum using the expressions
+but we can compute the mean and variance the sum using the expressions
 given by \citet{heropup2019}:
+\begin{align}
+    \text{EBS}(\mu_n, \mu_p) &= \biggl \langle \frac{1}{N} \sum_{i=0}^N \text{B}(n_i, p_i) \biggr \rangle \\
+                            &= \mu_n \mu_p
+\end{align}
+and
+\begin{align} 
+    &\text{VBS}(\mu_n, \mu_p, \sigma_n^2, \sigma_p^2) = \text{Var}\left(\frac{1}{N} \sum_{i=0}^N \text{B}(n_i, p_i) \right) \\
+                            &= \sigma_n^2 \sigma_p^2 + \sigma_n^2 \mu_p^2 + \mu_n^2 \sigma_p^2 + \mu_n (\mu_p - \sigma_p^2 - \mu_p^2),
+\end{align}
+where $\mu_n$, $\mu_p$, $\sigma_n^2$, and $\sigma_p^2$ are the mean and variance
+of the number of trials, $n$, and probability of success $p$.
+The mean and variance of $m_e''$ is then
 \begin{equation} \label{eq:signalMean}
-    \langle m_e'' \rangle = m_\gamma'' \mu_q \mu_\eta
+    \langle m_e'' \rangle = m_\gamma' \, \text{EBS}(\mu_q, \mu_\eta)
 \end{equation}
 and
-\begin{equation} \label{eq:signalVSR}
-    \text{VSR}(m_e'') = \frac{\sigma_q^2 \sigma_\eta^2 + \sigma_q^2 \mu_\eta^2 + \mu_q^2 \sigma_\eta^2 + \mu_q (\mu_\eta - \sigma_\eta^2 - \mu_\eta^2)}
-                                {\mu_q \mu_\eta},
+\begin{equation} \label{eq:signalVar}
+    \text{Var}(m_e'') = m_\gamma' \, \text{VBS}(\mu_q, \mu_\eta, \sigma_q^2, \sigma_\eta^2),
 \end{equation}
 where
 \begin{equation}
-    \mu_q = \text{IQY}(\lambda)
+    \mu_q = \text{IQY}(\lambda).
 \end{equation}
-is the mean of $q_i$,
+and
 \begin{equation}
-    \sigma_q^2 = \mathcal{F}' \mu_q
+    \sigma_q^2 = \mathcal{F}' \mu_q,
 \end{equation}
-is the variance of $q_i$,
+is the mean and variance of the quantum yield $q_i'$, and
 \begin{equation}
-    \mu_\eta = \eta_0 + \frac{1 - \eta_0}{\alpha W} + \frac{1 - \eta_0}{1 - e^{\alpha W}}
+    \mu_\eta = \eta_0 + \frac{1 - \eta_0}{\alpha W} + \frac{1 - \eta_0}{1 - e^{\alpha W}},
 \end{equation}
-is the mean of $\eta(z_i)$, and
+and
 \begin{equation}
     \sigma_\eta^2 = \frac{1}{4} (1 - \eta_0)^2 \left[ \frac{4}{\alpha^2 W^2} - \text{csch}^2 \left( \frac{\alpha W}{2} \right) \right]
 \end{equation}
-is the variance of $\eta(z_i)$.
-Using Equations~\ref{eq:signalMean} and~\ref{eq:signalVSR},
+is the mean and variance of $\eta(z_i)$ within the \PCC\ region.
+Using Equations~\ref{eq:signalMean} and~\ref{eq:signalVar},
 we can crudely approximate Equation~\ref{eq:partialElectrons} using another
 $\text{SR}\Gamma(\mu, \nu)$ distribution,
 \begin{equation} \label{eq:approxPartialElectrons}
     m_e'' \simeq \text{SR}\Gamma(\langle m_e'' \rangle, \text{VSR}(m_e'') - 1/6 \langle m_e'' \rangle),
 \end{equation}
 which has the same mean and variance as Equation~\ref{eq:partialElectrons}.
+
+Equation~\ref{eq:approxMeasuredElectrons} allows us to sample the distribution
+of measured electrons efficiently enough to be useful in an instrument forward
+model.
+We've provided a reference implementation of Equation~\ref{eq:approxMeasuredElectrons}
+in Python,
+\href{https://optika.readthedocs.io/en/latest/_autosummary/optika.sensors.signal.html}{\texttt{optika.sensors.signal()}},
+to ease adoption of this method into existing instrument pipelines.
+
 In Figure~\ref{fig:energySpectrum},
-we have plotted the distribution of measured electrons for three discrete wavelengths
-to demonstrate the quality of this approximation.
-In the \FUV\ and \EUV\ we can see that this is approximation is extremely accurate,
-only in the \SXR\ regime does this approximation deviate slightly from the true
+we have plotted the probability of measuring a given number of electrons
+using Monte Carlo simulations of Equation~\ref{eq:measuredElectrons} 
+and Equation~\ref{eq:approxMeasuredElectrons}
+to demonstrate the quality of our approximation.
+In the \FUV\ and \EUV\ we can see that this approximation is extremely accurate,
+only in the \SXR\ does this approximation deviate slightly from the true
 distribution.
 
-In Figure~\ref{fig:Noise} we can see that the
-recombination noise is the dominant source of noise measured by the sensor
-in the near/far \UV\ and remains non-negligible into the \EUV.
+In Figure~\ref{fig:Noise} we have plotted the \VSR\ of the recombination noise
+in orange.
+This figure shows that recombination noise
+is the dominant source of noise measured by the sensor
+in the \FUV\ and remains non-negligible into the \EUV.
 """
     )
     subsection_noise.append(subsubsection_noise_recombination)

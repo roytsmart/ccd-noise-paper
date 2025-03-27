@@ -1,6 +1,8 @@
+import numpy as np
 import matplotlib.axes
 import astropy.units as u
 import named_arrays as na
+import optika
 import ccd_snr
 
 __all__ = [
@@ -26,7 +28,26 @@ def noise_electron(
     qe = ccd.quantum_efficiency(rays, normal)
     eqe = ccd.quantum_efficiency_effective(rays, normal)
 
+    n0 = ccd.cce_backsurface
+    a = optika.chemicals.Chemical("Si").absorption(wavelength)
+    W = ccd.thickness_implant
+    aW = (a * W).to(u.dimensionless_unscaled).value
+
+    f = ccd.fano_noise
+    f_a = f + (1 / 6) / iqy.value * iqy.unit
+
     electrons_measured = ccd_snr.simulations.electrons_measured()
+
+    mean_n = iqy
+    var_n = f_a * mean_n
+    mean_p = cce
+    var_p = 2 * np.exp(-aW) * np.square((n0 - 1) / aW) * (np.sinh(aW) - aW)
+    mean_p2 = np.square(mean_p)
+    mean_n2 = np.square(mean_n)
+    mean_i = mean_n * mean_p
+    var_exp = (var_n * var_p) + (var_n * mean_p2) + (var_p * mean_n2)
+    exp_var = mean_n * (mean_p - (var_p + mean_p2)) * u.electron / u.photon
+    var_i = var_exp + exp_var
 
     vsr_shot = 1 / absorbance.average * u.photon * qe
     vsr_recombination = (1 - cce) * u.electron
@@ -34,6 +55,7 @@ def noise_electron(
     f_a = f + (1 / 6) / iqy.value * iqy.unit
     vsr_fano = f / iqy / absorbance.average * u.photon * qe
     vsr_fano_a = f_a / iqy / absorbance.average * u.photon * qe
+    vsr_recombination = var_i / mean_i * u.photon - vsr_fano_a
     vsr_total = vsr_shot + vsr_recombination + vsr_fano_a
 
     fano_mc = ccd_snr.fano_factor(
@@ -99,6 +121,7 @@ def noise_electron(
     ax2.set_xticklabels([])
     ax.set_ylabel(f"variance-to-signal ratio ({vsr_total.unit:latex_inline})")
     ax.legend(loc="upper right")
+    ax.set_ylim(bottom=.03)
 
     ax.text(
         x=0.01,
