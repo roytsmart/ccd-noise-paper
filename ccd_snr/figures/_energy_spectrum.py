@@ -72,8 +72,8 @@ def energy_spectrum() -> aastex.FigureStar:
     )
     signal_exact = qy.sum("photon")
 
-    dither1 = na.random.uniform(-.5, .5, shape_random=rays.intensity.shape)
-    dither2 = na.random.uniform(-.5, .5, shape_random=rays.intensity.shape)
+    dither1 = na.random.uniform(-0.5, 0.5, shape_random=rays.intensity.shape)
+    dither2 = na.random.uniform(-0.5, 0.5, shape_random=rays.intensity.shape)
 
     dither1 = dither1 * u.electron
     dither2 = dither2 * u.electron
