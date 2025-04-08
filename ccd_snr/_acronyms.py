@@ -19,6 +19,7 @@ def acronyms() -> list[aastex.Acronym]:
         aastex.Acronym("SXR", "soft X-ray"),
         aastex.Acronym("QE", "quantum efficiency"),
         aastex.Acronym("QY", "quantum yield"),
+        aastex.Acronym("CCE", "charge-collection efficiency"),
         aastex.Acronym("SNR", "signal-to-noise ratio"),
         aastex.Acronym("SDO", "the Solar Dynamics Observatory"),
         aastex.Acronym("AIA", "the Atmospheric Imaging Assembly"),
