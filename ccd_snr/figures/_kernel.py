@@ -49,7 +49,7 @@ def diffusion_kernel() -> aastex.Figure:
     ax.set_yticks([-1, 0, 1])
     # fig.colorbar(mappable, ax=ax)
 
-    result = aastex.Figure("chargeDiffusionKernel")
+    result = aastex.Figure("chargeDiffusionKernel", position="htb!")
     result.append(aastex.NoEscape(r"\centering"))
     # result.append(aastex.NoEscape(r"\vspace{5pt}"))
     result.add_fig(fig, width=None)

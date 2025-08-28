@@ -85,7 +85,7 @@ def charge_diffusion() -> aastex.Figure:
         ax2.set_ylabel(f"width ({ax2.get_ylabel()})")
         ax1.legend()
 
-        result = aastex.Figure("chargeDiffusion")
+        result = aastex.Figure("chargeDiffusion", position="htb!")
         # result.append(aastex.NoEscape(r"\vspace{5pt}"))
         result.add_fig(fig, width=None)
 
