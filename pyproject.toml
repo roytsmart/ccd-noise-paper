@@ -37,6 +37,6 @@ doc = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/byrdie/ccd-euv-snr-paper"
+Homepage = "https://github.com/roytsmart/ccd-noise-paper"
 
 [tool.setuptools_scm]

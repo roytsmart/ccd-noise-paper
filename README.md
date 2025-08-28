@@ -1,4 +1,4 @@
-# ccd-euv-snr-paper
+# ccd-noise-paper
 
 [![tests](https://github.com/byrdie/ccd-euv-snr-paper/actions/workflows/tests.yml/badge.svg)](https://github.com/byrdie/ccd-euv-snr-paper/actions/workflows/tests.yml)
 [![codecov](https://codecov.io/gh/byrdie/ccd-euv-snr-paper/graph/badge.svg?token=tBcex8q72g)](https://codecov.io/gh/byrdie/ccd-euv-snr-paper)
