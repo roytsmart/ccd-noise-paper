@@ -49,7 +49,7 @@ All of the code to model the backilluminated silicon sensors is implemented
 in our Python package, 
 \href{https://optika.readthedocs.io/en/latest/}{\texttt{optika}}.
 The code to create this document, including the figures and tables,
-is available at \url{https://github.com/byrdie/ccd-euv-snr-paper}.
+is available at \url{https://github.com/roytsmart/ccd-noise-paper}.
 """
     )
     return result
