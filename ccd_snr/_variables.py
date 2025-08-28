@@ -1,6 +1,5 @@
 import numpy as np
 import astropy.units as u
-import optika
 import aastex
 import ccd_snr
 

@@ -51,23 +51,12 @@ def energy_spectrum() -> aastex.FigureStar:
         temperature=ccd.temperature,
         shape_random=shape_experiments,
     )
-    signal_approx = optika.sensors.signal(
-        photons_expected=rays.intensity,
-        wavelength=wavelength,
-        absorbance=1,
-        thickness_implant=ccd.thickness_implant,
-        cce_backsurface=ccd.cce_backsurface,
-        temperature=ccd.temperature,
-        method="approx",
-        shape_random=shape_experiments,
-    )
 
     dither0 = na.random.uniform(-0.5, 0.5, shape_random=signal.shape)
     dither1 = na.random.uniform(-0.5, 0.5, shape_random=signal.shape)
-    dither2 = na.random.uniform(-0.5, 0.5, shape_random=signal.shape)
 
+    dither0 = dither0 * u.electron
     dither1 = dither1 * u.electron
-    dither2 = dither2 * u.electron
 
     iqy = ccd.quantum_yield_ideal(wavelength)
     f = ccd.fano_factor(wavelength)
