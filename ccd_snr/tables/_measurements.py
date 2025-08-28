@@ -1,8 +1,8 @@
 import astropy.units as u
 import numpy as np
 import named_arrays as na
+import optika
 import ccd_snr
-from ccd_snr.instruments._util import _fano_electron
 
 __all__ = [
     "measurements",
@@ -10,6 +10,17 @@ __all__ = [
 
 
 def measurements() -> str:
+
+    ccd = ccd_snr.ccd()
+
+    num_x = 1000
+    num_y = 1000
+    axis_experiment = ("detector_x", "detector_y")
+    shape_experiment = dict(detector_x=num_x, detector_y=num_y)
+
+    intensity = na.broadcast_to(100 * u.ph, shape_experiment)
+    direction = na.Cartesian3dVectorArray(0, 0, 1)
+    normal = na.Cartesian3dVectorArray(0, 0, -1)
 
     index_uv = dict(wavelength=slice(None, ~0))
     index_visible = dict(wavelength=~0)
@@ -24,23 +35,57 @@ def measurements() -> str:
     )
     wavelength_wfc3 = ccd_snr.instruments.wfc3.wavelength
 
-    fano_electrons_iris = _fano_electron(wavelength_iris)
-    fano_electrons_wfc3 = ccd_snr.instruments.wfc3.fano_electron
+    rays_iris = optika.rays.RayVectorArray(
+        intensity=intensity,
+        wavelength=wavelength_iris,
+        direction=direction,
+    )
+    rays_wfc3 = optika.rays.RayVectorArray(
+        intensity=intensity,
+        wavelength=wavelength_wfc3,
+        direction=direction,
+    )
 
-    ratio_model_iris = fano_electrons_iris / fano_electrons_iris[index_visible]
-    ratio_model_wfc3 = fano_electrons_wfc3 / fano_electrons_wfc3[index_visible]
+    electrons_iris = ccd.signal(rays_iris, normal).intensity
+    electrons_wfc3 = ccd.signal(rays_wfc3, normal).intensity
 
-    ratio_model_iris = ratio_model_iris[index_uv]
-    ratio_model_wfc3 = ratio_model_wfc3[index_uv]
+    kernel_iris = ccd_snr.diffusion.kernel(
+        wavelength=wavelength_iris,
+        width_pixel=ccd_snr.instruments.iris.width_pixel,
+    )
+    kernel_wfc3 = ccd_snr.diffusion.kernel(
+        wavelength=wavelength_wfc3,
+        width_pixel=ccd_snr.instruments.wfc3.width_pixel,
+    )
+
+    electrons_iris = na.convolve(
+        array=electrons_iris,
+        kernel=kernel_iris.outputs,
+        axis=axis_experiment,
+    )
+    electrons_wfc3 = na.convolve(
+        array=electrons_wfc3,
+        kernel=kernel_wfc3.outputs,
+        axis=axis_experiment,
+    )
+
+    vmr_iris = electrons_iris.vmr(axis_experiment)
+    vmr_wfc3 = electrons_wfc3.vmr(axis_experiment)
+
+    ratio_model_iris = vmr_iris[index_uv] / vmr_iris[index_visible]
+    ratio_model_wfc3 = vmr_wfc3[index_uv] / vmr_wfc3[index_visible]
 
     ratio_measured_iris = [
         1.5,
     ]
     ratio_measured_wfc3 = [
-        1.07,
-        1.08,
-        1.04,
-        1.00,
+        (1.093 + 1.093) / 2,
+        (1.080 + 1.097) / 2,
+        (1.065 + 1.072) / 2,
+        (1.040 + 1.045) / 2,
+        (1.044 + 1.026) / 2,
+        (1.027 + 1.035) / 2,
+        (1.012 + 1.016) / 2,
     ]
 
     ratio_measured_iris = np.array(ratio_measured_iris)

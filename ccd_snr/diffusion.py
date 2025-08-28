@@ -87,8 +87,8 @@ def _kernel(
         The width of a pixel.
     """
 
-    index_x = na.linspace(-1, 1, axis="kx", num=3)
-    index_y = na.linspace(-1, 1, axis="ky", num=3)
+    index_x = na.linspace(-1, 1, axis="detector_x", num=3)
+    index_y = na.linspace(-1, 1, axis="detector_y", num=3)
 
     output = _kernel_2d(
         width_diffusion=width_diffusion,
@@ -103,7 +103,10 @@ def _kernel(
     )
 
 
-def kernel():
+def kernel(
+    wavelength: u.Quantity | na.AbstractScalar,
+    width_pixel: u.Quantity | na.AbstractScalar,
+):
 
     ccd = ccd_snr.ccd()
 

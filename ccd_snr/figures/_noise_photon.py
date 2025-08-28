@@ -33,13 +33,12 @@ def noise_photon(
     W = ccd.thickness_implant
     aW = (a * W).to(u.dimensionless_unscaled).value
 
-    f = ccd.fano_noise
-    f_a = f + (1 / 6) / iqy.value * iqy.unit
+    f = ccd.fano_factor(wavelength)
 
     photons_measured = ccd_snr.simulations.photons_measured()
 
     mean_n = iqy
-    var_n = f_a * mean_n
+    var_n = f * mean_n
     mean_p = cce
     var_p = 2 * np.exp(-aW) * np.square((n0 - 1) / aW) * (np.sinh(aW) - aW)
     mean_p2 = np.square(mean_p)
@@ -50,12 +49,10 @@ def noise_photon(
     var_i = var_exp + exp_var
 
     vsr_shot = 1 / absorbance.average * u.photon
-    f = ccd.fano_noise
-    f_a = f + (1 / 6) / iqy.value * iqy.unit
-    vsr_fano = f / iqy / absorbance.average * u.photon
-    vsr_fano_a = f_a / iqy / absorbance.average * u.photon
-    vsr_recombination = (var_i / mean_i * u.photon) / qe - vsr_fano_a
-    fano_total = vsr_shot + vsr_recombination + vsr_fano_a
+    f = ccd.fano_factor(wavelength)
+    vsr_fano = f * u.photon / qe
+    vsr_recombination = (var_i / mean_i * u.photon) / qe - vsr_fano
+    fano_total = vsr_shot + vsr_recombination + vsr_fano
     fano_mc = ccd_snr.fano_factor(
         a=photons_measured,
         axis=ccd_snr.simulations.axis_xy,
@@ -78,7 +75,7 @@ def noise_photon(
     )
     na.plt.plot(
         wavelength,
-        vsr_fano_a,
+        vsr_fano,
         ax=ax,
         label="Fano",
     )

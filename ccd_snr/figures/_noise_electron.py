@@ -33,13 +33,12 @@ def noise_electron(
     W = ccd.thickness_implant
     aW = (a * W).to(u.dimensionless_unscaled).value
 
-    f = ccd.fano_noise
-    f_a = f + (1 / 6) / iqy.value * iqy.unit
+    f = ccd.fano_factor(wavelength)
 
     electrons_measured = ccd_snr.simulations.electrons_measured()
 
     mean_n = iqy
-    var_n = f_a * mean_n
+    var_n = f * mean_n
     mean_p = cce
     var_p = 2 * np.exp(-aW) * np.square((n0 - 1) / aW) * (np.sinh(aW) - aW)
     mean_p2 = np.square(mean_p)
@@ -50,10 +49,9 @@ def noise_electron(
     var_i = var_exp + exp_var
 
     vsr_shot = 1 / absorbance.average * u.photon * qe
-    vsr_fano = f / iqy / absorbance.average * u.photon * qe
-    vsr_fano_a = f_a / iqy / absorbance.average * u.photon * qe
-    vsr_recombination = var_i / mean_i * u.photon - vsr_fano_a
-    vsr_total = vsr_shot + vsr_recombination + vsr_fano_a
+    vsr_fano = f * u.photon
+    vsr_recombination = var_i / mean_i * u.photon - vsr_fano
+    vsr_total = vsr_shot + vsr_recombination + vsr_fano
 
     fano_mc = ccd_snr.fano_factor(
         a=electrons_measured,
@@ -73,11 +71,11 @@ def noise_electron(
         wavelength,
         vsr_recombination,
         ax=ax,
-        label="recombination",
+        label="partial-charge collection",
     )
     na.plt.plot(
         wavelength,
-        vsr_fano_a,
+        vsr_fano,
         ax=ax,
         label="Fano",
     )
@@ -118,7 +116,7 @@ def noise_electron(
     ax2.set_xticklabels([])
     ax.set_ylabel(f"variance-to-signal ratio ({vsr_total.unit:latex_inline})")
     ax.legend(loc="upper right")
-    ax.set_ylim(bottom=0.03)
+    ax.set_ylim(bottom=0.01)
 
     ax.text(
         x=0.01,

@@ -1,4 +1,5 @@
 import functools
+import astropy.units as u
 import optika
 
 __all__ = [
@@ -9,7 +10,7 @@ __all__ = [
 
 @functools.cache
 def ccd() -> optika.sensors.E2VCCD97Material:
-    return optika.sensors.E2VCCD97Material()
+    return optika.sensors.E2VCCD97Material(temperature=190 * u.K)
 
 
 @functools.cache

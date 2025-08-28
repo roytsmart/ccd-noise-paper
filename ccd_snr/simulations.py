@@ -64,7 +64,7 @@ def electrons_measured() -> na.ScalarArray:
     The number of electrons measured by each pixel in the simulation.
     """
     ccd = ccd_snr.ccd()
-    return ccd.electrons_measured(rays(), normal).intensity
+    return ccd.signal(rays(), normal).intensity
 
 
 @functools.cache

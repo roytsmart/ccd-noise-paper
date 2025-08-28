@@ -42,7 +42,7 @@ def absorbance_and_cce() -> aastex.Figure:
         wavelength,
         cce,
         ax=ax,
-        label=r"$\mathrm{CCE}(\lambda)$",
+        label=r"$\overline{\eta}(\lambda)$",
     )
     na.plt.plot(
         energy,

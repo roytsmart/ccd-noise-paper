@@ -1,3 +1,4 @@
+import numpy as np
 import astropy.units as u
 import ccd_snr
 
@@ -28,10 +29,10 @@ def fano_factor() -> str:
     fano_photons_muse_naive = ccd_snr.instruments.muse.fano_photon_naive
     fano_photons_wfc3_naive = ccd_snr.instruments.wfc3.fano_photon_naive
 
-    improvement_aia = fano_photons_aia_naive / fano_photons_aia
-    improvement_iris = fano_photons_iris_naive / fano_photons_iris
-    improvement_muse = fano_photons_muse_naive / fano_photons_muse
-    improvement_wfc3 = fano_photons_wfc3_naive / fano_photons_wfc3
+    improvement_aia = np.sqrt(fano_photons_aia_naive / fano_photons_aia)
+    improvement_iris = np.sqrt(fano_photons_iris_naive / fano_photons_iris)
+    improvement_muse = np.sqrt(fano_photons_muse_naive / fano_photons_muse)
+    improvement_wfc3 = np.sqrt(fano_photons_wfc3_naive / fano_photons_wfc3)
 
     result = r"""\begin{deluxetable}{lrrrr}
 \tablecaption{
@@ -48,8 +49,8 @@ and our noise model to demonstrate the improvement in VSR predicted by our model
     result += rf"""\tablehead{{
 \colhead{{Instrument}}
 & \colhead{{$\lambda$ ({u.AA:latex_inline})}}
-& \colhead{{VSR ({fano_photons_aia.unit:latex_inline})}}
-& \colhead{{VSR ({fano_electrons_aia.unit:latex_inline})}}
+& \colhead{{VMR ({fano_photons_aia.unit:latex_inline})}}
+& \colhead{{VMR ({fano_electrons_aia.unit:latex_inline})}}
 & \colhead{{improvement}}
 }}
 """

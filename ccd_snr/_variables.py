@@ -18,14 +18,6 @@ def variables() -> list[aastex.Command]:
 
     return [
         aastex.Variable(
-            name="bandgapEnergy",
-            value=optika.sensors.energy_bandgap,
-        ),
-        aastex.Variable(
-            name="electronHoleEnergy",
-            value=optika.sensors.energy_electron_hole,
-        ),
-        aastex.Variable(
             name="backsurfaceCCE",
             value=np.round(ccd.cce_backsurface, 3),
         ),
@@ -75,13 +67,5 @@ def variables() -> list[aastex.Command]:
             value=ccd_snr.instruments.iris.wavelength[
                 ccd_snr.instruments.iris.index_1330
             ].ndarray,
-        ),
-        aastex.Variable(
-            name="diffusionWavelength",
-            value=ccd_snr.diffusion.wavelength,
-        ),
-        aastex.Variable(
-            name="diffusionPixelSize",
-            value=ccd_snr.diffusion.width_pixel,
         ),
     ]

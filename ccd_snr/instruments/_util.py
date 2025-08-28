@@ -6,7 +6,10 @@ import ccd_snr
 ccd = ccd_snr.ccd()
 
 num_experiment = 1000000
-shape_experiment = dict(experiment=num_experiment)
+num_x = 1000
+num_y = 1000
+axis_experiment = ("detector_x", "detector_y")
+shape_experiment = dict(detector_x=num_x, detector_y=num_y)
 
 intensity = na.broadcast_to(100 * u.ph, shape_experiment)
 direction = na.Cartesian3dVectorArray(0, 0, 1)
@@ -23,7 +26,7 @@ def _fano_electron(wavelength: na.ScalarArray) -> na.ScalarArray:
 
     electrons = ccd.signal(rays, normal).intensity
 
-    result = ccd_snr.fano_factor(electrons, axis="experiment")
+    result = ccd_snr.fano_factor(electrons, axis=axis_experiment)
 
     return result
 
@@ -59,7 +62,7 @@ def _fano_photon(wavelength: na.ScalarArray) -> na.ScalarArray:
 
     photons = electrons / qe
 
-    result = ccd_snr.fano_factor(photons, axis="experiment")
+    result = ccd_snr.fano_factor(photons, axis=axis_experiment)
 
     return result
 
@@ -78,7 +81,7 @@ def _fano_photon_naive(wavelength: na.ScalarArray) -> na.ScalarArray:
 
     eqe = ccd.quantum_efficiency_effective(rays, normal)
 
-    fano = ccd.fano_noise / iqy / absorbance.average * u.photon
+    fano = ccd.fano_factor(rays.wavelength) / iqy / absorbance.average * u.photon
 
     result = 1 / eqe * u.photon + fano
 

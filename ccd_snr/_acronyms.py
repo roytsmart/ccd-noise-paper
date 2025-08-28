@@ -25,7 +25,7 @@ def acronyms() -> list[aastex.Acronym]:
         aastex.Acronym("AIA", "the Atmospheric Imaging Assembly"),
         aastex.Acronym("IRIS", "the Interface Region Imaging Spectrograph"),
         aastex.Acronym("MUSE", "the Multi-slit Solar Explorer"),
-        aastex.Acronym("WFC", "Wide Field Camera 3", name_short="WFC3"),
+        aastex.Acronym("WFC", "the Wide Field Camera 3", name_short="WFC3"),
         aastex.Acronym("PCC", "partial-charge collection"),
         aastex.Acronym("CCC", "complete-charge-collection"),
         aastex.Acronym("VSR", "variance-to-signal ratio"),

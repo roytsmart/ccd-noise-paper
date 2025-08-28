@@ -25,7 +25,7 @@ def noise_fano() -> aastex.Figure:
     wavelength = na.geomspace(1.5, 10000, axis="wavelength", num=101) * u.AA
     energy = wavelength.to(u.eV, equivalencies=u.spectral())
 
-    f = ccd.fano_noise
+    f = ccd.fano_factor(wavelength)
 
     iqy = ccd.quantum_yield_ideal(wavelength)
 
