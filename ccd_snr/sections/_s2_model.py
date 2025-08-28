@@ -267,7 +267,9 @@ is the Fano noise an appreciable fraction of the total noise.
 """
     )
     subsection_noise.append(subsubsection_noise_fano)
-    subsubsection_noise_recombination = aastex.Subsubsection("Partial-Charge Collection Noise")
+    subsubsection_noise_recombination = aastex.Subsubsection(
+        "Partial-Charge Collection Noise",
+    )
     subsubsection_noise_recombination.append(
         r"""
 Random recombination of photoelectrons in the \PCC\ region is a significant source of noise in
@@ -395,7 +397,8 @@ and $\text{erf}(x)$ is the error function."""
     )
     subsection_charge_spreading.append(ccd_snr.figures.charge_diffusion())
     subsection_charge_spreading.append(ccd_snr.figures.diffusion_kernel())
-    subsection_charge_spreading.append(r"""
+    subsection_charge_spreading.append(
+        r"""
 In the top panel of Figure~\ref{fig:chargeDiffusion},
 we have  plotted a fit of Equation~\ref{eq:mcc} to the measurements in 
 \citet{Stern2004} which found $z_d=\depletionThickness$ best matched the data. 
