@@ -43,7 +43,7 @@ def variables() -> list[aastex.Command]:
         ),
         aastex.Variable(
             name="fanoFactor",
-            value=ccd.fano_noise.value,
+            value=np.round(ccd.fano_factor(1 * u.AA).value.ndarray, decimals=3),
         ),
         aastex.Variable(
             name="goesCcdThickness",
