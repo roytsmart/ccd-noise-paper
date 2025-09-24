@@ -32,14 +32,6 @@ and often ignored entirely,
 but it is usually combined with the shot noise to estimate the total noise
 measured by these sensors \citep{Stern1986,Janesick2001}.
 
-This traditional model works well in the X-ray regime \cite{Athiray2020}
-and is often ignored entirely,
-but is needed to 
-The Fano noise is usually considered to be the only noise contribution from the
-charge-generation process within the silicon \citep{Janesick2001}, and is
-often added to the photon shot noise \citep{Schottky1918} to estimate the
-total error measured by the sensor.
-
 This traditional model of shot noise and Fano noise is sufficient in X-ray 
 wavelengths \cite{Athiray2020},
 and in visible light wavelengths where there is no Fano noise.
