@@ -28,7 +28,7 @@ def acronyms() -> list[aastex.Acronym]:
         aastex.Acronym("WFC", "the Wide Field Camera 3", name_short="WFC3"),
         aastex.Acronym("PCC", "partial-charge collection"),
         aastex.Acronym("CCC", "complete-charge-collection"),
-        aastex.Acronym("VSR", "variance-to-signal ratio"),
+        aastex.Acronym("VMR", "variance-to-mean ratio"),
         aastex.Acronym("PDF", "probability distribution function"),
         aastex.Acronym("PMF", "probability mass function", plural=True),
         aastex.Acronym("MCC", "mean charge capture"),

@@ -78,7 +78,7 @@ def noise_fano() -> aastex.Figure:
         ax2.set_xscale("log")
         ax.set_xlabel(f"wavelength ({ax.get_xlabel()})")
         ax2.set_xlabel(f"energy ({ax2.get_xlabel()})", labelpad=8)
-        ax.set_ylabel(f"variance-to-signal ratio ({ax.get_ylabel()})")
+        ax.set_ylabel(f"variance-to-mean ratio ({ax.get_ylabel()})")
         ax.legend()
 
     result = aastex.Figure("fanoNoise", position="thb!")
@@ -89,7 +89,7 @@ def noise_fano() -> aastex.Figure:
     result.add_caption(
         aastex.NoEscape(
             r"""
-The VSR of the number of generated photoelectrons as a function of wavelength
+The VMR of the number of generated photoelectrons as a function of wavelength
 given by a Monte Carlo simulation of Equation~\ref{eq:totalElectrons} (individual photons)
 and Equation~\ref{eq:approxTotalElectrons} (ensemble approximation). 
 """

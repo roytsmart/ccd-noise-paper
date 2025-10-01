@@ -48,40 +48,40 @@ def noise_electron(
     exp_var = mean_n * (mean_p - (var_p + mean_p2)) * u.electron / u.photon
     var_i = var_exp + exp_var
 
-    vsr_shot = 1 / absorbance.average * u.photon * qe
-    vsr_fano = f * u.photon
-    vsr_recombination = var_i / mean_i * u.photon - vsr_fano
-    vsr_total = vsr_shot + vsr_recombination + vsr_fano
+    vmr_shot = 1 / absorbance.average * u.photon * qe
+    vmr_fano = f * u.photon
+    vmr_recombination = var_i / mean_i * u.photon - vmr_fano
+    vmr_total = vmr_shot + vmr_recombination + vmr_fano
 
     fano_mc = ccd_snr.fano_factor(
         a=electrons_measured,
         axis=ccd_snr.simulations.axis_xy,
     )
-    fano_eqe = (1 / eqe) * u.photon * qe + vsr_fano
+    fano_eqe = (1 / eqe) * u.photon * qe + vmr_fano
 
     ax2 = ax.twiny()
     ax2.invert_xaxis()
     na.plt.plot(
         wavelength,
-        vsr_shot,
+        vmr_shot,
         ax=ax,
         label="shot",
     )
     na.plt.plot(
         wavelength,
-        vsr_recombination,
+        vmr_recombination,
         ax=ax,
         label="partial-charge collection",
     )
     na.plt.plot(
         wavelength,
-        vsr_fano,
+        vmr_fano,
         ax=ax,
         label="Fano",
     )
     na.plt.plot(
         wavelength,
-        vsr_total,
+        vmr_total,
         ax=ax,
         label="total",
         color="black",
@@ -103,7 +103,7 @@ def noise_electron(
     )
     na.plt.plot(
         energy,
-        vsr_shot,
+        vmr_shot,
         ax=ax2,
         linestyle="None",
     )
@@ -114,7 +114,7 @@ def noise_electron(
     ax2.set_yscale("log")
     ax.set_xlabel(f"wavelength ({wavelength.unit:latex_inline})")
     ax2.set_xticklabels([])
-    ax.set_ylabel(f"variance-to-signal ratio ({vsr_total.unit:latex_inline})")
+    ax.set_ylabel(f"variance-to-mean ratio ({vmr_total.unit:latex_inline})")
     ax.legend(loc="upper right")
     ax.set_ylim(bottom=0.01)
 

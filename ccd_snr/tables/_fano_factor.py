@@ -36,13 +36,13 @@ def fano_factor() -> str:
 
     result = r"""\begin{deluxetable}{lrrrr}
 \tablecaption{
-\label{table:instrumentVSR}
+\label{table:instrumentVMR}
 The ratio of the variance to the mean predicted by our model for prominent
 wavelengths in selected solar observatories 
 in both incident photon and measured electron units.
 In the right column,
 we've also included the ratio between the \citet{Stern1986} noise model
-and our noise model to demonstrate the improvement in VSR predicted by our model. 
+and our noise model to demonstrate the improvement in VMR predicted by our model. 
 }
 """
 

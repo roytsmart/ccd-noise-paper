@@ -36,7 +36,7 @@ operating in the \UV\ use our model instead of the simpler \citet{Stern1986}
 noise model.
 Real cameras introduce read noise which was not considered in this study.
 A complete noise model would include read noise, which is not well-described
-by a \VSR\ and depends on the exact details of the camera electronics.
+by a \VMR\ and depends on the exact details of the camera electronics.
 
 We have also provided an estimate of the charge diffusion in a typical
 backilluminated silicon sensor.

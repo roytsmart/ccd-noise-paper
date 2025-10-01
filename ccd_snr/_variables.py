@@ -45,15 +45,15 @@ def variables() -> list[aastex.Command]:
             value=np.round(ccd.depletion.thickness, 1),
         ),
         aastex.Variable(
-            name="irisMeasuredVsr",
+            name="irisMeasuredVmr",
             value=1.5 * u.electron,
         ),
         aastex.Variable(
-            name="irisNaiveVsr",
+            name="irisNaiveVmr",
             value=2 * u.electron,
         ),
         aastex.Variable(
-            name="irisModeledVsr",
+            name="irisModeledVmr",
             value=np.round(
                 a=ccd_snr.instruments.iris.fano_electron[
                     ccd_snr.instruments.iris.index_1330

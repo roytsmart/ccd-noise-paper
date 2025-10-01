@@ -26,11 +26,11 @@ def noise() -> aastex.FigureStar:
     result.add_caption(
         aastex.NoEscape(
             r"""
-The total and component-wise VSR of our sensor model expressed in two
+The total and component-wise VMR of our sensor model expressed in two
 different units:
 photons incident on the sensor (top)
 and electrons measured by the sensor (bottom).
-Plotted for comparison (gray) is the VSR of the \citet{Stern1986} noise
+Plotted for comparison (gray) is the VMR of the \citet{Stern1986} noise
 model.
 """
         )

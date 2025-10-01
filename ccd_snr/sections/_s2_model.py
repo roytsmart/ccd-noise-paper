@@ -171,22 +171,22 @@ This section will describe the statistics of each noise source and demonstrate
 a procedure which can simulate the noise measured by our model sensor
 for a given number of incident photons.
 
-Throughout this work, we will measure noise in terms of a \VSR,
+Throughout this work, we will measure noise in terms of a \VMR,
 \begin{equation}
-    \text{VSR}(X) = \frac{\text{Var}(X)}{\langle X \rangle},
+    \text{VMR}(X) = \frac{\text{Var}(X)}{\langle X \rangle},
 \end{equation}
 where $X$ is some random variable
 and $\text{Var}(X)$ is the variance of $X$.
-Using the \VSR\ to express the noise is convenient since it is constant as a 
+Using the \VMR\ to express the noise is convenient since it is constant as a 
 function of signal for most of the distributions studied here.
-For example, the \VSR\ of a Poisson random variable is always unity since its 
+For example, the \VMR\ of a Poisson random variable is always unity since its 
 variance and expectation value are equal.
-The \VSR\ is not dimensionless
+The \VMR\ is not dimensionless
 (it has the same units as $X$),
-so we must take care to interpret the \VSR\ in terms of the correct units.
+so we must take care to interpret the \VMR\ in terms of the correct units.
 
 In Figure~\ref{fig:Noise} we have plotted
-the \VSR\ for the noise sources considered in this study in two different units:
+the \VMR\ for the noise sources considered in this study in two different units:
 number of incident photons and number of measured electrons.
 Figure~\ref{fig:Noise}a is useful if you are \textit{designing} an instrument since
 you presumably know the radiance of the source and the effective area of the
@@ -214,8 +214,8 @@ and the expected number of \textit{incident} photons, $\langle N_\gamma \rangle$
 
 We can compute the \VSR\ of the shot noi
 In Figure~\ref{fig:Noise}
-we have plotted the \VSR\ of the shot noise in blue.
-In Figure~\ref{fig:Noise}a, we can see that the \VSR\ of the shot noise
+we have plotted the \VMR\ of the shot noise in blue.
+In Figure~\ref{fig:Noise}a, we can see that the \VMR\ of the shot noise
 relative to the number of incident photons is often unity since it is
 fundamentally a Poisson process.
 The shot noise only deviates from unity when $A(\lambda)$ is significantly
@@ -232,7 +232,7 @@ The energy resolution of silicon detectors is ultimately limited due to Fano
 noise \citep{Fano1947}, the unpredictable variation of the quantum yield, 
 the number of electrons generated per absorbed photon.
 Fano noise is usually expressed in terms of the Fano factor, 
-$\mathcal{F} = \text{VSR}(n)$.
+$\mathcal{F} = \text{VMR}(n)$.
 Silicon is commonly accepted to have $\mathcal{F} \approx 0.1$ \citep{Janesick2001}.
 In part due to variations of the Fano noise as a function of wavelength and
 temperature \citep{Fraser1994}, 
@@ -312,7 +312,7 @@ in Python,
 \href{https://optika.readthedocs.io/en/latest/_autosummary/optika.sensors.signal.html}{\texttt{optika.sensors.signal()}},
 which is designed to be simple to use for existing and future instrument pipelines.
 
-In Figure~\ref{fig:Noise} we have plotted the \VSR\ of the recombination noise
+In Figure~\ref{fig:Noise} we have plotted the \VMR\ of the recombination noise
 in orange.
 This figure shows that recombination noise
 is the dominant source of noise measured by the sensor

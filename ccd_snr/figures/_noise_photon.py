@@ -48,34 +48,34 @@ def noise_photon(
     exp_var = mean_n * (mean_p - (var_p + mean_p2)) * u.electron / u.photon
     var_i = var_exp + exp_var
 
-    vsr_shot = 1 / absorbance.average * u.photon
+    vmr_shot = 1 / absorbance.average * u.photon
     f = ccd.fano_factor(wavelength)
-    vsr_fano = f * u.photon / qe
-    vsr_recombination = (var_i / mean_i * u.photon) / qe - vsr_fano
-    fano_total = vsr_shot + vsr_recombination + vsr_fano
+    vmr_fano = f * u.photon / qe
+    vmr_recombination = (var_i / mean_i * u.photon) / qe - vmr_fano
+    fano_total = vmr_shot + vmr_recombination + vmr_fano
     fano_mc = ccd_snr.fano_factor(
         a=photons_measured,
         axis=ccd_snr.simulations.axis_xy,
     )
-    fano_eqe = (1 / eqe) * u.photon + vsr_fano
+    fano_eqe = (1 / eqe) * u.photon + vmr_fano
 
     ax2 = ax.twiny()
     ax2.invert_xaxis()
     na.plt.plot(
         wavelength,
-        vsr_shot,
+        vmr_shot,
         ax=ax,
         label="shot",
     )
     na.plt.plot(
         wavelength,
-        vsr_recombination,
+        vmr_recombination,
         ax=ax,
         label="recombination",
     )
     na.plt.plot(
         wavelength,
-        vsr_fano,
+        vmr_fano,
         ax=ax,
         label="Fano",
     )
@@ -103,7 +103,7 @@ def noise_photon(
     )
     na.plt.plot(
         energy,
-        vsr_shot,
+        vmr_shot,
         ax=ax2,
         linestyle="None",
     )
@@ -111,7 +111,7 @@ def noise_photon(
     ax.set_xscale("log")
     ax2.set_xscale("log")
     ax2.set_xlabel(f"energy ({energy.unit:latex_inline})", labelpad=8)
-    ax.set_ylabel(f"variance-to-signal ratio ({fano_total.unit:latex_inline})")
+    ax.set_ylabel(f"variance-to-mean ratio ({fano_total.unit:latex_inline})")
 
     ax.text(
         x=0.01,

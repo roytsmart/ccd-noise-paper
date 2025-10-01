@@ -97,7 +97,7 @@ def measurements() -> str:
     result = r"""\begin{deluxetable}{lrrrr}
 \tablecaption{
 \label{table:measurements}
-The ratio of the \VSR\ in \UV\ to the \VSR\ in visible light for instruments
+The ratio of the \VMR\ in \UV\ to the \VMR\ in visible light for instruments
 which this data is available.
 }
 """
