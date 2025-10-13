@@ -86,3 +86,12 @@ def _fano_photon_naive(wavelength: na.ScalarArray) -> na.ScalarArray:
     result = 1 / eqe * u.photon + fano
 
     return result
+
+
+def _width_diffusion(wavelength: na.ScalarArray) -> na.ScalarArray:
+   return ccd.width_charge_diffusion(
+        rays=optika.rays.RayVectorArray(
+            wavelength=wavelength,
+        ),
+        normal=na.Cartesian3dVectorArray(0, 0, -1),
+    )

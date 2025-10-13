@@ -17,6 +17,7 @@ def acronyms() -> list[aastex.Acronym]:
         aastex.Acronym("FUV", "far ultraviolet"),
         aastex.Acronym("EUV", "extreme ultraviolet"),
         aastex.Acronym("SXR", "soft X-ray"),
+        aastex.Acronym("IR", "infrared"),
         aastex.Acronym("QE", "quantum efficiency"),
         aastex.Acronym("QY", "quantum yield"),
         aastex.Acronym("CCE", "charge-collection efficiency"),

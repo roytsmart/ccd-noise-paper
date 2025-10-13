@@ -359,11 +359,10 @@ def schematic() -> aastex.Figure:
     result.add_caption(
         aastex.NoEscape(
             r"""
-A schematic (not to scale) of the backilluminated sensor model used in this work,
+A schematic (not to scale) of the back-illuminated sensor model used in this work,
 labeled with the thicknesses of each layer.
-Plotted in blue is a \textit{qualitative} example of the 
-electric potential within the sensor that motivates the differential CCE,
-plotted in orange.
+Overplotted is a \textit{qualitative} example of the 
+electric potential within the sensor that motivates the differential CCE.
 """
         )
     )

@@ -34,24 +34,32 @@ def fano_factor() -> str:
     improvement_muse = np.sqrt(fano_photons_muse_naive / fano_photons_muse)
     improvement_wfc3 = np.sqrt(fano_photons_wfc3_naive / fano_photons_wfc3)
 
-    result = r"""\begin{deluxetable}{lrrrr}
+    diffusion_aia = ccd_snr.instruments.aia.width_diffusion
+    diffusion_iris = ccd_snr.instruments.iris.width_diffusion
+    diffusion_muse = ccd_snr.instruments.muse.width_diffusion
+    diffusion_wfc3 = ccd_snr.instruments.wfc3.width_diffusion
+
+    result = r"""
+\begin{deluxetable*}{lrrrrr}
 \tablecaption{
 \label{table:instrumentVMR}
 The ratio of the variance to the mean predicted by our model for prominent
-wavelengths in selected solar observatories 
+wavelengths in selected ultraviolet observatories 
 in both incident photon and measured electron units.
-In the right column,
-we've also included the ratio between the \citet{Stern1986} noise model
-and our noise model to demonstrate the improvement in VMR predicted by our model. 
+In the right columns,
+we've also included the SNR improvement ratio between the \citet{Stern1986} noise model
+and our noise model,
+as well as the standard deviation of the charge diffusion kernel. 
 }
 """
 
     result += rf"""\tablehead{{
 \colhead{{Instrument}}
-& \colhead{{$\lambda$ ({u.AA:latex_inline})}}
+& \colhead{{wavelength ({u.AA:latex_inline})}}
 & \colhead{{VMR ({fano_photons_aia.unit:latex_inline})}}
 & \colhead{{VMR ({fano_electrons_aia.unit:latex_inline})}}
-& \colhead{{improvement}}
+& \colhead{{SNR improvement}}
+& \colhead{{diffusion width({u.um:latex_inline})}}
 }}
 """
     result += "\\startdata\n"
@@ -67,6 +75,7 @@ and our noise model to demonstrate the improvement in VMR predicted by our model
             f"{fano_photons_aia[index].ndarray.real.to_value(u.ph):.2f}",
             f"{fano_electrons_aia[index].ndarray.to_value(u.electron):.2f}",
             f"{improvement_aia[index].ndarray.to_value(u.dimensionless_unscaled):.2f}",
+            f"{diffusion_aia[index].ndarray.to_value(u.um):.2f}",
         ]
         result += f"{'&'.join(row)} \\\\\n"
 
@@ -83,6 +92,7 @@ and our noise model to demonstrate the improvement in VMR predicted by our model
             f"{fano_photons_iris[index].ndarray.real.to_value(u.ph):.2f}",
             f"{fano_electrons_iris[index].ndarray.to_value(u.electron):.2f}",
             f"{improvement_iris[index].ndarray.to_value(u.dimensionless_unscaled):.2f}",
+            f"{diffusion_iris[index].ndarray.to_value(u.um):.2f}",
         ]
         result += f"{'&'.join(row)} \\\\\n"
 
@@ -99,6 +109,7 @@ and our noise model to demonstrate the improvement in VMR predicted by our model
             f"{fano_photons_muse[index].ndarray.real.to_value(u.ph):.2f}",
             f"{fano_electrons_muse[index].ndarray.to_value(u.electron):.2f}",
             f"{improvement_muse[index].ndarray.to_value(u.dimensionless_unscaled):.2f}",
+            f"{diffusion_muse[index].ndarray.to_value(u.um):.2f}",
         ]
         result += f"{'&'.join(row)} \\\\\n"
 
@@ -115,10 +126,11 @@ and our noise model to demonstrate the improvement in VMR predicted by our model
             f"{fano_photons_wfc3[index].ndarray.real.to_value(u.ph):.2f}",
             f"{fano_electrons_wfc3[index].ndarray.to_value(u.electron):.2f}",
             f"{improvement_wfc3[index].ndarray.to_value(u.dimensionless_unscaled):.2f}",
+            f"{diffusion_wfc3[index].ndarray.to_value(u.um):.2f}",
         ]
         result += f"{'&'.join(row)} \\\\\n"
 
     result += "\\enddata\n"
-    result += "\\end{deluxetable}"
+    result += "\\end{deluxetable*}"
 
     return result

@@ -8,26 +8,32 @@ import ccd_snr.figures
 
 
 def model() -> aastex.Section:
-    result = aastex.Section("CCD Model")
+    result = aastex.Section("Sensor Model")
     result.append(
         r"""
-In this work, we will model the light-sensitive region of the backilluminated 
-sensor as a epitaxial silicon layer with a thickness $D$, which is coated
-with a thin oxide layer of thickness $\delta$ to provide a realistic transmission 
-coefficient.
+In this work, we will use the back-illuminated CCD model described in 
+\citet{Stern1994} as a basis for our sensor model to make it directly comparable with 
+previous works in the literature.
+Figure 1 is a schematic of our sensor model and it shows
+the light-sensitive region of the sensor to be an epitaxial silicon layer with a thickness $D$, 
+which is coated with a oxide layer of thickness $\delta$ to absorb a fraction
+of the incident photons.
 The illuminated side of the epitaxial layer is considered to have a \PCC\ region
-of width $W$, where some of the generated electron-hole pairs recombine before being
-measured by the sensor.
-In this work we will adopt the convention where unprimed variables
+of thickness $W$, 
+where electron-hole pairs can recombine before being measured,
+and there is a depletion region of thickness $z_d$ on the non-illuminated side.
+
+In Section~\ref{subsec:Signal} we will calculate the signal measured by this sensor
+model using the method described in \citet{Stern1994} adapted to more recent
+measurements,
+in Section~\ref{subsec:Noise} we will calculate the noise measured by this sensor
+model in a self-consistent manner,
+and in Section~\ref{subsec:ChargeDiffusion} we will model the charge diffusion
+of this sensor which is needed for a complete description of the noise.
+Throughout this section we will adopt the convention that unprimed variables
 represent quantities incident on the sensor,
 primed variables represent quantities internal to the sensor,
-and the double-primed variables represent quantities measured by the sensor. 
-In Section~\ref{subsec:Signal} we will model the \QE\ of a silicon sensor using 
-the method described in \citet{Stern1994},
-in Section~\ref{subsec:Noise} we will see how the \citet{Stern1994} \QE\ model
-affects the variance of the signal measured by the sensor,
-and in Section~\ref{subsec:ChargeDiffusion} we will model the charge diffusion
-of the sensor which is needed for a complete description of the noise.
+and the double-primed variables represent quantities measured by the sensor.
 """
     )
     result.append(ccd_snr.figures.schematic())
@@ -37,9 +43,9 @@ of the sensor which is needed for a complete description of the noise.
     subsection_qe.append(ccd_snr.tables.models())
     subsection_qe.append(
         r"""
-\QE\ is the average number of photoelectrons measured per photon and is a common 
-performance metric for measuring sensor sensitivity.
-It is given in \citet{Janesick2001} as
+The average number of photoelectrons measured per incident photon is known as the \QE.
+This is a common performance metric for measuring sensor sensitivity and it is
+given in \citet{Janesick2001} as
 \begin{equation} \label{eq:quantum-efficiency}
     \text{QE}(\lambda, T) = \biggl \langle \frac{N_{e}''}{N_\gamma} \biggr \rangle
                           = A(\lambda) \, \overline{n}(\lambda, T) \, \overline{\eta}(\lambda),
@@ -49,17 +55,21 @@ $T$ is the temperature of the sensor,
 $\langle \cdot \rangle$ denotes an expectation value,
 $N_e''$ is the number of electrons measured by the sensor,
 $N_\gamma$ is the total number of photons incident on the sensor,
-$A(\lambda)$ is the fraction of incident energy absorbed by the light-sensitive 
-layer, 
+$A(\lambda)$ is the absorbance of the light-sensitive layer, 
 $\overline{n}(\lambda, T)$ is the average quantum yield,
 the number of photoelectrons generated per absorbed photon,
 and $\overline{\eta}(\lambda)$ is the average \CCE,
 the fraction of generated photoelectrons measured by the sensor.
 
-The absorbance $A(\lambda)$ can be determined from the optical constants of Si 
-and $\text{SiO}_2$, using, for example, the popular IMD code \citep{Windt1998}.
+The fraction of incident energy that is absorbed by the light sensitive layer
+is the absorbance, $A(\lambda)$, which is reduced by
+reflections at each interface,
+absorption in the oxide layer (\UV),
+or by penetration through the device (\SXR\ and \IR).
+$A(\lambda)$ can be determined from the optical constants of Si 
+and $\text{SiO}_2$ using, for example, the popular IMD code \citep{Windt1998}.
 For this work, we used our Python library, 
-\texttt{optika} \citep{optika}, 
+\href{https://optika.readthedocs.io}{\texttt{optika}} \citep{optika}, 
 which uses the transfer matrix method described in \citet{Yeh1988} 
 with the optical constants from \citet{Palik1997}, \citet{Henke1993}, and 
 \citet{Rodriguez-deMarcos2016} to compute the electric field for every interface
@@ -123,7 +133,7 @@ of the differential \CCE,
         1, & W < z < \infty
     \end{cases}
 \end{equation}
-where $\eta_0$ is the differential \CCE at the back surface of the sensor.
+where $\eta_0$ is the differential \CCE\ at the back surface of the sensor.
 Plugging Equation \ref{differential-cce} into Equation \ref{cce} yields an
 arithmetic expression for the \CCE,
 \begin{equation}
@@ -158,11 +168,10 @@ the \citet{Heymes2020} data.
 
     subsection_noise = aastex.Subsection("Noise")
     subsection_noise.append(ccd_snr.figures.noise())
-    subsection_noise.append(ccd_snr.figures.energy_spectrum())
     subsection_noise.append(
         r"""
 Our noise model will consider three sources:
-shot noise from the random arrival time of the photons striking the sensor,
+shot noise from the quantized nature of the photons striking the sensor,
 Fano noise due to inherent randomness in the process which converts photons
 to electrons,
 and noise due to electrons randomly recombining before they can be measured by
@@ -173,12 +182,12 @@ for a given number of incident photons.
 
 Throughout this work, we will measure noise in terms of a \VMR,
 \begin{equation}
-    \text{VMR}(X) = \frac{\text{Var}(X)}{\langle X \rangle},
+    \text{VMR}(X) = f_X =  \frac{\text{Var}(X)}{\langle X \rangle},
 \end{equation}
 where $X$ is some random variable
 and $\text{Var}(X)$ is the variance of $X$.
-Using the \VMR\ to express the noise is convenient since it is constant as a 
-function of signal for most of the distributions studied here.
+Using the \VMR\ instead of the \SNR\ to express the noise is convenient since it is constant as a 
+function of signal for the distributions studied here.
 For example, the \VMR\ of a Poisson random variable is always unity since its 
 variance and expectation value are equal.
 The \VMR\ is not dimensionless
@@ -188,13 +197,11 @@ so we must take care to interpret the \VMR\ in terms of the correct units.
 In Figure~\ref{fig:Noise} we have plotted
 the \VMR\ for the noise sources considered in this study in two different units:
 number of incident photons and number of measured electrons.
-Figure~\ref{fig:Noise}a is useful if you are \textit{designing} an instrument since
-you presumably know the radiance of the source and the effective area of the
-rest of your instrument, and you want to know how much noise to expect in
-terms of the number of photons incident on the sensor.
-Figure~\ref{fig:Noise}b is useful if you are \textit{calibrating} an instrument
-and want to know how much noise to expect for a given number of measured
-electrons.
+Figure~\ref{fig:Noise}a is useful when \textit{designing} an instrument since
+the number of photons incident on the sensor can be determined by the radiance
+of the source and the effective area of the instrument.
+Figure~\ref{fig:Noise}b is useful when \textit{calibrating} an instrument
+since we directly measure these electrons.
 The details of the calculations for Figure~\ref{fig:Noise} are presented in the 
 subsections below.
 """
@@ -203,25 +210,40 @@ subsections below.
     subsubsection_noise_shot.append(
         r"""
 Shot noise from the random arrival time of each photon is often the leading 
-noise contributor in \UV\ solar astronomy \citep{Lemen2012, DePontieu2014}.
-The number of photons that interact with the silicon, 
-$N_\gamma'$, is drawn from a Poisson distribution,
-\begin{equation} \label{eq:shot-noise-variance}
-    N_\gamma' \leftarrow \text{Pois}(A(\lambda) \langle N_\gamma \rangle),
+noise contributor in \UV\ astronomy \citep{Stern1986,Lemen2012,DePontieu2014}.
+If the expected number of photons that interact with the light-sensitive layer is
+\begin{equation}
+    \langle N_\gamma' \rangle = A \langle N_\gamma \rangle.
 \end{equation}
-where the expected value is the product of absorbance $A(\lambda)$ 
-and the expected number of \textit{incident} photons, $\langle N_\gamma \rangle$.
-
-We can compute the \VSR\ of the shot noi
-In Figure~\ref{fig:Noise}
-we have plotted the \VMR\ of the shot noise in blue.
-In Figure~\ref{fig:Noise}a, we can see that the \VMR\ of the shot noise
-relative to the number of incident photons is often unity since it is
-fundamentally a Poisson process.
-The shot noise only deviates from unity when $A(\lambda)$ is significantly
-less than one
-(like in the \UV),
-leading to more noise for a given number of incident photons.
+then the actual number of interacting photons,
+$N_\gamma'$, 
+is sampled from the Poisson distribution,
+\begin{equation} \label{eq:shot-noise-variance}
+    N_\gamma' \leftarrow \text{Pois}(\langle N_\gamma' \rangle).
+\end{equation}
+As mentioned in the previous section,
+the \VMR\ of this process is
+\begin{equation} \label{eq:absorbed-photon-vmr}
+    f_{N_\gamma'} = 1, 
+\end{equation}
+but this in terms of the number of absorbed photons, which is internal to the sensor.
+In terms of the expected number of incident photons the \VMR\ is
+\begin{equation} \label{eq:photonShotFano}
+    F_\text{shot} = \frac{1}{A} f_{N_\gamma'} = \frac{1}{A}
+\end{equation}
+since $f_{N_\gamma'}$ has the same units as $\langle N_\gamma' \rangle$.
+$F_\text{shot}$ is plotted in Figure~\ref{fig:Noise}a in blue and demonstrates
+that this expression is nearly unity across almost the entire wavelength
+range of the sensor except in the \UV, where the absorbance is poor
+(Figure~\ref{fig:absorbanceAndCCE}).
+We can also express the \VMR\ of the shot noise in terms of the
+number of measured electrons by using the \QE\ as the conversion factor,
+\begin{equation}
+    F_\text{shot}'' = \overline{n} \, \overline{\eta}.
+\end{equation}
+This equation is plotted in Figure~\ref{fig:Noise}b in blue,
+where we can see that it increases linearly with decreasing wavelength since
+the average \QY\ is increasing.
 """
     )
     subsection_noise.append(subsubsection_noise_shot)
@@ -229,10 +251,9 @@ leading to more noise for a given number of incident photons.
     subsubsection_noise_fano.append(
         r"""
 The energy resolution of silicon detectors is ultimately limited due to Fano
-noise \citep{Fano1947}, the unpredictable variation of the quantum yield, 
-the number of electrons generated per absorbed photon.
+noise \citep{Fano1947}, the unpredictable variation of the quantum yield $n$.
 Fano noise is usually expressed in terms of the Fano factor, 
-$\mathcal{F} = \text{VMR}(n)$.
+$\mathcal{F} = f_n$.
 Silicon is commonly accepted to have $\mathcal{F} \approx 0.1$ \citep{Janesick2001}.
 In part due to variations of the Fano noise as a function of wavelength and
 temperature \citep{Fraser1994}, 
@@ -258,7 +279,17 @@ At \qty{300}{K}, this corresponds to a Fano factor of approximately 0.114,
 which is generally consistent with the best-available measurement of the
 Fano factor by \citet{Rodrigues2021} at \SI{6}{\kilo\electronvolt}.
 
-In Figure~\ref{fig:Noise} we've plotted the Fano factor in green.
+$\mathcal{F}$ is a quantity internal to the sensor.
+The measured Fano factor is instead
+\begin{equation}
+    F_\text{Fano}'' = \overline{\eta} \mathcal{F}
+\end{equation}
+since the expected number of measured electrons is 
+$\langle N_e'' \rangle  = \overline{\eta} \langle N_e' \rangle$
+where
+$\langle N_e' \rangle = \overline{n} \langle N_\gamma' \rangle$ 
+is the expected number of generated electrons. 
+In Figure~\ref{fig:Noise} we have plotted $F_\text{Fano}''$ in green.
 This shows that the Fano noise is the smallest contributor to the total noise
 across the entire wavelength range and is often at least an order of magnitude
 smaller than the other noise sources.
@@ -268,13 +299,21 @@ is the Fano noise an appreciable fraction of the total noise.
     )
     subsection_noise.append(subsubsection_noise_fano)
     subsubsection_noise_recombination = aastex.Subsubsection(
-        "Partial-Charge Collection Noise",
+        "Partial Charge Collection Noise",
     )
+    subsection_noise.append(ccd_snr.figures.penetration_depth())
+    subsection_noise.append(ccd_snr.figures.energy_spectrum())
     subsubsection_noise_recombination.append(
         r"""
-Random recombination of photoelectrons in the \PCC\ region is a significant source of noise in
-the \UV\ since the photons are absorbed so close to the surface,
-where the \CCE\ is relatively low (Figure \ref{fig:absorbanceAndCCE}).
+In Figure~\ref{fig:penetrationDepth}, we have plotted the penetration depth in
+silicon vs. the thickness of the \PCC\ region.
+We can see that there are two regions in the \UV\ where the penetration depth
+is less than the thickness of the \PCC\ region.
+In these regions, there is a significant chance that some of the electron-hole
+will randomly recombine before being measured by the sensor.
+The stochastic nature of this process leads us to consider this as a new noise
+source, \PCC\ noise.
+
 In the \citet{Stern1994} charge-collection model, 
 each photoelectron generated in the \PCC\ region has a probability 
 $\eta(z)$ of \textit{not} recombining and subsequently being measured 
@@ -297,26 +336,52 @@ electrons given $N_\gamma'$ absorbed photons as
 This expression is intended to be used in an instrument forward model to sample 
 the distribution of measured electrons given an expected number of incident photons.
 
+The \VMR\ of this process is non-trivial since Equation~\ref{eq:measuredElectrons}
+is a sum of Binomial distributions with completely independent $n$ and $p$ for
+each term.
+However, if the \VMR\ of the \CCE\ is
+\begin{equation}
+    f_\eta = \frac{2 e^{-\alpha W}}{\overline{\eta}(\lambda)} \left( \frac{1 - \eta_0}{\alpha W} \right)^2 \bigl( \sinh(\alpha W) - \alpha W \bigr),
+\end{equation}
+and we hold $N_\gamma'$ constant,
+we can use the expressions given by \citet{heropup2019}
+to find the \VMR\ of only the Fano noise and \PCC\ noise as
+\begin{equation}
+    F_\text{sensor}'' = 1 - \mathcal{F} - f_\eta + \overline{\eta} \mathcal{F} + \overline{n} f_\eta + \mathcal{F} f_\eta.
+\end{equation}
+The contribution from only PCC noise is then
+\begin{equation}
+    F_{\text{PCC}}'' = F_\text{sensor}'' - F_\text{Fano}'',
+\end{equation}
+which is plotted in Figure~\ref{fig:Noise} in orange.
+We can see that the \PCC\ noise is usually very small compared to the shot noise,
+but in the \UV\ it actually exceeds the shot noise and is the dominant 
+contributor to the noise.
+
 In Figure~\ref{fig:energySpectrum},
-we have plotted the probability of measuring a given number of electrons
-using Monte Carlo simulations of Equation~\ref{eq:measuredElectrons} 
-and the \citet{Stern1986} noise model
-to demonstrate the quality of our approximation.
-In the \FUV\ and \EUV\ we can see that this approximation is extremely accurate,
-only in the \SXR\ does this approximation deviate slightly from the true
-distribution.
+we have plotted the \PMFs\ of Equation~\ref{eq:measuredElectrons} and the
+\citet{Stern1986} noise model to visualize the differences between these two
+distributions.
+Each model has been evaluated on a grid where each column of the grid represents
+a different wavelength
+(chosen to demonstrate the worst-case differences between the two models)
+and each row represents a different expected number of
+absorbed photons.
+When the number of absorbed photons is low,
+like in the bottom two rows of Figure~\ref{fig:energySpectrum},
+we can see that the \citet{Stern1986} model (orange) has a comb-like appearance
+caused by the Fano noise slightly blurring the \PMF\ of the photon shot noise.
+In contrast, our model show much less of this comb pattern since the recombination
+noise tends to blur the distribution further into a single peak.
+As the number of photons increases,
+both distributions tend towards a Gaussian,
+but our model remains narrower.
 
 To ease adoption of this model,
 we've provided a reference implementation of Equation~\ref{eq:measuredElectrons}
 in Python,
 \href{https://optika.readthedocs.io/en/latest/_autosummary/optika.sensors.signal.html}{\texttt{optika.sensors.signal()}},
 which is designed to be simple to use for existing and future instrument pipelines.
-
-In Figure~\ref{fig:Noise} we have plotted the \VMR\ of the recombination noise
-in orange.
-This figure shows that recombination noise
-is the dominant source of noise measured by the sensor
-in the \FUV\ and remains non-negligible into the \EUV.
 """
     )
     subsection_noise.append(subsubsection_noise_recombination)
@@ -325,7 +390,7 @@ in the \FUV\ and remains non-negligible into the \EUV.
     subsection_charge_spreading = aastex.Subsection("Charge Diffusion")
     subsection_charge_spreading.append(
         r"""
-In most backilluminated imaging sensors used for \UV\ astronomy,
+In most back-illuminated imaging sensors used for \UV\ astronomy,
 the depletion region (the region with significant electric field) does not 
 penetrate all the way into the device.
 As a result, there is a so-called field-free region near the back of the sensor

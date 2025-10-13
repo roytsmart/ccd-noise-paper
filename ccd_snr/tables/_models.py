@@ -45,7 +45,7 @@ and \citet{Heymes2020}."""
         tabular.add_row(
             [
                 "\citet{Boerner2012}",
-                r"\href{https://optika.readthedocs.io/en/latest/_autosummary/optika.sensors.E2VCCD203Material.html}{\texttt{E2VCCD203Material}}",
+                r"\href{https://optika.readthedocs.io/en/latest/_autosummary/optika.sensors.materials.e2v_ccd203.html}{\texttt{e2v\_ccd203}}",
                 f"{ccd_aia.cce_backsurface:0.3f}",
                 f"{ccd_aia.thickness_implant.to_value(unit):0.0f}",
                 f"{ccd_aia.thickness_oxide.to_value(unit):0.1f}",
@@ -56,7 +56,7 @@ and \citet{Heymes2020}."""
         tabular.add_row(
             [
                 "\citet{Heymes2020}",
-                r"\href{https://optika.readthedocs.io/en/latest/_autosummary/optika.sensors.E2VCCD97Material.html}{\texttt{E2VCCD97Material}}",
+                r"\href{https://optika.readthedocs.io/en/latest/_autosummary/optika.sensors.materials.e2v_ccd97.html}{\texttt{e2v\_ccd97}}",
                 f"{ccd.cce_backsurface:0.3f}",
                 f"{ccd.thickness_implant.to_value(unit):0.0f}",
                 f"{ccd.thickness_oxide.to_value(unit):0.1f}",

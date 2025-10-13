@@ -97,6 +97,8 @@ def _kernel(
         index_y=index_y,
     )
 
+    output = output / output.sum(("detector_x", "detector_y"))
+
     return na.FunctionArray(
         inputs=na.Cartesian2dVectorArray(index_x, index_y),
         outputs=output,

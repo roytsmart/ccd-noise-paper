@@ -19,8 +19,8 @@ def qe_effective() -> aastex.Figure:
     ccd = ccd_snr.ccd()
     ccd_aia = ccd_snr.ccd_aia()
 
-    eqe_measured = ccd.quantum_efficiency_measured
-    eqe_measured_aia = ccd_aia.quantum_efficiency_measured
+    eqe_measured = ccd.eqe_measured
+    eqe_measured_aia = ccd_aia.eqe_measured
 
     wavelength = ccd_snr.wavelength()
     energy = ccd_snr.energy()

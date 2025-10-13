@@ -5,84 +5,100 @@ import ccd_snr
 def discussion() -> aastex.Section:
     result = aastex.Section("Results and Discussion")
     result.append(
-        r"""     
-Since $\text{EQE}(\lambda)$ is a type of efficiency,
-it is tempting to treat the sensor like any other component in a given optical system
-and simply use $\text{EQE}(\lambda)$ as another factor in the effective
-area calculation.
+        r"""Since $\text{EQE}(\lambda)$ can be interpreted as an efficiency,
+it is tempting to think that the expected number of measured photons and their
+variance is $\text{EQE}(\lambda) \langle N_\gamma \rangle$.
 However, using $\text{EQE}(\lambda)$ in this way is equivalent to an
 all-or-nothing charge collection model where either all the electrons associated
 with an absorbed photon are measured or none of them are.
 This simple noise model is formalized in Equations 9 and 10 of \citet{Stern1986},
 which gives the \VMR\ of the number of measured electrons as
 \begin{equation} \label{eq:sternVMR}
-    \text{VMR}(N_e'') = \text{IQY}(\lambda) + \mathcal{F} \quad \text{(incomplete!).}
+    F_\text{Stern}'' = \overline{n} + \mathcal{F}
 \end{equation}
 In the absence of evidence to the contrary,
 this is presumably the noise model used by most solar instrument teams.
-For comparison, the \VMR\ predicted by our noise model is
+For comparison, the \VMR\ predicted by our noise model 
+(excluding charge diffusion)
+is the sum of
+$F_\text{shot}''$ and $F_\text{sensor}''$,
 \begin{equation} \label{eq:ourVMR}
-    \text{VMR}(N_e'') = \text{IQY}(\lambda) + \frac{\text{VBS}(\mu_Q, \mu_H, \sigma_Q^2, \sigma_H^2)}{\text{EBS}(\mu_Q, \mu_H)},
-\end{equation}
-where
-\begin{equation}
-    \mu_Q = \text{IQY}(\lambda),
-\end{equation}
-\begin{equation}
-    \sigma_Q^2 = \mu_Q \mathcal{F} + \frac{1}{6},
-\end{equation}
-\begin{equation}
-    \mu_H = \text{CCE}(\lambda),
-\end{equation}
-and
-\begin{equation}
-    \sigma_H^2 = 2 e^{-\alpha W} \left( \frac{1 - \eta_0}{\alpha W} \right)^2 \bigl( \sinh(\alpha W) - \alpha W \bigr).
+    F_\text{total}'' = f_{N_e''} = 1 - \mathcal{F} - f_\eta + \overline{n} \, \overline{\eta} + \overline{\eta} \mathcal{F} + \overline{n} f_\eta + \mathcal{F} f_\eta.
 \end{equation}
 In Figure~\ref{fig:Noise},
-we have compared Equation~\ref{eq:sternVMR} (gray) 
-to our model, Equation~\ref{eq:ourVMR} (black). 
-Over most of the \SXR\ and visible wavelengths,
-The \citet{Stern1986} model is a good approximation of the noise 
-model developed in this work.
-However, the effect of \PCC\ violates the assumptions of \citet{Stern1986}
-and Equation~\ref{eq:sternVMR} overestimates the variance
-predicted by our model by up to a factor of ${\sim}2$ in the \UV\ since treating
-each photon as a binary choice introduces more noise than treating each electron
-as a binary choice.
+we have compared $F_\text{Stern}''$ (gray) 
+to our model, $F_\text{total}''$ (black). 
+Over most of the \SXR\ and visible wavelengths
+the \citet{Stern1986} model is a good approximation of the noise 
+model developed in this work since the penetration depth is deeper than
+the \PCC\ region.
+However, in the \UV, 
+where the penetration depth is very shallow,
+the \citet{Stern1986} overestimates the noise compared to our model.
+
+It may seem paradoxical to add a noise source and then measure less total noise,
+but this is because more photons are measured in our model than the all-or-nothing
+model.
+Even though \PCC\ introduces noise, it is less noise than there would be if the
+photon was undetected. 
 This is good news for engineers building \UV\ astronomical instruments since
 there is much less noise than expected from the \citet{Stern1986} model in this 
 wavelength range."""
     )
+    result.append(ccd_snr.figures.snr_improvement())
+    result.append(
+        r"""In Figure~\ref{fig:SnrImprovement},
+we have plotted the ratio of the \SNR\ predicted by our model to the \SNR\
+predicted by the traditional model.
+It shows that our model predicts that there are two regions,
+one from \qtyrange[range-units=single,range-phrase=-]{30}{100}{\angstrom} 
+and another from \qtyrange[range-units=single,range-phrase=-]{500}{2000}{\angstrom},
+where the noise statistics deviate from the traditional model,
+in some cases by up to ${\sim}30\%$.
+This figure can be used to quickly estimate the importance of \PCC\ noise
+in a given wavelength range."""
+    )
     result.append(ccd_snr.tables.fano_factor())
-    result.append(ccd_snr.tables.measurements())
     result.append(
         r"""
 In Table~\ref{table:instrumentVMR},
-we have calculated the \VMR\ in terms of incident photons and measured electrons
-for the target wavelengths of a few popular and upcoming solar instruments:
+we have calculated the \VMR\
+in terms of incident photons and measured electrons
+for the target wavelengths of a few popular +and upcoming solar instruments:
 \AIA\ \citep{Lemen2012}, \IRIS\ \citep{DePontieu2014}, and \MUSE\ \citep{DePontieu2020}.
 The results show that for the \EUV\ channels, \AIA\ and \MUSE\ are nearly
-shot noise limited since the \VMR\ in units of incident photons is near unity.
-
-Plotted in the right column of Table~\ref{table:instrumentVMR} is
+shot-noise-limited since the \VMR\ in units of incident photons is near unity.
+Plotted in the second-to-last column of Table~\ref{table:instrumentVMR} is
 the improvement factor between the \VMR\ of the \citet{Stern1986} noise model
 and our noise model.
-These ratios show that the \citet{Stern1986} model overestimates the variance
-in the \AIA\ and \IRIS\ \FUV\ channels by about 50\%.
-The \citet{Stern1986} model overestimates the variance even more
-in the short-wavelength \EUV\ channels of \AIA\ and \MUSE.
-Note that since the improvement factor is in variance units,
-the improvement in \SNR\ is the square root of the improvement factor.
-
-Table~\ref{table:instrumentVMR} also partially resolves a discrepancy
-in the theoretical vs. measured noise in \IRIS.
-In \citet{Wulser2018}, the authors measured a \VMR\ of \irisMeasuredVmr\
-at \irisWavelength, expecting a \VMR\ of around \irisNaiveVmr.
-In Table~\ref{table:instrumentVMR} we find that the theoretical \VMR\ of the
-\IRIS\ sensor at \irisWavelength\ predicted by our model is \irisModeledVmr,
-which is much closer to the measured value.
-The remaining discrepancy may be due to charge diffusion as suggested by
-\citet{Wulser2018}.
+These ratios show that the \AIA\ \qty{94}{\angstrom}
+and \qty{1600}{\angstrom}, \IRIS\ \qty{1330}{\angstrom} and \qty{1400}{\angstrom},
+and \MUSE\ \qty{108}{\angstrom} channels are predicted to have at least 20\% more \SNR\
+than the traditional noise model would suggest.
+These results do not include the influence of charge diffusion,
+so we've included the size of the charge diffusion kernel in the last column
+which can be used in a forward model of these instrument
+to blur the result after the noise has been applied."""
+    )
+    result.append(ccd_snr.tables.measurements())
+    result.append(r"""
+In Table~\ref{table:measurements},
+we've attempted to reproduce the measurements of \citet{Wulser2018} and
+\citet{Borders2010} by taking the ratio of the \VMR\ of an \UV\ flat-field
+image to the \VMR\ of a visible flat-field image.
+The flat-field images were created by drawing samples from Equation~\ref{eq:measuredElectrons},
+and then convolving with the appropriate charge-diffusion kernel,
+such as Figure~\ref{fig:chargeDiffusionKernel} for \IRIS.
+This table shows that the discrepancy discussed in the introduction is mostly
+resolved.
+For \IRIS, \citet{Wulser2018} measured \measuredIrisRatio\ at \wavelengthIrisRatio\ expecting about
+\expectedIrisRatio, but our model predicted \modeledIrisRatio, which is much closer.
+Similarly for \WFC, \citet{Borders2010} measured \measuredWfcRatio\ at \wavelengthWfcRatio\ expecting about
+\expectedWfcRatio\ and our model predicted \modeledWfcRatio, which again is closer than their expected value.
+The reason for the remaining discrepancy is not well-understood,
+but one obvious
+but one possibility is that the details of the \PCC\ region are different in
+reality, and we may need to move beyond the \citet{Stern1994} model. 
 """
     )
     return result

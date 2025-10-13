@@ -12,9 +12,9 @@ def abstract() -> aastex.Abstract:
 Silicon-based imaging sensors are a critical component for \UV\ astronomy.
 Their high sensitivity and low noise are a vital part of making
 \UV\ telescopes practical to build.
-However, \UV\ light is unique compared to other components of the
+However, \UV\ light is unique compared to other bands of the
 electromagnetic spectrum since it has a shallow penetration depth
-into the silicon substrate and is absorbed in a region where the corresponding 
+into the silicon substrate and is absorbed in a region where the 
 electron-hole pairs have a significant chance of recombination before being measured.
 This phenomenon is known as \PCC, 
 and in this article we will use the theoretical 

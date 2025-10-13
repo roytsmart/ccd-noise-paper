@@ -5,12 +5,14 @@ from ._util import (
     _fano_electron_naive,
     _fano_photon,
     _fano_photon_naive,
+    _width_diffusion,
 )
 
 __all__ = [
     "wavelength",
     "fano_electron",
     "fano_photon",
+    "width_diffusion",
 ]
 
 wavelength = [
@@ -32,3 +34,5 @@ fano_electron_naive = _fano_electron_naive(wavelength)
 
 fano_photon = _fano_photon(wavelength)
 fano_photon_naive = _fano_photon_naive(wavelength)
+
+width_diffusion = _width_diffusion(wavelength)

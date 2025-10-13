@@ -50,7 +50,7 @@ def noise_photon(
 
     vmr_shot = 1 / absorbance.average * u.photon
     f = ccd.fano_factor(wavelength)
-    vmr_fano = f * u.photon / qe
+    vmr_fano = cce * f * u.photon / qe
     vmr_recombination = (var_i / mean_i * u.photon) / qe - vmr_fano
     fano_total = vmr_shot + vmr_recombination + vmr_fano
     fano_mc = ccd_snr.fano_factor(

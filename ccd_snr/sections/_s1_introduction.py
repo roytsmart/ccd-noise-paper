@@ -7,8 +7,9 @@ def introduction() -> aastex.Section:
         r"""
 Back-illuminated, silicon-based image sensors such as \CCDs\ and \CMOS\ sensors 
 are ubiquitous in \UV\ astronomy, 
-and are currently used in many of the community's most ambitious missions,
-such as \AIA\ \citep{Lemen2012}, \IRIS\ \citep{DePontieu2014},
+and are currently used in many \UV\ instruments such as 
+\AIA\ \citep{Lemen2012},
+\IRIS\ \citep{DePontieu2014},
 and \WFC\ \citep{Kimble2008} on HST.
 Predicting the noise measured by these sensors is important both
 for quantifying the uncertainty on current astronomical observations
@@ -18,7 +19,7 @@ Often the largest source of noise measured by these sensors is
 shot noise \citep{Stern1986}.
 This noise is due to the quantized nature of light \citep{Schottky1918}
 and is not a property of the sensor \textit{per se},
-but its magnitude depends on the number of interacting photons,
+but its magnitude depends on the number of measured photons,
 which is determined by the sensor's geometry and optical constants.
 Another well-known source of noise inherent to silicon sensors is 
 Fano noise \citep{Fano1947},
@@ -26,7 +27,7 @@ the random variation of the number of electrons produced
 per interacting photon.
 This noise source is small \citep{Rodrigues2023},
 and often ignored entirely,
-but it is usually combined with the shot noise to form a traditional estimate 
+but it can be combined with the shot noise to form the traditional estimate 
 of the total noise \citep{Stern1986,Janesick2001}.
 
 This traditional model of shot noise and Fano noise is very accurate in the
@@ -42,15 +43,23 @@ these sensors in the \UV.
 
 In this work, we aim to resolve this discrepancy by developing a noise model
 which adds two additional effects to the traditional model.
-First, we examine \PCC,
+The first effect is \PCC,
 which occurs when electron-hole pairs recombine before they can be measured
 by the sensor \citep{Stern1994,Janesick2001}.
-Second, we investigate the role of charge diffusion (or charge spreading),
+\PCC\ is a well-known effect, for example \citet{Rodrigues2023} accounted for
+\PCC\ in their measurement of the Fano noise in \SXR,
+but its influence on the noise measured in \UV\ has been rarely modeled in detail.
+The second effect is charge diffusion (or charge spreading),
 the tendency for photoelectrons to migrate into neighboring pixels \citep{Janesick2001},
 a mechanism suggested by both \citet{Wulser2018} and \citet{Marinelli2024} to
-resolve this discrepancy.
-We will also provide a reference implementation of our model in Python and use
-it to predict the noise measured by \AIA, \IRIS, \MUSE, and \WFC.
+explain the discrepancies they measured.
+We will model the contribution of each of theses effects to the total noise
+and compare our predicted noise to the noise measured by \IRIS\ and \WFC.
+We will also provide noise predictions for \AIA\ and \MUSE\ 
+\citep{DePontieu2020} which can be used for estimating the uncertainty
+of observations captured by these instruments.
+Finally, we will present a reference implementation of our noise model in Python
+which is available to be installed from the Python Package Index.
 """
     )
     return result

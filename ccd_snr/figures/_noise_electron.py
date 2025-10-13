@@ -49,7 +49,7 @@ def noise_electron(
     var_i = var_exp + exp_var
 
     vmr_shot = 1 / absorbance.average * u.photon * qe
-    vmr_fano = f * u.photon
+    vmr_fano = cce * f * u.photon
     vmr_recombination = var_i / mean_i * u.photon - vmr_fano
     vmr_total = vmr_shot + vmr_recombination + vmr_fano
 

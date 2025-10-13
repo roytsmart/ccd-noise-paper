@@ -15,9 +15,9 @@ def charge_diffusion() -> aastex.Figure:
     ccd = ccd_snr.ccd()
     # ccd_aia = ccd_snr.ccd_aia()
 
-    wavelength_measured = ccd.depletion.mean_charge_capture_measured.inputs
+    wavelength_measured = ccd.depletion.mcc_measured.inputs
 
-    mcc_measured = ccd.depletion.mean_charge_capture_measured.outputs
+    mcc_measured = ccd.depletion.mcc_measured.outputs
 
     wavelength_fit = ccd_snr.wavelength()
     energy_fit = ccd_snr.energy()

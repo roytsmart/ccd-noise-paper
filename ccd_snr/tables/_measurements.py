@@ -1,5 +1,7 @@
 import astropy.units as u
 import numpy as np
+
+import aastex
 import named_arrays as na
 import optika
 import ccd_snr
@@ -94,7 +96,16 @@ def measurements() -> str:
     ratio_measured_iris = na.ScalarArray(ratio_measured_iris, axes="wavelength")
     ratio_measured_wfc3 = na.ScalarArray(ratio_measured_wfc3, axes="wavelength")
 
-    result = r"""\begin{deluxetable}{lrrrr}
+    # result = ""
+    result = f"""{aastex.Variable("modeledIrisRatio", np.round(ratio_model_iris.ndarray[0].value, decimals=2)).dumps()}
+{aastex.Variable("modeledWfcRatio", np.round(ratio_model_wfc3.ndarray[0].value, decimals=2)).dumps()}
+{aastex.Variable("measuredIrisRatio", ratio_measured_iris.ndarray[0]).dumps()}
+{aastex.Variable("measuredWfcRatio", np.round(ratio_measured_wfc3.ndarray[0], decimals=2)).dumps()}
+{aastex.Variable("wavelengthIrisRatio", wavelength_iris.ndarray[0]).dumps()}
+{aastex.Variable("wavelengthWfcRatio", wavelength_wfc3.ndarray[0]).dumps()}
+"""
+
+    result += r"""\begin{deluxetable}{lrrrr}
 \tablecaption{
 \label{table:measurements}
 The ratio of the \VMR\ in \UV\ to the \VMR\ in visible light for instruments
