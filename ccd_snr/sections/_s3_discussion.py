@@ -14,20 +14,20 @@ with an absorbed photon are measured or none of them are.
 This simple noise model is formalized in Equations 9 and 10 of \citet{Stern1986},
 which gives the \VMR\ of the number of measured electrons as
 \begin{equation} \label{eq:sternVMR}
-    F_\text{Stern}'' = \overline{n} + \mathcal{F}
+    F_{e,\text{Stern}}'' = \overline{n} + \mathcal{F}
 \end{equation}
 In the absence of evidence to the contrary,
 this is presumably the noise model used by most solar instrument teams.
-For comparison, the \VMR\ predicted by our noise model 
+For comparison, the total \VMR\ predicted by our noise model 
 (excluding charge diffusion)
 is the sum of
-$F_\text{shot}''$ and $F_\text{sensor}''$,
+$F_{e,\text{shot}}''$ and $F_{e,\text{sensor}}''$,
 \begin{equation} \label{eq:ourVMR}
-    F_\text{total}'' = f_{N_e''} = 1 - \mathcal{F} - f_\eta + \overline{n} \, \overline{\eta} + \overline{\eta} \mathcal{F} + \overline{n} f_\eta + \mathcal{F} f_\eta.
+    F(N_e'') = 1 - \E{\eta} - F(\eta) + \E{n} \, \E{\eta} + \E{\eta} \mathcal{F} + \E{n} F(\eta) + \mathcal{F} F(\eta).
 \end{equation}
 In Figure~\ref{fig:Noise},
-we have compared $F_\text{Stern}''$ (gray) 
-to our model, $F_\text{total}''$ (black). 
+we have compared $F_{e,\text{Stern}}''$ (gray) 
+to our model, $F(N_e'')$ (black). 
 Over most of the \SXR\ and visible wavelengths
 the \citet{Stern1986} model is a good approximation of the noise 
 model developed in this work since the penetration depth is deeper than
@@ -64,7 +64,7 @@ in a given wavelength range."""
 In Table~\ref{table:instrumentVMR},
 we have calculated the \VMR\
 in terms of incident photons and measured electrons
-for the target wavelengths of a few popular +and upcoming solar instruments:
+for the target wavelengths of a few popular and upcoming solar instruments:
 \AIA\ \citep{Lemen2012}, \IRIS\ \citep{DePontieu2014}, and \MUSE\ \citep{DePontieu2020}.
 The results show that for the \EUV\ channels, \AIA\ and \MUSE\ are nearly
 shot-noise-limited since the \VMR\ in units of incident photons is near unity.

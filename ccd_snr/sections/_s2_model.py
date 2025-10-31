@@ -15,18 +15,18 @@ In this work, we will use the back-illuminated CCD model described in
 \citet{Stern1994} as a basis for our sensor model to make it directly comparable with 
 previous works in the literature.
 Figure 1 is a schematic of our sensor model and it shows
-the light-sensitive region of the sensor to be an epitaxial silicon layer with a thickness $D$, 
-which is coated with a oxide layer of thickness $\delta$ to absorb a fraction
-of the incident photons.
+the light-sensitive region of the sensor to be an epitaxial silicon layer with a thickness $D$.
+A fraction of the incident photons are either absorbed in the oxide layer (thickness $\delta$)
+or reflected at the first or second interface.
 The illuminated side of the epitaxial layer is considered to have a \PCC\ region
 of thickness $W$, 
 where electron-hole pairs can recombine before being measured,
 and there is a depletion region of thickness $z_d$ on the non-illuminated side.
 
 In Section~\ref{subsec:Signal} we will calculate the signal measured by this sensor
-model using the method described in \citet{Stern1994} adapted to more recent
-measurements,
-in Section~\ref{subsec:Noise} we will calculate the noise measured by this sensor
+model using the method described in \citet{Stern1994}, adapted to more recent
+measurements.
+In Section~\ref{subsec:Noise} we will calculate the noise measured by this sensor
 model in a self-consistent manner,
 and in Section~\ref{subsec:ChargeDiffusion} we will model the charge diffusion
 of this sensor which is needed for a complete description of the noise.
@@ -48,17 +48,17 @@ This is a common performance metric for measuring sensor sensitivity and it is
 given in \citet{Janesick2001} as
 \begin{equation} \label{eq:quantum-efficiency}
     \text{QE}(\lambda, T) = \biggl \langle \frac{N_{e}''}{N_\gamma} \biggr \rangle
-                          = A(\lambda) \, \overline{n}(\lambda, T) \, \overline{\eta}(\lambda),
+                          = A(\lambda) \, \E{n}(\lambda, T) \, \E{\eta}(\lambda),
 \end{equation}
 where $\lambda$ is the wavelength of the incident photons in vacuum,
 $T$ is the temperature of the sensor,
-$\langle \cdot \rangle$ denotes an expectation value,
+$\langle X \rangle = \E{X}$ denotes the expected value of a random variable $X$,
 $N_e''$ is the number of electrons measured by the sensor,
 $N_\gamma$ is the total number of photons incident on the sensor,
 $A(\lambda)$ is the absorbance of the light-sensitive layer, 
-$\overline{n}(\lambda, T)$ is the average quantum yield,
+$\E{n}(\lambda, T)$ is the average quantum yield,
 the number of photoelectrons generated per absorbed photon,
-and $\overline{\eta}(\lambda)$ is the average \CCE,
+and $\E{\eta}(\lambda)$ is the average \CCE,
 the fraction of generated photoelectrons measured by the sensor.
 
 The fraction of incident energy that is absorbed by the light sensitive layer
@@ -84,14 +84,14 @@ light-sensitive region of the sensor to determine $A(\lambda)$.
 This treatment introduces interference effects for infrared wavelengths, 
 which can be seen on the right side of Figure \ref{fig:absorbanceAndCCE}.
 
-Determining $\overline{n}(\lambda, T)$ over the entire wavelength range considered 
+Determining $\E{n}(\lambda, T)$ over the entire wavelength range considered 
 in this study is an area of ongoing research \citep[just to name a few]{Fraser1994,Geist1996,Scholze1998,Fang2019}.
 This work will use the quantum yield model developed by \citet{Ramanathan2020}
 which uses a phenomenological model of impact ionization to bridge the ``UV gap'',
 an area where direct measurements of the quantum yield are not yet available.
 They give the average quantum yield as 
 \begin{equation} \label{eq:iqy}
-    \overline{n}(E, T) = \begin{cases}
+    \E{n}(E, T) = \begin{cases}
         \sum_{n=0}^\infty n p_n(E, T), & 0 < E \le \qty{50}{\electronvolt} \\
         E / \epsilon_{eh}(T), & \qty{50}{\electronvolt} < E < \infty,
     \end{cases}
@@ -102,12 +102,13 @@ $p_n(E, T)$ is a table of pair-creation probabilities which is provided in their
 \begin{equation}
     \epsilon_{eh}(T) = 1.7 E_g(T) + (\qty{0.084}{\per\electronvolt}) A + \qty{1.3}{\electronvolt},
 \end{equation}
-is the asymptotic pair-production energy,
+is the asymptotic mean energy per electron-hole pair,
+$A = \qty{5.2}{\square\electronvolt}$,
+and
 \begin{equation}
     E_g(T) = \qty{1.1692}{\electronvolt} - \frac{(\qty{4.9e-4}{\electronvolt\per\kelvin}) \, T^2}{T + \qty{655}{\kelvin}},
 \end{equation}
-is the bandgap energy of silicon,
-and $A = \qty{5.2}{\square\electronvolt}$.
+is the bandgap energy of silicon.
 
 In \citet{Stern1994}, the average \CCE\ is expressed in terms of a differential \CCE,
 $\eta(z)$, which is the fraction of photoelectrons collected for a photon 
@@ -115,7 +116,7 @@ absorbed at a depth $z$ into the epitaxial layer.
 The average \CCE\ is then the first moment of the differential \CCE\ weighted by 
 the probability of absorbing a photon at a depth $z$,
 \begin{equation} \label{cce}
-    \overline{\eta}(\lambda) = \frac{\int_0^\infty \eta(z) \, e^{-\alpha(\lambda) z} \, dz}
+    \E{\eta}(\lambda) = \frac{\int_0^\infty \eta(z) \, e^{-\alpha(\lambda) z} \, dz}
                                {\int_0^\infty e^{-\alpha(\lambda) z} \, dz},
 \end{equation}
 where $\alpha(\lambda)$ is the absorption coefficient of silicon for the given 
@@ -135,9 +136,9 @@ of the differential \CCE,
 \end{equation}
 where $\eta_0$ is the differential \CCE\ at the back surface of the sensor.
 Plugging Equation \ref{differential-cce} into Equation \ref{cce} yields an
-arithmetic expression for the \CCE,
+expression for the \CCE,
 \begin{equation}
-    \overline{\eta}(\lambda) = \eta_0 + \left( \frac{1 - \eta_0}{\alpha W} \right)(1 - e^{-\alpha W}),
+    \E{\eta}(\lambda) = \eta_0 + \left( \frac{1 - \eta_0}{\alpha W} \right)(1 - e^{-\alpha W}),
 \end{equation}
 which can be used in Equation \ref{eq:quantum-efficiency} to determine the \QE.
 In Figure \ref{fig:absorbanceAndCCE} we have plotted the average \CCE\ for
@@ -145,7 +146,7 @@ the \citet{Heymes2020} parameters in Table \ref{table:models}.
 
 In \citet{Stern1994}, the authors define an effective \QE\ as
 \begin{equation} \label{eqe}
-    \text{EQE}(\lambda) = A(\lambda) \, \overline{\eta}(\lambda),
+    \text{EQE}(\lambda) = A(\lambda) \, \E{\eta}(\lambda),
 \end{equation}
 which is the quantity that is typically measured when calibrating a image sensor
 \citep{Stern1994,Stern2004,Boerner2012}.
@@ -182,10 +183,9 @@ for a given number of incident photons.
 
 Throughout this work, we will measure noise in terms of a \VMR,
 \begin{equation}
-    \text{VMR}(X) = f_X =  \frac{\text{Var}(X)}{\langle X \rangle},
+    F(X) =  \frac{\text{Var}(X)}{\E {X}},
 \end{equation}
-where $X$ is some random variable
-and $\text{Var}(X)$ is the variance of $X$.
+where $\text{Var}(X)$ is the variance of $X$.
 Using the \VMR\ instead of the \SNR\ to express the noise is convenient since it is constant as a 
 function of signal for the distributions studied here.
 For example, the \VMR\ of a Poisson random variable is always unity since its 
@@ -193,6 +193,12 @@ variance and expectation value are equal.
 The \VMR\ is not dimensionless
 (it has the same units as $X$),
 so we must take care to interpret the \VMR\ in terms of the correct units.
+For a constant multiple of a random variable, $a X$,
+\begin{equation}
+    F(a X) = a F(X).
+\end{equation}
+We will use this relationship throughout this work to convert from incident photons
+to measured electrons and vice versa.
 
 In Figure~\ref{fig:Noise} we have plotted
 the \VMR\ for the noise sources considered in this study in two different units:
@@ -213,37 +219,39 @@ Shot noise from the random arrival time of each photon is often the leading
 noise contributor in \UV\ astronomy \citep{Stern1986,Lemen2012,DePontieu2014}.
 If the expected number of photons that interact with the light-sensitive layer is
 \begin{equation}
-    \langle N_\gamma' \rangle = A \langle N_\gamma \rangle.
+    \E{N}_\gamma'  = A \E{N}_\gamma.
 \end{equation}
 then the actual number of interacting photons,
 $N_\gamma'$, 
 is sampled from the Poisson distribution,
 \begin{equation} \label{eq:shot-noise-variance}
-    N_\gamma' \leftarrow \text{Pois}(\langle N_\gamma' \rangle).
+    N_\gamma' \leftarrow \text{Poisson} \bigl( \E{N}_\gamma' \bigr).
 \end{equation}
 As mentioned in the previous section,
 the \VMR\ of this process is
 \begin{equation} \label{eq:absorbed-photon-vmr}
-    f_{N_\gamma'} = 1, 
+    F(N_\gamma') = 1, 
 \end{equation}
 but this in terms of the number of absorbed photons, which is internal to the sensor.
-In terms of the expected number of incident photons the \VMR\ is
+In terms of the expected number of incident photons given the number of absorbed photons
+the \VMR\ is
 \begin{equation} \label{eq:photonShotFano}
-    F_\text{shot} = \frac{1}{A} f_{N_\gamma'} = \frac{1}{A}
+    F_{\gamma,\text{shot}} = F \left(\frac{N_\gamma'}{A} \right) = \frac{1}{A}
 \end{equation}
-since $f_{N_\gamma'}$ has the same units as $\langle N_\gamma' \rangle$.
-$F_\text{shot}$ is plotted in Figure~\ref{fig:Noise}a in blue and demonstrates
+since $A$ is the conversion factor between incident photons and absorbed photons.
+$F_{\gamma,\text{shot}}$ is plotted in Figure~\ref{fig:Noise}a in blue and demonstrates
 that this expression is nearly unity across almost the entire wavelength
 range of the sensor except in the \UV, where the absorbance is poor
 (Figure~\ref{fig:absorbanceAndCCE}).
 We can also express the \VMR\ of the shot noise in terms of the
-number of measured electrons by using the \QE\ as the conversion factor,
+number of measured electrons by using the \QE\ as the conversion factor between
+the unprimed and double-primed variables,
 \begin{equation}
-    F_\text{shot}'' = \overline{n} \, \overline{\eta}.
+    F_{\gamma,\text{shot}}'' = \E{n} \, \E{\eta}.
 \end{equation}
 This equation is plotted in Figure~\ref{fig:Noise}b in blue,
 where we can see that it increases linearly with decreasing wavelength since
-the average \QY\ is increasing.
+the average quantum yield is increasing.
 """
     )
     subsection_noise.append(subsubsection_noise_shot)
@@ -253,7 +261,7 @@ the average \QY\ is increasing.
 The energy resolution of silicon detectors is ultimately limited due to Fano
 noise \citep{Fano1947}, the unpredictable variation of the quantum yield $n$.
 Fano noise is usually expressed in terms of the Fano factor, 
-$\mathcal{F} = f_n$.
+$\mathcal{F} = F(n)$.
 Silicon is commonly accepted to have $\mathcal{F} \approx 0.1$ \citep{Janesick2001}.
 In part due to variations of the Fano noise as a function of wavelength and
 temperature \citep{Fraser1994}, 
@@ -269,8 +277,8 @@ this work uses the quantum yield model of \citet{Ramanathan2020}.
 They provide the \PMF\ of the quantum yield distribution, $p_n(E, T)$, which we can use
 directly to generate random samples of the quantum yield for $E \le \qty{50}{\electronvolt}$.
 For $E > \qty{50}{\electronvolt}$, we will assume that the quantum yield
-is a Gaussian distribution centered around $\overline{n}(\lambda, T)$,
-with standard deviation $\sqrt{\overline{n}(\lambda, T) \, \mathcal{F}(T)}$,
+is a Gaussian distribution centered around $\E{n}(\lambda, T)$,
+with standard deviation $\sqrt{\E{n}(\lambda, T) \, \mathcal{F}(T)}$,
 where $\mathcal{F}(T)$ is the asymptotic Fano factor given by \citet{Ramanathan2020} as
 \begin{equation}
     \mathcal{F}(T) = (\qty{-0.028}{\per\electronvolt}) \, E_g(T) + (\qty{0.0015}{\per\square\electronvolt}) \, A + 0.14.
@@ -282,14 +290,11 @@ Fano factor by \citet{Rodrigues2021} at \SI{6}{\kilo\electronvolt}.
 $\mathcal{F}$ is a quantity internal to the sensor.
 The measured Fano factor is instead
 \begin{equation}
-    F_\text{Fano}'' = \overline{\eta} \mathcal{F}
+    F_{e,\text{Fano}}'' = \E{\eta} \mathcal{F}
 \end{equation}
-since the expected number of measured electrons is 
-$\langle N_e'' \rangle  = \overline{\eta} \langle N_e' \rangle$
-where
-$\langle N_e' \rangle = \overline{n} \langle N_\gamma' \rangle$ 
-is the expected number of generated electrons. 
-In Figure~\ref{fig:Noise} we have plotted $F_\text{Fano}''$ in green.
+since the conversion factor between the generated electrons and the measured
+electrons is the \CCE. 
+In Figure~\ref{fig:Noise}b we have plotted $F_{e,\text{Fano}}''$ in green.
 This shows that the Fano noise is the smallest contributor to the total noise
 across the entire wavelength range and is often at least an order of magnitude
 smaller than the other noise sources.
@@ -322,11 +327,11 @@ If $n_i'$ is the quantum yield of the $i$th photon generated using
 the \citet{Ramanathan2020} model discussed in the previous section,
 we can express the \textit{measured} quantum yield as
 \begin{equation} \label{eq:measuredQuantumYield}
-    n_i'' \leftarrow \text{B}(n_i', \eta(z_i)),
+    n_i'' \leftarrow \text{Binomial}\bigl(n_i', \eta(z_i) \bigr),
 \end{equation}
 where
 $z_i$ is the penetration depth of the $i$th photon.
-and $\text{B}(n, p)$ is a sample from the binomial distribution
+and $\text{Binomial}(n, p)$ is a sample from the binomial distribution
 with $n$ trials and probability of success $p$.
 We can use \ref{eq:measuredQuantumYield} to compute the total number of measured
 electrons given $N_\gamma'$ absorbed photons as
@@ -341,22 +346,23 @@ is a sum of Binomial distributions with completely independent $n$ and $p$ for
 each term.
 However, if the \VMR\ of the \CCE\ is
 \begin{equation}
-    f_\eta = \frac{2 e^{-\alpha W}}{\overline{\eta}(\lambda)} \left( \frac{1 - \eta_0}{\alpha W} \right)^2 \bigl( \sinh(\alpha W) - \alpha W \bigr),
+    F(\eta) = \frac{2 e^{-\alpha W}}{\E{\eta}} \left( \frac{1 - \eta_0}{\alpha W} \right)^2 \bigl( \sinh(\alpha W) - \alpha W \bigr),
 \end{equation}
 and we hold $N_\gamma'$ constant,
 we can use the expressions given by \citet{heropup2019}
 to find the \VMR\ of only the Fano noise and \PCC\ noise as
 \begin{equation}
-    F_\text{sensor}'' = 1 - \mathcal{F} - f_\eta + \overline{\eta} \mathcal{F} + \overline{n} f_\eta + \mathcal{F} f_\eta.
+    F_{e,\text{sensor}}'' = 1 - \E{\eta} - F(\eta) + \E{\eta} \mathcal{F} + \E{n} F(\eta) + \mathcal{F} F(\eta).
 \end{equation}
 The contribution from only PCC noise is then
 \begin{equation}
-    F_{\text{PCC}}'' = F_\text{sensor}'' - F_\text{Fano}'',
+    F_{e,\text{PCC}}'' = F_{e,\text{sensor}}'' - F_{e,\text{Fano}}'',
 \end{equation}
 which is plotted in Figure~\ref{fig:Noise} in orange.
 We can see that the \PCC\ noise is usually very small compared to the shot noise,
-but in the \UV\ it actually exceeds the shot noise and is the dominant 
-contributor to the noise.
+but in the \UV\,
+from about \qtyrange{2000}{3500}{\angstrom},
+it actually exceeds the shot noise and is the dominant contributor to the noise.
 
 In Figure~\ref{fig:energySpectrum},
 we have plotted the \PMFs\ of Equation~\ref{eq:measuredElectrons} and the
@@ -371,7 +377,7 @@ When the number of absorbed photons is low,
 like in the bottom two rows of Figure~\ref{fig:energySpectrum},
 we can see that the \citet{Stern1986} model (orange) has a comb-like appearance
 caused by the Fano noise slightly blurring the \PMF\ of the photon shot noise.
-In contrast, our model show much less of this comb pattern since the recombination
+In contrast, our model show much less of this comb pattern since the \PCC\
 noise tends to blur the distribution further into a single peak.
 As the number of photons increases,
 both distributions tend towards a Gaussian,
@@ -423,7 +429,7 @@ we can find the average variance of the charge diffusion kernel by taking an
 mean across the entire thickness of the sensor weighted by the probability of
 a photon being absorbed at that depth,
 \begin{equation} \label{eq:chargeDiffusionWidth}
-\langle\sigma^2\rangle = \frac{z_f \left( \alpha z_f + e^{-\alpha z_f} - 1 \right)}
+\E{\sigma}^2 = \frac{z_f \left( \alpha z_f + e^{-\alpha z_f} - 1 \right)}
                               {\alpha \left( 1 - e^{-\alpha D} \right)}.
 \end{equation}
 The thickness of the depletion region or the field-free region is difficult
@@ -452,12 +458,12 @@ where $K(x)$ is the charge diffusion kernel,
 $\Pi(x)$ is the rectangle function,
 and $d$ is the width of a pixel.
 If we assume that the charge diffusion kernel is a Gaussian with variance 
-$\langle\sigma^2\rangle$, then we can analytically solve for the \MCC,
+$\E{\sigma}^2$, then we can analytically solve for the \MCC,
 \begin{equation}
     \label{eq:mcc}
     \text{MCC} = \left[ \frac{1}{\sqrt{\pi a}} \left( e^{-a} - 1 \right) + \text{erf} \left( \sqrt{a} \right) \right]^2,
 \end{equation}
-where $a = d^2 / 2 \langle\sigma^2\rangle$,
+where $a = d^2 / 2 \E{\sigma}^2$,
 and $\text{erf}(x)$ is the error function."""
     )
     subsection_charge_spreading.append(ccd_snr.figures.charge_diffusion())

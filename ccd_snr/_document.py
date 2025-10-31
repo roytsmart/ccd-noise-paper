@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 import pathlib
+import pylatex
 import aastex
 import ccd_snr
 
@@ -31,10 +32,16 @@ def document() -> aastex.Document:
     doc.packages.append(aastex.Package("hyperref"))
 
     doc.preamble += ccd_snr.acronyms()
+    doc.preamble.append(
+        pylatex.NoEscape(
+            r"""\newcommand{\E}[1]{\makebox[0pt]{$\phantom{#1}\overline{\phantom{#1}}$}#1}"""
+        )
+    )
+
     doc.variables += ccd_snr.variables()
 
     title = aastex.Title(
-        "The Noise Measured by Backilluminated Silicon Sensors",
+        "The Noise on Ultraviolet Astronomical Images Captured by Back-illuminated Silicon Sensors",
     )
     doc.append(title)
 
