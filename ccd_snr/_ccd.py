@@ -1,4 +1,3 @@
-import functools
 import astropy.units as u
 import optika
 

@@ -74,7 +74,7 @@ def snr_improvement() -> pathlib.Path:
         ax2.set_xscale("log")
         ax.set_xlabel(f"wavelength ({ax.get_xlabel()})")
         ax2.set_xlabel(f"energy ({ax2.get_xlabel()})", labelpad=16)
-        ax.set_ylabel(f"SNR improvement")
+        ax.set_ylabel("SNR improvement")
 
     result = aastex.Figure("SnrImprovement")
     result.append(aastex.NoEscape(r"\vspace{5pt}"))
