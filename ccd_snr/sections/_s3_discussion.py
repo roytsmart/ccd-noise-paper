@@ -81,7 +81,8 @@ which can be used in a forward model of these instrument
 to blur the result after the noise has been applied."""
     )
     result.append(ccd_snr.tables.measurements())
-    result.append(r"""
+    result.append(
+        r"""
 In Table~\ref{table:measurements},
 we've attempted to reproduce the measurements of \citet{Wulser2018} and
 \citet{Borders2010} by taking the ratio of the \VMR\ of an \UV\ flat-field

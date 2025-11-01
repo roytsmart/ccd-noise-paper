@@ -31,8 +31,8 @@ def penetration_depth() -> pathlib.Path:
         )
         ax2 = ax.twiny()
         ax2.invert_xaxis()
-        na.plt.plot(wavelength, depth, ax=ax, color="tab:blue");
-        na.plt.plot(energy, depth, ax=ax2, color="tab:blue");
+        na.plt.plot(wavelength, depth, ax=ax, color="tab:blue")
+        na.plt.plot(energy, depth, ax=ax2, color="tab:blue")
         ax.axhline(ccd.thickness_implant, linestyle="--", color="black")
         ax.text(
             x=0.1,
@@ -40,13 +40,13 @@ def penetration_depth() -> pathlib.Path:
             s="PCC region",
             transform=ax.get_yaxis_transform(),
         )
-        ax.set_xscale("log");
-        ax2.set_xscale("log");
-        ax.set_yscale("log");
-        ax2.set_yscale("log");
+        ax.set_xscale("log")
+        ax2.set_xscale("log")
+        ax.set_yscale("log")
+        ax2.set_yscale("log")
         ax.set_xlabel(f"wavelength ({ax.get_xlabel()})");
         ax2.set_xlabel(f"energy ({ax2.get_xlabel()})", labelpad=16)
-        ax.set_ylabel(f"penetration depth ({depth.unit:latex_inline})");
+        ax.set_ylabel(f"penetration depth ({depth.unit:latex_inline})")
 
     result = aastex.Figure("penetrationDepth")
     result.append(aastex.NoEscape(r"\vspace{5pt}"))

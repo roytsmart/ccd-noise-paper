@@ -13,7 +13,7 @@ __all__ = [
     "fano_electron",
     "fano_photon",
     "width_pixel",
-    "width_diffusion"
+    "width_diffusion",
 ]
 
 wavelength = [

@@ -89,7 +89,7 @@ def _fano_photon_naive(wavelength: na.ScalarArray) -> na.ScalarArray:
 
 
 def _width_diffusion(wavelength: na.ScalarArray) -> na.ScalarArray:
-   return ccd.width_charge_diffusion(
+    return ccd.width_charge_diffusion(
         rays=optika.rays.RayVectorArray(
             wavelength=wavelength,
         ),
