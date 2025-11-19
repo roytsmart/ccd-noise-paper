@@ -1,10 +1,9 @@
 import astropy.units as u
 import named_arrays as na
 from ._util import (
-    _fano_electron,
-    _fano_electron_naive,
-    _fano_photon,
-    _fano_photon_naive,
+    _vmr_electron,
+    _vmr_photon,
+    _snr_improvement,
     _width_diffusion,
 )
 
@@ -12,9 +11,10 @@ __all__ = [
     "index_1330",
     "index_1400",
     "wavelength",
-    "fano_electron",
-    "fano_photon",
     "width_pixel",
+    "vmr_electron",
+    "vmr_photon",
+    "snr_improvement",
     "width_diffusion",
 ]
 
@@ -25,17 +25,16 @@ wavelength = [
     2832,
 ]
 
+width_pixel = 13 * u.um
+
 index_1330 = dict(wavelength=wavelength.index(1330))
 index_1400 = dict(wavelength=wavelength.index(1400))
 
 wavelength = na.ScalarArray(wavelength * u.AA, axes="wavelength")
 
-fano_electron = _fano_electron(wavelength)
-fano_electron_naive = _fano_electron_naive(wavelength)
+vmr_electron = _vmr_electron(wavelength, width_pixel)
+vmr_photon = _vmr_photon(wavelength, width_pixel)
 
-fano_photon = _fano_photon(wavelength)
-fano_photon_naive = _fano_photon_naive(wavelength)
-
-width_pixel = 13 * u.um
+snr_improvement = _snr_improvement(wavelength, width_pixel)
 
 width_diffusion = _width_diffusion(wavelength)

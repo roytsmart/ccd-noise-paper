@@ -95,7 +95,7 @@ def charge_diffusion() -> aastex.Figure:
 The top panel plots the MCC measured by \citet{Stern2004} and the fit
 of our model.
 The bottom panel shows the corresponding standard deviation of the charge
-diffusion kernel for the \citet{Heymes2020} sensor
+diffusion kernel for the \citet{Heymes2020} sensor.
     """
             )
         )

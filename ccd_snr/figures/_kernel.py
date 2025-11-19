@@ -37,7 +37,7 @@ def diffusion_kernel() -> aastex.Figure:
     na.plt.text(
         x=kernel.inputs.x,
         y=kernel.inputs.y,
-        s=kernel.outputs.to_string_array(),
+        s=kernel.outputs.to_string_array(format_value="%.3f"),
         color="black",
         ha="center",
         va="center",

@@ -3,11 +3,11 @@ import astropy.units as u
 import ccd_snr
 
 __all__ = [
-    "models",
+    "ccd_models",
 ]
 
 
-def models() -> pylatex.Table:
+def ccd_models() -> pylatex.Table:
 
     result = pylatex.Table()
     result.escape = False

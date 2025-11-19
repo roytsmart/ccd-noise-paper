@@ -42,7 +42,7 @@ This discrepancy indicates that the traditional model is incomplete,
 and that a more detailed model is needed to predict the noise measured by 
 these sensors in the \UV.
 
-In this work, we aim to resolve this discrepancy by developing a noise model
+In this work, we aim to resolve the \UV\ noise discrepancy by developing a noise model
 which adds two additional effects to the traditional model.
 The first effect is \PCC,
 which occurs when electron-hole pairs recombine before they can be measured

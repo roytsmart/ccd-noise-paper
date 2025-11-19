@@ -6,7 +6,6 @@ from ._schematic import schematic
 from ._qe_effective import qe_effective
 from ._absorbance_and_cce import absorbance_and_cce
 from ._noise import noise
-from ._noise_fano import noise_fano
 from ._energy_spectrum import energy_spectrum
 from ._penetration_depth import penetration_depth
 from ._charge_diffusion import charge_diffusion
@@ -18,7 +17,6 @@ __all__ = [
     "qe_effective",
     "absorbance_and_cce",
     "noise",
-    "noise_fano",
     "energy_spectrum",
     "penetration_depth",
     "charge_diffusion",

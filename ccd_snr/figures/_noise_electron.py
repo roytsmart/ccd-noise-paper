@@ -19,45 +19,42 @@ def noise_electron(
     wavelength = ccd_snr.wavelength()
     energy = ccd_snr.energy()
 
-    rays = ccd_snr.simulations.rays()
-    normal = ccd_snr.simulations.normal
+    kwargs_vmr = dict(
+        wavelength=wavelength,
+        absorption=ccd._chemical.absorption(wavelength),
+        thickness_implant=ccd.thickness_implant,
+        cce_backsurface=ccd.cce_backsurface,
+        temperature=ccd.temperature,
+    )
+    vmr_shot = optika.sensors.vmr_signal(fano=False, pcc=False, **kwargs_vmr)
+    vmr_fano = optika.sensors.vmr_signal(shot=False, pcc=False, **kwargs_vmr)
+    vmr_pcc = optika.sensors.vmr_signal(shot=False, fano=False, **kwargs_vmr)
+    vmr_total = optika.sensors.vmr_signal(**kwargs_vmr)
 
-    iqy = ccd.quantum_yield_ideal(wavelength)
-    absorbance = ccd.absorbance(rays, normal)
-    cce = ccd.charge_collection_efficiency(rays, normal)
-    qe = ccd.quantum_efficiency(rays, normal)
-    eqe = ccd.quantum_efficiency_effective(rays, normal)
+    width_diffusion = optika.sensors.charge_diffusion(
+        absorption=ccd._chemical.absorption(wavelength),
+        thickness_substrate=ccd.thickness_substrate,
+        thickness_depletion=ccd.depletion.thickness,
+    )
 
-    n0 = ccd.cce_backsurface
-    a = optika.chemicals.Chemical("Si").absorption(wavelength)
-    W = ccd.thickness_implant
-    aW = (a * W).to(u.dimensionless_unscaled).value
+    mcc_iris = optika.sensors.mean_charge_capture(
+        width_diffusion=width_diffusion,
+        width_pixel=ccd_snr.instruments.iris.width_pixel,
+    )
 
-    f = ccd.fano_factor(wavelength)
+    vmr_iris = optika.sensors.vmr_diffusion(
+        vmr_flat=vmr_total,
+        mcc=mcc_iris,
+    )
 
     electrons_measured = ccd_snr.simulations.electrons_measured()
 
-    mean_n = iqy
-    var_n = f * mean_n
-    mean_p = cce
-    var_p = 2 * np.exp(-aW) * np.square((n0 - 1) / aW) * (np.sinh(aW) - aW)
-    mean_p2 = np.square(mean_p)
-    mean_n2 = np.square(mean_n)
-    mean_i = mean_n * mean_p
-    var_exp = (var_n * var_p) + (var_n * mean_p2) + (var_p * mean_n2)
-    exp_var = mean_n * (mean_p - (var_p + mean_p2)) * u.electron / u.photon
-    var_i = var_exp + exp_var
+    vmr_mc = electrons_measured.vmr(ccd_snr.simulations.axis_xy)
 
-    vmr_shot = 1 / absorbance.average * u.photon * qe
-    vmr_fano = cce * f * u.photon
-    vmr_recombination = var_i / mean_i * u.photon - vmr_fano
-    vmr_total = vmr_shot + vmr_recombination + vmr_fano
-
-    fano_mc = ccd_snr.fano_factor(
-        a=electrons_measured,
-        axis=ccd_snr.simulations.axis_xy,
+    vmr_stern = ccd_snr.vmr_stern(
+        wavelength=wavelength,
+        temperature=ccd.temperature,
     )
-    fano_eqe = (1 / eqe) * u.photon * qe + vmr_fano
 
     ax2 = ax.twiny()
     ax2.invert_xaxis()
@@ -65,41 +62,49 @@ def noise_electron(
         wavelength,
         vmr_shot,
         ax=ax,
-        label="shot",
+        label=r"$F_{e,\mathrm{shot}}''$",
     )
     na.plt.plot(
         wavelength,
-        vmr_recombination,
+        vmr_pcc,
         ax=ax,
-        label="partial-charge collection",
+        label=r"$F_{e,\mathrm{PCC}}''$",
     )
     na.plt.plot(
         wavelength,
         vmr_fano,
         ax=ax,
-        label="Fano",
+        label=r"$F_{e,\mathrm{Fano}}''$",
     )
     na.plt.plot(
         wavelength,
         vmr_total,
         ax=ax,
-        label="total",
+        label="$F(N_e'')$",
         color="black",
         zorder=5,
     )
     na.plt.plot(
         wavelength,
-        fano_mc,
+        vmr_stern,
         ax=ax,
-        label=r"Monte Carlo",
-        zorder=0,
+        label=r"$F_{e,\mathrm{Stern}}''$",
+        color="black",
+        linestyle="dashed",
     )
     na.plt.plot(
         wavelength,
-        fano_eqe,
+        vmr_iris,
         ax=ax,
-        label="Stern et al. (1986)",
+        label=r"$F_{e,\mathrm{blurred}}''$",
         color="gray",
+    )
+    na.plt.plot(
+        wavelength,
+        vmr_mc,
+        ax=ax,
+        label=r"Monte Carlo",
+        zorder=0,
     )
     na.plt.plot(
         energy,

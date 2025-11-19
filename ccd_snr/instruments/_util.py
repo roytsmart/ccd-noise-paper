@@ -1,3 +1,4 @@
+import numpy as np
 import astropy.units as u
 import named_arrays as na
 import optika
@@ -16,22 +17,36 @@ direction = na.Cartesian3dVectorArray(0, 0, 1)
 normal = na.Cartesian3dVectorArray(0, 0, -1)
 
 
-def _fano_electron(wavelength: na.ScalarArray) -> na.ScalarArray:
+def _vmr_electron(
+    wavelength: na.ScalarArray,
+    width_pixel: u.Quantity,
+) -> na.ScalarArray:
 
-    rays = optika.rays.RayVectorArray(
-        intensity=intensity,
+    result = optika.sensors.vmr_signal(
         wavelength=wavelength,
-        direction=direction,
+        absorption=ccd._chemical.absorption(wavelength),
+        thickness_implant=ccd.thickness_implant,
+        cce_backsurface=ccd.cce_backsurface,
+        temperature=ccd.temperature,
     )
 
-    electrons = ccd.signal(rays, normal).intensity
+    mcc = optika.sensors.mean_charge_capture(
+        width_diffusion=_width_diffusion(wavelength),
+        width_pixel=width_pixel,
+    )
 
-    result = ccd_snr.fano_factor(electrons, axis=axis_experiment)
+    result = optika.sensors.vmr_diffusion(
+        vmr_flat=result,
+        mcc=mcc,
+    )
 
     return result
 
 
-def _fano_electron_naive(wavelength: na.ScalarArray) -> na.ScalarArray:
+def _vmr_photon(
+    wavelength: na.ScalarArray,
+    width_pixel: u.Quantity,
+) -> na.ScalarArray:
 
     rays = optika.rays.RayVectorArray(
         intensity=intensity,
@@ -41,49 +56,23 @@ def _fano_electron_naive(wavelength: na.ScalarArray) -> na.ScalarArray:
 
     qe = ccd.quantum_efficiency(rays, normal)
 
-    eqe = ccd.quantum_efficiency_effective(rays, normal)
+    vmr_electron = _vmr_electron(wavelength, width_pixel)
 
-    result = 1 / eqe * u.photon * qe
-
-    return result
-
-
-def _fano_photon(wavelength: na.ScalarArray) -> na.ScalarArray:
-
-    rays = optika.rays.RayVectorArray(
-        intensity=intensity,
-        wavelength=wavelength,
-        direction=direction,
-    )
-
-    electrons = ccd.signal(rays, normal).intensity
-
-    qe = ccd.quantum_efficiency(rays, normal)
-
-    photons = electrons / qe
-
-    result = ccd_snr.fano_factor(photons, axis=axis_experiment)
+    result = vmr_electron / qe
 
     return result
 
 
-def _fano_photon_naive(wavelength: na.ScalarArray) -> na.ScalarArray:
+def _snr_improvement(
+    wavelength: na.ScalarArray,
+    width_pixel: u.Quantity,
+) -> na.ScalarArray:
 
-    rays = optika.rays.RayVectorArray(
-        intensity=intensity,
-        wavelength=wavelength,
-        direction=direction,
-    )
+    vmr_electron = _vmr_electron(wavelength, width_pixel)
 
-    iqy = ccd.quantum_yield_ideal(rays.wavelength)
+    vmr_stern = ccd_snr.vmr_stern(wavelength, ccd.temperature)
 
-    absorbance = ccd.absorbance(rays, normal)
-
-    eqe = ccd.quantum_efficiency_effective(rays, normal)
-
-    fano = ccd.fano_factor(rays.wavelength) / iqy / absorbance.average * u.photon
-
-    result = 1 / eqe * u.photon + fano
+    result = np.sqrt(vmr_stern / vmr_electron)
 
     return result
 

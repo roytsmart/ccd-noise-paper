@@ -18,48 +18,44 @@ def snr_improvement() -> pathlib.Path:
     ccd = ccd_snr.ccd()
 
     wavelength = ccd_snr.wavelength()
-
     energy = ccd_snr.energy()
 
-    rays = optika.rays.RayVectorArray(
+    vmr_total = optika.sensors.vmr_signal(
         wavelength=wavelength,
-        direction=na.Cartesian3dVectorArray(0, 0, 1),
+        absorption=ccd._chemical.absorption(wavelength),
+        thickness_implant=ccd.thickness_implant,
+        cce_backsurface=ccd.cce_backsurface,
+        temperature=ccd.temperature,
     )
 
-    normal = na.Cartesian3dVectorArray(0, 0, -1)
+    width_diffusion = optika.sensors.charge_diffusion(
+        absorption=ccd._chemical.absorption(wavelength),
+        thickness_substrate=ccd.thickness_substrate,
+        thickness_depletion=ccd.depletion.thickness,
+    )
+    vmr_iris = optika.sensors.vmr_diffusion(
+        vmr_flat=vmr_total,
+        mcc=optika.sensors.mean_charge_capture(
+            width_diffusion=width_diffusion,
+            width_pixel=ccd_snr.instruments.iris.width_pixel,
+        ),
+    )
+    vmr_wfc3 = optika.sensors.vmr_diffusion(
+        vmr_flat=vmr_total,
+        mcc=optika.sensors.mean_charge_capture(
+            width_diffusion=width_diffusion,
+            width_pixel=ccd_snr.instruments.wfc3.width_pixel,
+        ),
+    )
 
-    iqy = ccd.quantum_yield_ideal(wavelength)
-    cce = ccd.charge_collection_efficiency(rays, normal)
-    eqe = ccd.quantum_efficiency_effective(rays, normal)
-    qe = ccd.quantum_efficiency(rays, normal)
+    vmr_stern = ccd_snr.vmr_stern(
+        wavelength=wavelength,
+        temperature=ccd.temperature,
+    )
 
-    absorbance = ccd.absorbance(rays, normal).average
-
-    f = ccd.fano_factor(wavelength)
-
-    n0 = ccd.cce_backsurface
-    a = optika.chemicals.Chemical("Si").absorption(wavelength)
-    W = ccd.thickness_implant
-    aW = (a * W).to(u.dimensionless_unscaled).value
-
-    mean_n = iqy
-    var_n = f * mean_n
-    mean_p = cce
-    var_p = 2 * np.exp(-aW) * np.square((n0 - 1) / aW) * (np.sinh(aW) - aW)
-    mean_p2 = np.square(mean_p)
-    mean_n2 = np.square(mean_n)
-    mean_i = mean_n * mean_p
-    var_exp = (var_n * var_p) + (var_n * mean_p2) + (var_p * mean_n2)
-    exp_var = mean_n * (mean_p - (var_p + mean_p2)) * u.electron / u.photon
-    var_i = var_exp + exp_var
-
-    vmr_simple = 1 / eqe * u.photon
-    vmr_shot = 1 / absorbance * u.photon
-    vmr_fano = f * u.photon / qe
-    vmr_pcc = (var_i / mean_i * u.photon) / qe - vmr_fano
-    vmr_total = vmr_shot + vmr_fano + vmr_pcc
-
-    ratio = np.sqrt(vmr_simple / vmr_total)
+    ratio_total = np.sqrt(vmr_stern / vmr_total)
+    ratio_iris = np.sqrt(vmr_stern / vmr_iris)
+    ratio_wfc3 = np.sqrt(vmr_stern / vmr_wfc3)
 
     with astropy.visualization.quantity_support():
         fig, ax = plt.subplots(
@@ -68,13 +64,34 @@ def snr_improvement() -> pathlib.Path:
         )
         ax2 = ax.twiny()
         ax2.invert_xaxis()
-        na.plt.plot(wavelength, ratio, ax=ax)
-        na.plt.plot(energy, ratio, ax=ax2, color="none")
+        na.plt.plot(
+            wavelength,
+            ratio_total,
+            ax=ax,
+            label="undiffused"
+            # label=r"$\sqrt{F(N_e'') / F_{e,\mathrm{Stern}}''}$"
+        )
+        na.plt.plot(
+            wavelength,
+            ratio_iris,
+            ax=ax,
+            label="IRIS",
+            # label=r"$\sqrt{F_{e,\mathrm{IRIS}}'' / F_{e,\mathrm{Stern}}''}$"
+        )
+        na.plt.plot(
+            wavelength,
+            ratio_wfc3,
+            ax=ax,
+            label="WFC3",
+            # label=r"$\sqrt{F_{e,\mathrm{WFC3}}'' / F_{e,\mathrm{Stern}}''}$"
+        )
+        na.plt.plot(energy, ratio_total, ax=ax2, color="none")
         ax.set_xscale("log")
         ax2.set_xscale("log")
         ax.set_xlabel(f"wavelength ({ax.get_xlabel()})")
         ax2.set_xlabel(f"energy ({ax2.get_xlabel()})", labelpad=16)
         ax.set_ylabel("SNR improvement")
+        ax.legend()
 
     result = aastex.Figure("SnrImprovement")
     result.append(aastex.NoEscape(r"\vspace{5pt}"))
@@ -83,8 +100,12 @@ def snr_improvement() -> pathlib.Path:
     result.add_caption(
         aastex.NoEscape(
             r"""
-The SNR improvement predicted by our noise model compared to the traditional
-model.
+The SNR improvement predicted by our noise model
+compared to the \citet{Stern1986} model.
+In blue we have plotted the SNR improvement ignoring charge diffusion.
+In orange and green we have plotted the SNR improvement,
+including charge diffusion,
+for a flat-field image observed by IRIS and WFC3.
 """
         )
     )

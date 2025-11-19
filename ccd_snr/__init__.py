@@ -2,11 +2,10 @@
 Create the figures and compile the LaTeX files for this article.
 """
 
-from . import random
-from ._fano_factor import fano_factor
 from ._wavelength import wavelength, energy
 from ._ccd import ccd, ccd_aia
 from . import diffusion
+from ._vmr import vmr_stern
 from . import simulations
 from . import instruments
 from ._acronyms import acronyms
@@ -14,11 +13,13 @@ from ._variables import variables
 from ._authors import authors
 from . import figures
 from . import tables
+from ._keywords import keywords
 from . import sections
+from ._acknowledgements import acknowledgements
 from ._document import document, pdf
 
 __all__ = [
-    "random",
+    # "random",
     "fano_factor",
     "wavelength",
     "energy",

@@ -17,27 +17,26 @@ def authors() -> list[aastex.Author]:
         "Bozeman, MT 59717, USA"
     )
 
-    gsfc = aastex.Affiliation(
-        "Goddard Space Flight Center, 8800 Greenbelt Rd, Greenbelt, MD 20771, USA"
-    )
-
     roy = aastex.Author(
         name="Roy T. Smart",
         affiliation=msu,
         orcid="0000-0002-9997-5515",
         email="roytsmart@gmail.com",
+        corresponding=True,
     )
 
     charles = aastex.Author(
         name="Charles C. Kankelborg",
         affiliation=msu,
         orcid="0000-0002-1992-7469",
+        email="kankel@montana.edu",
     )
 
     jake = aastex.Author(
         name="Jacob D. Parker",
         orcid="0000-0001-8732-8284",
-        affiliation=gsfc,
+        affiliation=msu,
+        email="jacobdparker@gmail.com",
     )
 
     return [

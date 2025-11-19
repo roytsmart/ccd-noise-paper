@@ -157,7 +157,7 @@ def energy_spectrum() -> aastex.FigureStar:
         aastex.NoEscape(
             rf"""
 The probability distribution of the number of measured electrons for a given
-wavelength and expected number of absorbed photons calculated using
+wavelength and expected number of \textit{{absorbed}} photons calculated using
 {num_experiments} samples of Equation~\ref{{eq:measuredElectrons}} and the 
 \cite{{Stern1986}} noise model."""
         )

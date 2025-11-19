@@ -18,6 +18,12 @@ def discrete_gamma(
         shape_random=shape_random,
     )
 
+    x = np.where(
+        condition=vmr != 0,
+        x=x,
+        y=mean,
+    )
+
     unit_x = x.unit
     if unit_x is not None:
         x = x.value

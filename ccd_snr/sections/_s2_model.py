@@ -23,10 +23,10 @@ of thickness $W$,
 where electron-hole pairs can recombine before being measured,
 and there is a depletion region of thickness $z_d$ on the non-illuminated side.
 
-In Section~\ref{subsec:Signal} we will calculate the signal measured by this sensor
+In Section~\ref{subsec:Signal} we will calculate the signal predicted by this sensor
 model using the method described in \citet{Stern1994}, adapted to more recent
 measurements.
-In Section~\ref{subsec:Noise} we will calculate the noise measured by this sensor
+In Section~\ref{subsec:Noise} we will calculate the noise predicted by this sensor
 model in a self-consistent manner,
 and in Section~\ref{subsec:ChargeDiffusion} we will model the charge diffusion
 of this sensor which is needed for a complete description of the noise.
@@ -40,7 +40,7 @@ and the double-primed variables represent quantities measured by the sensor.
     subsection_qe = aastex.Subsection("Signal")
     subsection_qe.append(ccd_snr.figures.absorbance_and_cce())
     subsection_qe.append(ccd_snr.figures.qe_effective())
-    subsection_qe.append(ccd_snr.tables.models())
+    subsection_qe.append(ccd_snr.tables.ccd_models())
     subsection_qe.append(
         r"""
 The average number of photoelectrons measured per incident photon is known as the \QE.
@@ -148,7 +148,9 @@ In \citet{Stern1994}, the authors define an effective \QE\ as
 \begin{equation} \label{eqe}
     \text{EQE}(\lambda) = A(\lambda) \, \E{\eta}(\lambda),
 \end{equation}
-which is the quantity that is typically measured when calibrating a image sensor
+which is found by taking the ratio of the current measured by the sensor
+to the current measured by a calibrated photodiode
+and is the quantity that is typically measured when calibrating a image sensor
 \citep{Stern1994,Stern2004,Boerner2012}.
 In Figure~\ref{fig:eqe}, we have plotted the measured, effective \QE\ for two
 sources: \citet{Boerner2012} which measured the \AIA\ \CCDs\ at a few
@@ -215,7 +217,7 @@ subsections below.
     subsubsection_noise_shot = aastex.Subsubsection("Shot Noise")
     subsubsection_noise_shot.append(
         r"""
-Shot noise from the random arrival time of each photon is often the leading 
+Photon shot noise is often assumed to be the leading 
 noise contributor in \UV\ astronomy \citep{Stern1986,Lemen2012,DePontieu2014}.
 If the expected number of photons that interact with the light-sensitive layer is
 \begin{equation}
@@ -236,7 +238,7 @@ but this in terms of the number of absorbed photons, which is internal to the se
 In terms of the expected number of incident photons given the number of absorbed photons
 the \VMR\ is
 \begin{equation} \label{eq:photonShotFano}
-    F_{\gamma,\text{shot}} = F \left(\frac{N_\gamma'}{A} \right) = \frac{1}{A}
+    F_{\gamma,\text{shot}} \equiv F \left(\frac{N_\gamma'}{A} \right) = \frac{1}{A}
 \end{equation}
 since $A$ is the conversion factor between incident photons and absorbed photons.
 $F_{\gamma,\text{shot}}$ is plotted in Figure~\ref{fig:Noise}a in blue and demonstrates
@@ -247,7 +249,7 @@ We can also express the \VMR\ of the shot noise in terms of the
 number of measured electrons by using the \QE\ as the conversion factor between
 the unprimed and double-primed variables,
 \begin{equation}
-    F_{\gamma,\text{shot}}'' = \E{n} \, \E{\eta}.
+    F_{e,\text{shot}}'' = \E{n} \, \E{\eta}.
 \end{equation}
 This equation is plotted in Figure~\ref{fig:Noise}b in blue,
 where we can see that it increases linearly with decreasing wavelength since
@@ -259,7 +261,7 @@ the average quantum yield is increasing.
     subsubsection_noise_fano.append(
         r"""
 The energy resolution of silicon detectors is ultimately limited due to Fano
-noise \citep{Fano1947}, the unpredictable variation of the quantum yield $n$.
+noise \citep{Fano1947}, the random variation of the quantum yield $n$.
 Fano noise is usually expressed in terms of the Fano factor, 
 $\mathcal{F} = F(n)$.
 Silicon is commonly accepted to have $\mathcal{F} \approx 0.1$ \citep{Janesick2001}.
@@ -298,8 +300,6 @@ In Figure~\ref{fig:Noise}b we have plotted $F_{e,\text{Fano}}''$ in green.
 This shows that the Fano noise is the smallest contributor to the total noise
 across the entire wavelength range and is often at least an order of magnitude
 smaller than the other noise sources.
-Only in the \UV, where the Fano factor roughly doubles around \qty{2000}{\angstrom}, 
-is the Fano noise an appreciable fraction of the total noise.
 """
     )
     subsection_noise.append(subsubsection_noise_fano)
@@ -314,7 +314,7 @@ In Figure~\ref{fig:penetrationDepth}, we have plotted the penetration depth in
 silicon vs. the thickness of the \PCC\ region.
 We can see that there are two regions in the \UV\ where the penetration depth
 is less than the thickness of the \PCC\ region.
-In these regions, there is a significant chance that some of the electron-hole
+In these regions, there is a significant chance that some of the electron-hole pairs
 will randomly recombine before being measured by the sensor.
 The stochastic nature of this process leads us to consider this as a new noise
 source, \PCC\ noise.
@@ -330,7 +330,7 @@ we can express the \textit{measured} quantum yield as
     n_i'' \leftarrow \text{Binomial}\bigl(n_i', \eta(z_i) \bigr),
 \end{equation}
 where
-$z_i$ is the penetration depth of the $i$th photon.
+$z_i$ is the penetration depth of the $i$th photon
 and $\text{Binomial}(n, p)$ is a sample from the binomial distribution
 with $n$ trials and probability of success $p$.
 We can use \ref{eq:measuredQuantumYield} to compute the total number of measured
@@ -342,17 +342,17 @@ This expression is intended to be used in an instrument forward model to sample
 the distribution of measured electrons given an expected number of incident photons.
 
 The \VMR\ of this process is non-trivial since Equation~\ref{eq:measuredElectrons}
-is a sum of Binomial distributions with completely independent $n$ and $p$ for
+is a sum of Binomial draws with completely independent $n$ and $p$ for
 each term.
-However, if the \VMR\ of the \CCE\ is
+However, if we compute the \VMR\ of the \CCE\ by taking the second moment of
+Equation~\ref{differential-cce} in a similar fashion to Equation~\ref{cce},
 \begin{equation}
     F(\eta) = \frac{2 e^{-\alpha W}}{\E{\eta}} \left( \frac{1 - \eta_0}{\alpha W} \right)^2 \bigl( \sinh(\alpha W) - \alpha W \bigr),
 \end{equation}
-and we hold $N_\gamma'$ constant,
 we can use the expressions given by \citet{heropup2019}
 to find the \VMR\ of only the Fano noise and \PCC\ noise as
 \begin{equation}
-    F_{e,\text{sensor}}'' = 1 - \E{\eta} - F(\eta) + \E{\eta} \mathcal{F} + \E{n} F(\eta) + \mathcal{F} F(\eta).
+    F_{e,\text{sensor}}'' = 1 + (\mathcal{F} - 1) \E{\eta} + \bigl( \E{n} + \mathcal{F} - 1 \bigr) F(\eta).
 \end{equation}
 The contribution from only PCC noise is then
 \begin{equation}
@@ -398,18 +398,18 @@ which is designed to be simple to use for existing and future instrument pipelin
         r"""
 In most back-illuminated imaging sensors used for \UV\ astronomy,
 the depletion region (the region with significant electric field) does not 
-penetrate all the way into the device.
+extend all the way from the gate structure through the device.
 As a result, there is a so-called field-free region near the back of the sensor
 where photoelectrons must undergo a random walk to find their way to the
 depletion region where they can then be conducted to the terminals and measured
 \citep{Janesick2001}.
 This random walk generally leads to a loss of spatial resolution measured by
 the sensor since electrons can diffuse to adjacent pixels.
-It also leads to an apparent reduction in the noise of a flat field measured by the sensor since
+It also leads to a reduction in the variance of a flat field measured by the sensor since
 the blurring due to this diffusion induces a correlation between neighboring 
 pixels.
 
-Using Monte Carlo modeling, \citet{Janesick2001} found the following analytic
+Using Monte Carlo modeling, \citet{Janesick2001} found the following
 expression for the standard deviation of the charge diffusion kernel:
 \begin{equation}
     \label{eq:chargeDiffusion}
@@ -419,10 +419,7 @@ expression for the standard deviation of the charge diffusion kernel:
     \end{cases}
 \end{equation} 
 where $z$ is the distance from the back surface at which the photon is absorbed,
-\begin{equation}
-    z_f = D - z_d
-\end{equation}
-is the thickness of the field-free region of the sensor,
+$z_f = D - z_d$ is the thickness of the field-free region of the sensor,
 and $z_d$ is the thickness of the depletion region.
 Using Equation \ref{eq:chargeDiffusion},
 we can find the average variance of the charge diffusion kernel by taking an
@@ -436,7 +433,7 @@ The thickness of the depletion region or the field-free region is difficult
 to measure, and depends on the voltage applied to the sensor and the charge
 collected at the terminals \citep{Stern2004}.
 
-However, \citet{Stern2004} did measure the size of the charge diffusion kernel,
+However, \citet{Stern2004} did estimate the size of the charge diffusion kernel,
 for two discrete wavelengths, of a \goesCcdThickness-thick 
 (100 $\Omega$-cm resistivity) \CCD\ for the GOES Soft X-ray Imager.
 We can use these measurements to estimate the size of the depletion region
@@ -449,21 +446,14 @@ extent of a pixel.
 However, since a photon can strike anywhere within the central pixel,
 we need to convolve with a rectangle function the width of a pixel before
 integrating.
-So, our definition for the \MCC\ is
-\begin{equation}
-    \label{eq:mccIntegral}
-    \text{MCC} = \left\{ \frac{1}{d} \int_{-d/2}^{d/2} \left[ K(x') * \Pi \left( \frac{x'}{d} \right) \right](x) \, dx \right\}^2,
-\end{equation}
-where $K(x)$ is the charge diffusion kernel,
-$\Pi(x)$ is the rectangle function,
-and $d$ is the width of a pixel.
-If we assume that the charge diffusion kernel is a Gaussian with variance 
-$\E{\sigma}^2$, then we can analytically solve for the \MCC,
+If we assume that the charge diffusion kernel is a Gaussian with variance $\E{\sigma}^2$,
+then the \MCC\ is
 \begin{equation}
     \label{eq:mcc}
-    \text{MCC} = \left[ \frac{1}{\sqrt{\pi a}} \left( e^{-a} - 1 \right) + \text{erf} \left( \sqrt{a} \right) \right]^2,
+    m = \left[ \frac{1}{\sqrt{\pi a}} \left( e^{-a} - 1 \right) + \text{erf} \left( \sqrt{a} \right) \right]^2,
 \end{equation}
 where $a = d^2 / 2 \E{\sigma}^2$,
+$d$ is the width of a pixel, 
 and $\text{erf}(x)$ is the error function."""
     )
     subsection_charge_spreading.append(ccd_snr.figures.charge_diffusion())
@@ -473,7 +463,6 @@ and $\text{erf}(x)$ is the error function."""
 In the top panel of Figure~\ref{fig:chargeDiffusion},
 we have  plotted a fit of Equation~\ref{eq:mcc} to the measurements in 
 \citet{Stern2004} which found $z_d=\depletionThickness$ best matched the data. 
-The fit is qualitatively better than the models shown in \cite{Stern2004}.
 In the lower panel of Figure~\ref{fig:chargeDiffusion},
 we have plotted the corresponding standard deviation of the charge diffusion
 kernel as a function of wavelength which predicts that the charge diffusion is
@@ -483,13 +472,31 @@ since the penetration depth is low in this regime.
 To forward model this charge diffusion in a practical way,
 we've included Figure~\ref{fig:chargeDiffusionKernel},
 a $3 \times 3$ kernel where the value in each pixel has been computed in
-a manner similar to Equation~\ref{eq:mccIntegral},
+a manner similar to Equation~\ref{eq:mcc},
 just with different limits of integration.
 We used the \IRIS\ pixel size and a representative wavelength 
 to demonstrate the worst-case scenario for \IRIS.
 This kernel is intended to be convolved with an input image after the noise
 model (described above) has been applied to approximate the effects of charge
 diffusion and complete the forward model of the sensor.
+We have provided the function
+\href{https://optika.readthedocs.io/en/latest/_autosummary/optika.sensors.kernel\_diffusion.html}{\texttt{optika.sensors.kernel\_diffusion()}},
+which can be used to compute the charge diffusion kernel for other wavelengths
+and pixel sizes.
+
+We can use the definition of a discrete, 2D convolution and Bienaym\'es formula
+to find that for an unblurred flat-field image with a given \VMR, $F_0$,
+the blurring introduced by an even, separable, $3 \times 3$ kernel is
+\begin{equation}
+    F_\text{blurred} = \epsilon F_0,
+\end{equation}
+where
+\begin{equation}
+    \epsilon = \frac{1}{4} \left( 3 m - 2 \sqrt{m} + 1 \right)^2.
+\end{equation}
+Unlike the other noise sources discussed in Section~\ref{subsec:Noise},
+the \VMR\ of the charge diffusion process is multiplicative, instead of additive,
+and cannot be directly compared to these other sources.
 """
     )
     result.append(subsection_charge_spreading)

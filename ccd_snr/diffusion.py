@@ -1,108 +1,12 @@
 import numpy as np
-import scipy.special
 import astropy.units as u
 import named_arrays as na
 import optika
 import ccd_snr
 
 __all__ = [
-    "wavelength",
-    "width_pixel",
     "kernel",
 ]
-
-wavelength = 1400 * u.AA
-
-width_pixel = 13 * u.um
-
-
-def _kernel_1d(
-    width_diffusion: u.Quantity,
-    width_pixel: u.Quantity,
-    index_pixel: int | na.AbstractScalar,
-) -> na.AbstractScalar:
-
-    w = width_diffusion
-    d = width_pixel
-    n = index_pixel
-
-    x = d / w
-    x2 = np.square(x)
-
-    c = 1 / (x * np.sqrt(2 * np.pi))
-
-    def g(m: int | na.AbstractScalar) -> na.AbstractScalar:
-        return np.exp(-x2 * m / 2)
-
-    def e(m: int | na.AbstractScalar) -> na.AbstractScalar:
-        return m * scipy.special.erf(x * m / np.sqrt(2))
-
-    g1 = g(np.square(n - 1))
-    g2 = -2 * g(np.square(n))
-    g3 = g(np.square(n + 1))
-
-    e1 = e(n - 1) / 2
-    e2 = -e(n)
-    e3 = e(n + 1) / 2
-
-    result = c * (g1 + g2 + g3) + e1 + e2 + e3
-
-    return result
-
-
-def _kernel_2d(
-    width_diffusion: u.Quantity,
-    width_pixel: u.Quantity,
-    index_x: int | na.AbstractScalar,
-    index_y: int | na.AbstractScalar,
-) -> na.AbstractScalar:
-
-    kx = _kernel_1d(
-        width_diffusion=width_diffusion,
-        width_pixel=width_pixel,
-        index_pixel=index_x,
-    )
-    print(f"{kx=}")
-    ky = _kernel_1d(
-        width_diffusion=width_diffusion,
-        width_pixel=width_pixel,
-        index_pixel=index_y,
-    )
-
-    return kx * ky
-
-
-def _kernel(
-    width_diffusion: u.Quantity,
-    width_pixel: u.Quantity,
-) -> na.FunctionArray:
-    """
-    The charge diffusion kernel convolved with a pixel.
-
-    Parameters
-    ----------
-    width_diffusion
-        The standard deviation of the charge diffusion kernel.
-    width_pixel
-        The width of a pixel.
-    """
-
-    index_x = na.linspace(-1, 1, axis="detector_x", num=3)
-    index_y = na.linspace(-1, 1, axis="detector_y", num=3)
-
-    output = _kernel_2d(
-        width_diffusion=width_diffusion,
-        width_pixel=width_pixel,
-        index_x=index_x,
-        index_y=index_y,
-    )
-
-    output = output / output.sum(("detector_x", "detector_y"))
-
-    return na.FunctionArray(
-        inputs=na.Cartesian2dVectorArray(index_x, index_y),
-        outputs=output,
-    )
 
 
 def kernel(
@@ -112,7 +16,7 @@ def kernel(
 
     ccd = ccd_snr.ccd()
 
-    return _kernel(
+    return optika.sensors.kernel_diffusion(
         width_diffusion=ccd.width_charge_diffusion(
             rays=optika.rays.RayVectorArray(
                 wavelength=wavelength,
@@ -120,4 +24,6 @@ def kernel(
             normal=na.Cartesian3dVectorArray(0, 0, -1),
         ),
         width_pixel=width_pixel,
+        axis_x=ccd_snr.simulations.axis_x,
+        axis_y=ccd_snr.simulations.axis_y,
     )

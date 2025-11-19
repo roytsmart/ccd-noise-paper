@@ -30,6 +30,7 @@ def document() -> aastex.Document:
 
     doc.packages.append(aastex.Package("amsmath"))
     doc.packages.append(aastex.Package("hyperref"))
+    doc.packages.append(aastex.Package("siunitx"))
 
     doc.preamble += ccd_snr.acronyms()
     doc.preamble.append(
@@ -48,10 +49,12 @@ def document() -> aastex.Document:
     doc += ccd_snr.authors()
 
     doc.append(ccd_snr.sections.abstract())
+    doc.append(ccd_snr.keywords())
     doc.append(ccd_snr.sections.introduction())
     doc.append(ccd_snr.sections.model())
     doc.append(ccd_snr.sections.discussion())
     doc.append(ccd_snr.sections.conclusion())
+    doc.append(ccd_snr.acknowledgements())
 
     doc.append(aastex.Bibliography("sources"))
 

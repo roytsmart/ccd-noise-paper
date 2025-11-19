@@ -64,7 +64,24 @@ def electrons_measured() -> na.ScalarArray:
     The number of electrons measured by each pixel in the simulation.
     """
     ccd = ccd_snr.ccd()
-    return ccd.signal(rays(), normal).intensity
+
+    r = rays()
+
+    result = ccd.signal(r, normal).intensity
+
+    kernel = ccd_snr.diffusion.kernel(
+        wavelength=r.wavelength,
+        width_pixel=ccd_snr.instruments.iris.width_pixel,
+    )
+
+    result = na.convolve(
+        array=result,
+        kernel=kernel.outputs,
+        axis=ccd_snr.simulations.axis_xy,
+        mode="wrap",
+    )
+
+    return result
 
 
 @functools.cache

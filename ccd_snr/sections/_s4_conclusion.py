@@ -6,7 +6,7 @@ __all__ = [
 
 
 def conclusion() -> aastex.Section:
-    result = aastex.Section("Conclusion")
+    result = aastex.Section("Conclusions and Future Work")
     result.packages.append(
         aastex.Package(name="algorithm2e", options="ruled"),
     )
@@ -43,12 +43,9 @@ and also cannot be characterized using a \VMR.
 Instead, this work focuses only on the noise intrinsic to the charge-generation
 process, since this comparatively consistent across different instruments.
 
-This article is an example of an executable paper \citep{Lasser2020},
-all of the simulations, figures, and tables are generated dynamically
-when this article is created.
-This helps prevent mistakes and allows this research to be as repeatable as possible.
-The code to create this document is available at 
-\url{https://github.com/roytsmart/ccd-noise-paper}.
+We plan to use this work to model the noise for \ESIS\ \citep{Parker2022},
+as well as \FURST, sounding-rocket-based spectrographs developed by our
+research group for observing the solar atmosphere.
 """
     )
     return result
