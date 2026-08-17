@@ -8,4 +8,4 @@
 
 An investigation into the signal-to-noise ratio of astronomical CCDs which considers the effect of recombination
 
-Here is a link to the [pdf version](https://ccd-euv-snr.readthedocs.io/_/downloads/en/latest/pdf/) of the article.
+Here is a link to the [pdf version](https://roytsmart.github.io/ccd-noise-paper/ccd-euv-snr.pdf) of the article.

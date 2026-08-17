@@ -10,11 +10,6 @@ build:
     - texlive-science
     - cm-super
     - dvipng
-  jobs:
-    post_build:
-      - python -c "import ccd_snr; ccd_snr.pdf()"
-      - mkdir $READTHEDOCS_OUTPUT/pdf/
-      - mv ccd_snr/ccd-euv-snr.pdf $READTHEDOCS_OUTPUT/pdf/
 
 sphinx:
   configuration: docs/conf.py
