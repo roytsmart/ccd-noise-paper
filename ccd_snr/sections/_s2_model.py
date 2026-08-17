@@ -9,8 +9,7 @@ import ccd_snr.figures
 
 def model() -> aastex.Section:
     result = aastex.Section("Sensor Model")
-    result.append(
-        r"""
+    result.append(r"""
 In this work, we will use the back-illuminated CCD model described in 
 \citet{Stern1994} as a basis for our sensor model to make it directly comparable with 
 previous works in the literature.
@@ -34,15 +33,13 @@ Throughout this section we will adopt the convention that unprimed variables
 represent quantities incident on the sensor,
 primed variables represent quantities internal to the sensor,
 and the double-primed variables represent quantities measured by the sensor.
-"""
-    )
+""")
     result.append(ccd_snr.figures.schematic())
     subsection_qe = aastex.Subsection("Signal")
     subsection_qe.append(ccd_snr.figures.absorbance_and_cce())
     subsection_qe.append(ccd_snr.figures.qe_effective())
     subsection_qe.append(ccd_snr.tables.ccd_models())
-    subsection_qe.append(
-        r"""
+    subsection_qe.append(r"""
 The average number of photoelectrons measured per incident photon is known as the \QE.
 This is a common performance metric for measuring sensor sensitivity and it is
 given in \citet{Janesick2001} as
@@ -165,14 +162,12 @@ and the corresponding values of the free parameters are shown in
 Table~\ref{table:models}.
 Throughout the remainder of this work we will use the model which best fits
 the \citet{Heymes2020} data.
-"""
-    )
+""")
     result.append(subsection_qe)
 
     subsection_noise = aastex.Subsection("Noise")
     subsection_noise.append(ccd_snr.figures.noise())
-    subsection_noise.append(
-        r"""
+    subsection_noise.append(r"""
 Our noise model will consider three sources:
 shot noise from the quantized nature of the photons striking the sensor,
 Fano noise due to inherent randomness in the process which converts photons
@@ -212,11 +207,9 @@ Figure~\ref{fig:Noise}b is useful when \textit{calibrating} an instrument
 since we directly measure these electrons.
 The details of the calculations for Figure~\ref{fig:Noise} are presented in the 
 subsections below.
-"""
-    )
+""")
     subsubsection_noise_shot = aastex.Subsubsection("Shot Noise")
-    subsubsection_noise_shot.append(
-        r"""
+    subsubsection_noise_shot.append(r"""
 Photon shot noise is often assumed to be the leading 
 noise contributor in \UV\ astronomy \citep{Stern1986,Lemen2012,DePontieu2014}.
 If the expected number of photons that interact with the light-sensitive layer is
@@ -254,12 +247,10 @@ the unprimed and double-primed variables,
 This equation is plotted in Figure~\ref{fig:Noise}b in blue,
 where we can see that it increases linearly with decreasing wavelength since
 the average quantum yield is increasing.
-"""
-    )
+""")
     subsection_noise.append(subsubsection_noise_shot)
     subsubsection_noise_fano = aastex.Subsubsection("Fano Noise")
-    subsubsection_noise_fano.append(
-        r"""
+    subsubsection_noise_fano.append(r"""
 The energy resolution of silicon detectors is ultimately limited due to Fano
 noise \citep{Fano1947}, the random variation of the quantum yield $n$.
 Fano noise is usually expressed in terms of the Fano factor, 
@@ -300,16 +291,14 @@ In Figure~\ref{fig:Noise}b we have plotted $F_{e,\text{Fano}}''$ in green.
 This shows that the Fano noise is the smallest contributor to the total noise
 across the entire wavelength range and is often at least an order of magnitude
 smaller than the other noise sources.
-"""
-    )
+""")
     subsection_noise.append(subsubsection_noise_fano)
     subsubsection_noise_recombination = aastex.Subsubsection(
         "Partial Charge Collection Noise",
     )
     subsection_noise.append(ccd_snr.figures.penetration_depth())
     subsection_noise.append(ccd_snr.figures.energy_spectrum())
-    subsubsection_noise_recombination.append(
-        r"""
+    subsubsection_noise_recombination.append(r"""
 In Figure~\ref{fig:penetrationDepth}, we have plotted the penetration depth in
 silicon vs. the thickness of the \PCC\ region.
 We can see that there are two regions in the \UV\ where the penetration depth
@@ -388,14 +377,12 @@ we've provided a reference implementation of Equation~\ref{eq:measuredElectrons}
 in Python,
 \href{https://optika.readthedocs.io/en/latest/_autosummary/optika.sensors.signal.html}{\texttt{optika.sensors.signal()}},
 which is designed to be simple to use for existing and future instrument pipelines.
-"""
-    )
+""")
     subsection_noise.append(subsubsection_noise_recombination)
     result.append(subsection_noise)
 
     subsection_charge_spreading = aastex.Subsection("Charge Diffusion")
-    subsection_charge_spreading.append(
-        r"""
+    subsection_charge_spreading.append(r"""
 In most back-illuminated imaging sensors used for \UV\ astronomy,
 the depletion region (the region with significant electric field) does not 
 extend all the way from the gate structure through the device.
@@ -454,12 +441,10 @@ then the \MCC\ is
 \end{equation}
 where $a = d^2 / 2 \E{\sigma}^2$,
 $d$ is the width of a pixel, 
-and $\text{erf}(x)$ is the error function."""
-    )
+and $\text{erf}(x)$ is the error function.""")
     subsection_charge_spreading.append(ccd_snr.figures.charge_diffusion())
     subsection_charge_spreading.append(ccd_snr.figures.diffusion_kernel())
-    subsection_charge_spreading.append(
-        r"""
+    subsection_charge_spreading.append(r"""
 In the top panel of Figure~\ref{fig:chargeDiffusion},
 we have  plotted a fit of Equation~\ref{eq:mcc} to the measurements in 
 \citet{Stern2004} which found $z_d=\depletionThickness$ best matched the data. 
@@ -497,8 +482,7 @@ where
 Unlike the other noise sources discussed in Section~\ref{subsec:Noise},
 the \VMR\ of the charge diffusion process is multiplicative, instead of additive,
 and cannot be directly compared to these other sources.
-"""
-    )
+""")
     result.append(subsection_charge_spreading)
 
     return result

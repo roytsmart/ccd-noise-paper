@@ -10,8 +10,7 @@ def conclusion() -> aastex.Section:
     result.packages.append(
         aastex.Package(name="algorithm2e", options="ruled"),
     )
-    result.append(
-        r"""
+    result.append(r"""
 This work aims to resolve the discrepancy identified by 
 \citet{Borders2010} and \citet{Wulser2018} in the predicted vs. observed noise
 measured by back-illuminated silicon imaging sensors.
@@ -46,6 +45,5 @@ process, since this comparatively consistent across different instruments.
 We plan to use this work to model the noise for \ESIS\ \citep{Parker2022},
 as well as \FURST, sounding-rocket-based spectrographs developed by our
 research group for observing the solar atmosphere.
-"""
-    )
+""")
     return result

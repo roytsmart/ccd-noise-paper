@@ -3,8 +3,7 @@ import aastex
 
 def introduction() -> aastex.Section:
     result = aastex.Section("Introduction")
-    result.append(
-        r"""
+    result.append(r"""
 Back-illuminated, silicon-based image sensors such as \CCDs\ and \CMOS\ sensors 
 are ubiquitous in \UV\ astronomy, 
 and are currently used in many \UV\ instruments such as 
@@ -61,6 +60,5 @@ We will also provide noise predictions for \AIA\ and \MUSE\
 of observations captured by these instruments.
 Finally, we have made available a reference implementation of our noise model in Python
 which is available to be installed from \PyPI.
-"""
-    )
+""")
     return result

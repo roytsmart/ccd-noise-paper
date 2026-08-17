@@ -86,14 +86,10 @@ def noise_fano() -> aastex.Figure:
     # result.append(aastex.NoEscape(r"\vspace{5pt}"))
     result.add_fig(fig, width=None)
 
-    result.add_caption(
-        aastex.NoEscape(
-            r"""
+    result.add_caption(aastex.NoEscape(r"""
 The VMR of the number of generated photoelectrons as a function of wavelength
 given by a Monte Carlo simulation of Equation~\ref{eq:totalElectrons} (individual photons)
 and Equation~\ref{eq:approxTotalElectrons} (ensemble approximation). 
-"""
-        )
-    )
+"""))
 
     return result

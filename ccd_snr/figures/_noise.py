@@ -23,9 +23,7 @@ def noise() -> aastex.FigureStar:
 
     result = aastex.FigureStar("Noise")
     result.add_fig(fig, width=None)
-    result.add_caption(
-        aastex.NoEscape(
-            r"""
+    result.add_caption(aastex.NoEscape(r"""
 The total and component-wise VMR of our sensor model expressed in two
 different units:
 photons incident on the sensor (top)
@@ -33,8 +31,6 @@ and electrons measured by the sensor (bottom).
 Plotted for comparison is the
 VMR of the \citet{Stern1986} noise model (dashed)
 and a Monte Carlo simulation of $F(N_e'')$ in red.
-"""
-        )
-    )
+"""))
 
     return result

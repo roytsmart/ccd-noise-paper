@@ -13,13 +13,9 @@ def ccd_models() -> pylatex.Table:
     result.escape = False
     result._star_latex_name = True
 
-    result.add_caption(
-        pylatex.NoEscape(
-            r"""
+    result.add_caption(pylatex.NoEscape(r"""
 The sensor model parameters which best fit the measurements in \citet{Boerner2012}
-and \citet{Heymes2020}."""
-        )
-    )
+and \citet{Heymes2020}."""))
     result.append(pylatex.Label("table:models"))
 
     ccd = ccd_snr.ccd()

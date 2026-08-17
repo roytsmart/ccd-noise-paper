@@ -44,7 +44,7 @@ def penetration_depth() -> pathlib.Path:
         ax2.set_xscale("log")
         ax.set_yscale("log")
         ax2.set_yscale("log")
-        ax.set_xlabel(f"wavelength ({ax.get_xlabel()})");
+        ax.set_xlabel(f"wavelength ({ax.get_xlabel()})")
         ax2.set_xlabel(f"energy ({ax2.get_xlabel()})", labelpad=16)
         ax.set_ylabel(f"penetration depth ({depth.unit:latex_inline})")
 
@@ -52,13 +52,9 @@ def penetration_depth() -> pathlib.Path:
     result.append(aastex.NoEscape(r"\vspace{5pt}"))
     result.add_fig(fig, width=None)
 
-    result.add_caption(
-        aastex.NoEscape(
-            r"""
+    result.add_caption(aastex.NoEscape(r"""
 The penetration depth in silicon as a function of wavelength plotted against
 the depth of the PCC region.
-"""
-        )
-    )
+"""))
 
     return result

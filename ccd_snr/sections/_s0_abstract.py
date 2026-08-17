@@ -7,8 +7,7 @@ __all__ = [
 
 def abstract() -> aastex.Abstract:
     result = aastex.Abstract()
-    result.append(
-        r"""
+    result.append(r"""
 Ultraviolet (\acs{UV}) astronomy currently relies on back-illuminated silicon imaging sensors.
 While the noise in these sensors is typically assumed to be dominated by photon shot noise,
 measurements from \WFC\ and \IRIS\ reveal a significant discrepancy:
@@ -24,6 +23,5 @@ This finding implies that the signal-to-noise ratio achievable with these sensor
 is higher in the \UV\ than previously understood,
 potentially impacting both future instrument proposals and the uncertainties of our current \UV\ imagery.
 At about \qtyrange{2000}{3500}{\angstrom}, \PCC\ is the dominant noise source in the high-signal limit.
-\acresetall"""
-    )
+\acresetall""")
     return result

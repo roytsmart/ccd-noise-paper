@@ -54,14 +54,10 @@ def diffusion_kernel() -> aastex.Figure:
     # result.append(aastex.NoEscape(r"\vspace{5pt}"))
     result.add_fig(fig, width=None)
 
-    result.add_caption(
-        aastex.NoEscape(
-            f"""
+    result.add_caption(aastex.NoEscape(f"""
 The charge diffusion kernel at {wavelength:latex_inline} convolved with a 
 {width_pixel:latex_inline} IRIS pixel and integrated over the extent of each
 pixel.
-"""
-        )
-    )
+"""))
 
     return result

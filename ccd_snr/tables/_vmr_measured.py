@@ -2,7 +2,6 @@ import numpy as np
 import astropy.units as u
 import aastex
 import named_arrays as na
-import optika
 import ccd_snr
 from ccd_snr.instruments._util import _vmr_electron
 

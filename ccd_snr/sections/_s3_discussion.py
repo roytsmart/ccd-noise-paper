@@ -7,8 +7,7 @@ def discussion() -> aastex.Section:
     result.append(ccd_snr.figures.snr_improvement())
     result.append(ccd_snr.tables.vmr_predicted())
     result.append(ccd_snr.tables.vmr_measured())
-    result.append(
-        r"""Since $\text{EQE}(\lambda)$ can be interpreted as an efficiency,
+    result.append(r"""Since $\text{EQE}(\lambda)$ can be interpreted as an efficiency,
 it is tempting to think that the expected number of measured photons and their
 variance is $\text{EQE} \times \E{N}_\gamma$.
 However, using the effective \QE\ in this way is equivalent to an
@@ -98,6 +97,5 @@ is slightly different than that of the sensor measured by \citet{Heymes2020}.
 Another possibility is that the thickness of the depletion region is different
 for these sensors than the one measured by \citet{Stern2004},
 leading to more charge diffusion.
-"""
-    )
+""")
     return result
