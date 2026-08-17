@@ -7,6 +7,9 @@ build:
   apt_packages:
     - graphviz
     - texlive-publishers
+    - texlive-science
+    - cm-super
+    - dvipng
   jobs:
     post_build:
       - python -c "import ccd_snr; ccd_snr.pdf()"
