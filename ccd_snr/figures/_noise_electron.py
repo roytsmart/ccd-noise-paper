@@ -1,6 +1,4 @@
-import numpy as np
 import matplotlib.axes
-import astropy.units as u
 import named_arrays as na
 import optika
 import ccd_snr
@@ -21,31 +19,23 @@ def noise_electron(
 
     kwargs_vmr = dict(
         wavelength=wavelength,
-        absorption=ccd._chemical.absorption(wavelength),
         thickness_implant=ccd.thickness_implant,
         cce_backsurface=ccd.cce_backsurface,
         temperature=ccd.temperature,
+        diffusion=False,
     )
     vmr_shot = optika.sensors.vmr_signal(fano=False, pcc=False, **kwargs_vmr)
     vmr_fano = optika.sensors.vmr_signal(shot=False, pcc=False, **kwargs_vmr)
     vmr_pcc = optika.sensors.vmr_signal(shot=False, fano=False, **kwargs_vmr)
     vmr_total = optika.sensors.vmr_signal(**kwargs_vmr)
 
-    width_diffusion = optika.sensors.charge_diffusion(
-        absorption=ccd._chemical.absorption(wavelength),
-        thickness_substrate=ccd.thickness_substrate,
+    kwargs_diffusion = kwargs_vmr | dict(
         thickness_depletion=ccd.depletion.thickness,
-    )
-
-    mcc_iris = optika.sensors.mean_charge_capture(
-        width_diffusion=width_diffusion,
+        thickness_substrate=ccd.thickness_substrate,
         width_pixel=ccd_snr.instruments.iris.width_pixel,
+        diffusion=True,
     )
-
-    vmr_iris = optika.sensors.vmr_diffusion(
-        vmr_flat=vmr_total,
-        mcc=mcc_iris,
-    )
+    vmr_iris = optika.sensors.vmr_signal(**kwargs_diffusion)
 
     electrons_measured = ccd_snr.simulations.electrons_measured()
 

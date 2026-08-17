@@ -65,23 +65,13 @@ def electrons_measured() -> na.ScalarArray:
     """
     ccd = ccd_snr.ccd()
 
-    r = rays()
-
-    result = ccd.signal(r, normal).intensity
-
-    kernel = ccd_snr.diffusion.kernel(
-        wavelength=r.wavelength,
+    return ccd.signal(
+        photons=na.broadcast_to(photons_expected, shape),
+        wavelength=ccd_snr.wavelength(),
         width_pixel=ccd_snr.instruments.iris.width_pixel,
+        axis_xy=axis_xy,
+        wrap=True,
     )
-
-    result = na.convolve(
-        array=result,
-        kernel=kernel.outputs,
-        axis=ccd_snr.simulations.axis_xy,
-        mode="wrap",
-    )
-
-    return result
 
 
 @functools.cache
@@ -90,5 +80,5 @@ def photons_measured() -> na.ScalarArray:
     The number of photons measured by each pixel in the simulation.
     """
     ccd = ccd_snr.ccd()
-    qe = ccd.quantum_efficiency(rays(), normal)
+    qe = ccd.quantum_efficiency(ccd_snr.wavelength())
     return electrons_measured() / qe

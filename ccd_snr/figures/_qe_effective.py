@@ -1,6 +1,5 @@
 import matplotlib.pyplot as plt
 import named_arrays as na
-import optika
 import aastex
 import ccd_snr
 
@@ -25,14 +24,8 @@ def qe_effective() -> aastex.Figure:
     wavelength = ccd_snr.wavelength()
     energy = ccd_snr.energy()
 
-    rays = optika.rays.RayVectorArray(
-        wavelength=wavelength,
-        direction=na.Cartesian3dVectorArray(0, 0, 1),
-    )
-    normal = na.Cartesian3dVectorArray(0, 0, -1)
-
-    eqe = ccd.quantum_efficiency_effective(rays, normal)
-    eqe_aia = ccd_aia.quantum_efficiency_effective(rays, normal)
+    eqe = ccd.quantum_efficiency_effective(wavelength)
+    eqe_aia = ccd_aia.quantum_efficiency_effective(wavelength)
 
     sz_scatter = 10
     fig, ax = plt.subplots(
@@ -113,16 +106,12 @@ def qe_effective() -> aastex.Figure:
     result.append(aastex.NoEscape(r"\vspace{5pt}"))
     result.add_fig(fig, width=None)
 
-    result.add_caption(
-        aastex.NoEscape(
-            r"""
+    result.add_caption(aastex.NoEscape(r"""
 A comparison of $\text{EQE}(\lambda)$ measured by \citet{Boerner2012} and \citet{Heymes2020},
 along with the best-fit models described in Table \ref{table:models} plotted
 as lines with the same color as the data.
 The inset zooms into the ultraviolet to better visualize the difference between
 the measurement and model in this range.
-"""
-        )
-    )
+"""))
 
     return result

@@ -1,6 +1,5 @@
 import matplotlib.pyplot as plt
 import named_arrays as na
-import optika
 import aastex
 import ccd_snr
 
@@ -16,14 +15,8 @@ def absorbance_and_cce() -> aastex.Figure:
 
     ccd = ccd_snr.ccd()
 
-    rays = optika.rays.RayVectorArray(
-        wavelength=wavelength,
-        direction=na.Cartesian3dVectorArray(0, 0, 1),
-    )
-    normal = na.Cartesian3dVectorArray(0, 0, -1)
-
-    absorbance = ccd.absorbance(rays, normal).average
-    cce = ccd.charge_collection_efficiency(rays, normal)
+    absorbance = ccd.absorbance(wavelength).average
+    cce = ccd.charge_collection_efficiency(wavelength)
 
     fig, ax = plt.subplots(
         figsize=(aastex.column_width_inches, 2.5),
@@ -61,14 +54,10 @@ def absorbance_and_cce() -> aastex.Figure:
     result.append(aastex.NoEscape(r"\vspace{5pt}"))
     result.add_fig(fig, width=None)
 
-    result.add_caption(
-        aastex.NoEscape(
-            r"""
+    result.add_caption(aastex.NoEscape(r"""
 The fraction of incident light absorbed by the light-sensitive silicon layer 
 and the CCE as a function of wavelength for the parameters inferred from the 
 \citet{Heymes2020} measurements.
-"""
-        )
-    )
+"""))
 
     return result

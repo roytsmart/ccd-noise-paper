@@ -24,20 +24,12 @@ def _vmr_electron(
 
     result = optika.sensors.vmr_signal(
         wavelength=wavelength,
-        absorption=ccd._chemical.absorption(wavelength),
         thickness_implant=ccd.thickness_implant,
+        thickness_depletion=ccd.depletion.thickness,
+        thickness_substrate=ccd.thickness_substrate,
+        width_pixel=width_pixel,
         cce_backsurface=ccd.cce_backsurface,
         temperature=ccd.temperature,
-    )
-
-    mcc = optika.sensors.mean_charge_capture(
-        width_diffusion=_width_diffusion(wavelength),
-        width_pixel=width_pixel,
-    )
-
-    result = optika.sensors.vmr_diffusion(
-        vmr_flat=result,
-        mcc=mcc,
     )
 
     return result
@@ -48,13 +40,7 @@ def _vmr_photon(
     width_pixel: u.Quantity,
 ) -> na.ScalarArray:
 
-    rays = optika.rays.RayVectorArray(
-        intensity=intensity,
-        wavelength=wavelength,
-        direction=direction,
-    )
-
-    qe = ccd.quantum_efficiency(rays, normal)
+    qe = ccd.quantum_efficiency(wavelength)
 
     vmr_electron = _vmr_electron(wavelength, width_pixel)
 
@@ -78,9 +64,4 @@ def _snr_improvement(
 
 
 def _width_diffusion(wavelength: na.ScalarArray) -> na.ScalarArray:
-    return ccd.width_charge_diffusion(
-        rays=optika.rays.RayVectorArray(
-            wavelength=wavelength,
-        ),
-        normal=na.Cartesian3dVectorArray(0, 0, -1),
-    )
+    return ccd.width_charge_diffusion(wavelength)

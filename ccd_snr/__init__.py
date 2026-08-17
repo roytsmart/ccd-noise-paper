@@ -19,13 +19,12 @@ from ._acknowledgements import acknowledgements
 from ._document import document, pdf
 
 __all__ = [
-    # "random",
-    "fano_factor",
     "wavelength",
     "energy",
     "ccd",
     "ccd_aia",
     "diffusion",
+    "vmr_stern",
     "simulations",
     "instruments",
     "acronyms",
@@ -33,7 +32,9 @@ __all__ = [
     "authors",
     "figures",
     "tables",
+    "keywords",
     "sections",
+    "acknowledgements",
     "document",
     "pdf",
 ]

@@ -2,7 +2,6 @@ import matplotlib.pyplot as plt
 import aastex
 import astropy.visualization
 import named_arrays as na
-import optika
 import ccd_snr
 
 __all__ = [
@@ -24,13 +23,7 @@ def charge_diffusion() -> aastex.Figure:
 
     mcc_fit = ccd.depletion.mean_charge_capture(wavelength_fit)
 
-    rays = optika.rays.RayVectorArray(
-        wavelength=wavelength_fit,
-        direction=na.Cartesian3dVectorArray(0, 0, 1),
-    )
-    normal = na.Cartesian3dVectorArray(0, 0, -1)
-
-    width = ccd.width_charge_diffusion(rays, normal)
+    width = ccd.width_charge_diffusion(wavelength_fit)
     # width_aia = ccd_aia.width_charge_diffusion(rays, normal)
 
     with astropy.visualization.quantity_support():
@@ -89,15 +82,11 @@ def charge_diffusion() -> aastex.Figure:
         # result.append(aastex.NoEscape(r"\vspace{5pt}"))
         result.add_fig(fig, width=None)
 
-        result.add_caption(
-            aastex.NoEscape(
-                r"""
+        result.add_caption(aastex.NoEscape(r"""
 The top panel plots the MCC measured by \citet{Stern2004} and the fit
 of our model.
 The bottom panel shows the corresponding standard deviation of the charge
 diffusion kernel for the \citet{Heymes2020} sensor.
-    """
-            )
-        )
+    """))
 
         return result

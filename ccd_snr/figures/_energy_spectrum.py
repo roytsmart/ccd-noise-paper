@@ -40,7 +40,6 @@ def energy_spectrum() -> aastex.FigureStar:
         wavelength=wavelength,
         direction=na.Cartesian3dVectorArray(0, 0, 1),
     )
-    normal = na.Cartesian3dVectorArray(0, 0, -1)
 
     signal = optika.sensors.signal(
         photons_expected=rays.intensity,
@@ -60,7 +59,7 @@ def energy_spectrum() -> aastex.FigureStar:
 
     iqy = ccd.quantum_yield_ideal(wavelength)
     f = ccd.fano_factor(wavelength)
-    cce = ccd.charge_collection_efficiency(rays, normal)
+    cce = ccd.charge_collection_efficiency(wavelength)
     mu = iqy * na.random.poisson(rays.intensity * cce, shape_random=signal.shape)
     signal_stern86 = na.random.normal(
         loc=mu,
@@ -153,14 +152,10 @@ def energy_spectrum() -> aastex.FigureStar:
 
     result = aastex.FigureStar("energySpectrum")
     result.add_fig(fig, width=None)
-    result.add_caption(
-        aastex.NoEscape(
-            rf"""
+    result.add_caption(aastex.NoEscape(rf"""
 The probability distribution of the number of measured electrons for a given
 wavelength and expected number of \textit{{absorbed}} photons calculated using
 {num_experiments} samples of Equation~\ref{{eq:measuredElectrons}} and the 
-\cite{{Stern1986}} noise model."""
-        )
-    )
+\cite{{Stern1986}} noise model."""))
 
     return result

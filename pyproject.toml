@@ -9,14 +9,14 @@ authors = [
 ]
 description = "An article investigating CCD SNR in the extreme ultraviolet regime."
 readme = "README.md"
-requires-python = ">=3.10"
+requires-python = ">=3.12"
 classifiers = [
     "Programming Language :: Python :: 3",
 ]
 dependencies = [
     "pylatex",
-    "aastex>=0.3.1",
-    "optika>=0.12.0",
+    "aastex>=0.4.0,<0.5",
+    "optika>=2.2,<3",
 ]
 dynamic = ["version"]
 
