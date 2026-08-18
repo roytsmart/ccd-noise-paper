@@ -483,6 +483,29 @@ It moves electrons between pixels without creating or destroying any, so it
 leaves the mean of a flat-field image unchanged, and it reduces the variance
 only by weakening the correlation between electrons that came from the same
 photon.
+To make this precise, note that Equation~\ref{eq:measuredElectrons} sums a
+Poisson number of independent contributions, so its \VMR\ is
+$\E{(n'')^2} / \E{n''}$.
+Splitting the second moment as $\E{(n'')^2} = \E{n''} + \E{n''(n'' - 1)}$,
+and using $\E{n''} = \E{n} \E{\eta}$ together with
+$\E{n''(n'' - 1)} = \E{n} \bigl( \E{n} + \mathcal{F} - 1 \bigr) \E{\eta^2}$,
+the total \VMR\ of the sensor becomes
+\begin{equation} \label{eq:totalVmr}
+    F_e'' = F_{e,\text{shot}}'' + F_{e,\text{sensor}}''
+          = 1 + \bigl( \E{n} + \mathcal{F} - 1 \bigr) \frac{\E{\eta^2}}{\E{\eta}},
+\end{equation}
+where the second equality follows from
+$\E{\eta^2} / \E{\eta} = \E{\eta} + F(\eta)$,
+which is just the definition of the \VMR\ of $\eta$ rearranged.
+Equation~\ref{eq:totalVmr} is algebraically identical to the sum of
+$F_{e,\text{shot}}''$ and Equation~\ref{eq:sensorVmr},
+but it separates the two ways an electron contributes to the variance:
+the leading unity is the contribution of the electrons counted individually,
+which is Poisson and therefore irreducible,
+while the second term counts the \textit{pairs} of electrons liberated by the
+same photon, which are measured in the same pixel and so contribute an excess
+variance beyond Poisson.
+
 Two electrons liberated by one photon share an absorption depth and a sub-pixel
 origin, so before diffusion they are always measured together; afterwards they
 are measured together only with probability
@@ -496,11 +519,21 @@ are measured together only with probability
 where $p(s)$ is the probability that two electrons displaced independently from
 a common, uniformly distributed sub-pixel origin fall in the same column of
 pixels, and $d$ is the width of a pixel.
-Weighting the photon-correlated term of Equation~\ref{eq:sensorVmr} by
-$\mathcal{P}(z)$ therefore gives the \VMR\ in the presence of charge diffusion,
-which is the form implemented by
+Only the pair term of Equation~\ref{eq:totalVmr} depends on two electrons
+sharing a pixel, so charge diffusion weights that term by $\mathcal{P}(z)$
+inside the average over absorption depth,
+\begin{equation} \label{eq:diffusedVmr}
+    F_{e,\text{diff}}'' = 1 + \bigl( \E{n} + \mathcal{F} - 1 \bigr)
+        \frac{\E{\mathcal{P} \eta^2}}{\E{\eta}},
+\end{equation}
+and leaves the uncorrelated term untouched.
+Equation~\ref{eq:diffusedVmr} is the form implemented by
 \href{https://optika.readthedocs.io/en/latest/_autosummary/optika.sensors.vmr_signal.html}{\texttt{optika.sensors.vmr\_signal()}}
 and plotted for \IRIS\ in Figure~\ref{fig:Noise}.
+It assumes the illumination is uniform, so that the charge leaving each pixel is
+balanced on average by the charge arriving from its neighbors;
+near the edge of the sensor, where diffused charge is lost, it is an
+approximation.
 """)
     result.append(subsection_charge_spreading)
 
