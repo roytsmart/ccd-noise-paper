@@ -454,12 +454,12 @@ kernel as a function of wavelength which predicts that the charge diffusion is
 reasonably constant over much of the \SXR\ and ultraviolet wavelengths
 since the penetration depth is low in this regime.
 
-To forward model this charge diffusion in a practical way,
+To visualize the extent of this charge diffusion,
 we've included Figure~\ref{fig:chargeDiffusionKernel},
 a $3 \times 3$ kernel where the value in each pixel has been computed in
 a manner similar to Equation~\ref{eq:mcc},
 just with different limits of integration.
-We used the \IRIS\ pixel size and a representative wavelength 
+We used the \IRIS\ pixel size and a representative wavelength
 to demonstrate the worst-case scenario for \IRIS.
 Convolving this kernel with an image approximates the spatial extent of the
 charge diffusion, but it does not describe the process faithfully.
@@ -487,10 +487,11 @@ Two electrons liberated by one photon share an absorption depth and a sub-pixel
 origin, so before diffusion they are always measured together; afterwards they
 are measured together only with probability
 \begin{equation} \label{eq:probabilitySamePixel}
-    \mathcal{P}(z) = p\bigl(\sigma(z) / d\bigr)^2,
-    \quad
-    p(s) = \text{erf}\left( \frac{1}{2 s} \right)
-         - \frac{2 s}{\sqrt{\pi}} \left( 1 - e^{-1 / 4 s^2} \right),
+\begin{split}
+    \mathcal{P}(z) &= p\bigl(\sigma(z) / d\bigr)^2, \\
+    p(s) &= \text{erf}\left( \frac{1}{2 s} \right)
+            - \frac{2 s}{\sqrt{\pi}} \left( 1 - e^{-1 / 4 s^2} \right),
+\end{split}
 \end{equation}
 where $p(s)$ is the probability that two electrons displaced independently from
 a common, uniformly distributed sub-pixel origin fall in the same column of
