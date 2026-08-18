@@ -15,8 +15,8 @@ classifiers = [
 ]
 dependencies = [
     "pylatex",
-    "aastex>=0.4.0,<0.5",
-    "optika>=2.2,<3",
+    "aastex~=0.4.0",
+    "optika~=2.2",
 ]
 dynamic = ["version"]
 
