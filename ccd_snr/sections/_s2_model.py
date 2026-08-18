@@ -241,7 +241,7 @@ range of the sensor except in the \UV, where the absorbance is poor
 We can also express the \VMR\ of the shot noise in terms of the
 number of measured electrons by using the \QE\ as the conversion factor between
 the unprimed and double-primed variables,
-\begin{equation}
+\begin{equation} \label{eq:electronShotVmr}
     F_{e,\text{shot}}'' = \E{n} \, \E{\eta}.
 \end{equation}
 This equation is plotted in Figure~\ref{fig:Noise}b in blue,
@@ -330,18 +330,68 @@ electrons given $N_\gamma'$ absorbed photons as
 This expression is intended to be used in an instrument forward model to sample 
 the distribution of measured electrons given an expected number of incident photons.
 
-The \VMR\ of this process is non-trivial since Equation~\ref{eq:measuredElectrons}
-is a sum of Binomial draws with completely independent $n$ and $p$ for
-each term.
-However, if we compute the \VMR\ of the \CCE\ by taking the second moment of
-Equation~\ref{differential-cce} in a similar fashion to Equation~\ref{cce},
+At first glance the \VMR\ of this process looks intractable,
+since Equation~\ref{eq:measuredElectrons} is a sum of binomial draws in which
+both the number of trials and the probability of success vary from one term to
+the next.
+It is made tractable by the fact that the number of terms is itself Poisson.
+The \VMR\ of a sum of independent contributions drawn a Poisson number of times
+does not depend on how many contributions arrive;
+it is fixed entirely by the statistics of a single one.
+In our case that single contribution is the number of electrons delivered by one
+absorbed photon, and the \VMR\ is the mean of the square of that number divided
+by its mean.
+
+It pays to separate this second moment into two pieces, because they behave very
+differently from one another.
+Each measured electron contributes to the variance once on its own account,
+and once again for every \textit{other} electron that the same photon delivered
+alongside it.
+Written out, the second moment is the mean number of electrons plus the mean
+number of ordered pairs of distinct electrons originating from the same photon,
+\begin{equation} \label{eq:secondMoment}
+    \E{(n'')^2} = \E{n''} + \E{n''(n'' - 1)}.
+\end{equation}
+The first term is what a stream of mutually independent electrons would produce
+by itself, and it is the reason the \VMR\ measured in electrons can never fall
+below unity.
+The second term is the excess above that floor.
+It is nonzero only because one photon can liberate several electrons at once,
+and because those electrons are all collected by the same pixel.
+
+Both terms are readily evaluated.
+The mean number of electrons measured per absorbed photon is the average quantum
+yield reduced by the average \CCE, $\E{n''} = \E{n} \, \E{\eta}$.
+A photon which liberates $n'$ electrons at a depth $z$ contributes
+$n'(n' - 1) \, \eta^2(z)$ ordered pairs on average,
+so averaging over the quantum yield and the absorption depth in turn gives
+\begin{equation} \label{eq:pairTerm}
+    \E{n''(n'' - 1)} = \E{n} \bigl( \E{n} + \mathcal{F} - 1 \bigr) \E{\eta^2}.
+\end{equation}
+Dividing Equation~\ref{eq:secondMoment} by the mean then gives the \VMR\ of the
+electrons measured by the sensor,
+\begin{equation} \label{eq:totalVmr}
+    F_e'' = 1 + \bigl( \E{n} + \mathcal{F} - 1 \bigr) \frac{\E{\eta^2}}{\E{\eta}},
+\end{equation}
+in which the leading unity is the uncorrelated floor and the remaining term
+carries all of the excess noise.
+Note that the two moments of the \CCE\ enter only through their ratio.
+
+It is conventional to express this result in terms of the \VMR\ of the \CCE\
+rather than its second moment.
+Taking the second moment of Equation~\ref{differential-cce} in a similar fashion
+to Equation~\ref{cce} gives
 \begin{equation}
     F(\eta) = \frac{2 e^{-\alpha W}}{\E{\eta}} \left( \frac{1 - \eta_0}{\alpha W} \right)^2 \bigl( \sinh(\alpha W) - \alpha W \bigr),
 \end{equation}
-we can use the expressions given by \citet{heropup2019}
-to find the \VMR\ of only the Fano noise and \PCC\ noise as
+and rearranging the definition of the \VMR\ shows that the ratio appearing in
+Equation~\ref{eq:totalVmr} is simply $\E{\eta} + F(\eta)$.
+Substituting this and setting aside the shot noise of
+Equation~\ref{eq:electronShotVmr} leaves the combined Fano and \PCC\
+contribution,
 \begin{equation} \label{eq:sensorVmr}
-    F_{e,\text{sensor}}'' = 1 + (\mathcal{F} - 1) \E{\eta} + \bigl( \E{n} + \mathcal{F} - 1 \bigr) F(\eta).
+    F_{e,\text{sensor}}'' = F_e'' - F_{e,\text{shot}}''
+        = 1 + (\mathcal{F} - 1) \E{\eta} + \bigl( \E{n} + \mathcal{F} - 1 \bigr) F(\eta).
 \end{equation}
 The contribution from only PCC noise is then
 \begin{equation}
@@ -483,32 +533,23 @@ It moves electrons between pixels without creating or destroying any, so it
 leaves the mean of a flat-field image unchanged, and it reduces the variance
 only by weakening the correlation between electrons that came from the same
 photon.
-To make this precise, note that Equation~\ref{eq:measuredElectrons} sums a
-Poisson number of independent contributions, so its \VMR\ is
-$\E{(n'')^2} / \E{n''}$.
-Splitting the second moment as $\E{(n'')^2} = \E{n''} + \E{n''(n'' - 1)}$,
-and using $\E{n''} = \E{n} \E{\eta}$ together with
-$\E{n''(n'' - 1)} = \E{n} \bigl( \E{n} + \mathcal{F} - 1 \bigr) \E{\eta^2}$,
-the total \VMR\ of the sensor becomes
-\begin{equation} \label{eq:totalVmr}
-    F_e'' = F_{e,\text{shot}}'' + F_{e,\text{sensor}}''
-          = 1 + \bigl( \E{n} + \mathcal{F} - 1 \bigr) \frac{\E{\eta^2}}{\E{\eta}},
-\end{equation}
-where the second equality follows from
-$\E{\eta^2} / \E{\eta} = \E{\eta} + F(\eta)$,
-which is just the definition of the \VMR\ of $\eta$ rearranged.
-Equation~\ref{eq:totalVmr} is algebraically identical to the sum of
-$F_{e,\text{shot}}''$ and Equation~\ref{eq:sensorVmr},
-but it separates the two ways an electron contributes to the variance:
-the leading unity is the contribution of the electrons counted individually,
-which is Poisson and therefore irreducible,
-while the second term counts the \textit{pairs} of electrons liberated by the
-same photon, which are measured in the same pixel and so contribute an excess
-variance beyond Poisson.
+Its effect on the noise is confined to one of the two terms identified in
+Section~\ref{subsec:Noise}.
+The leading unity of Equation~\ref{eq:totalVmr} counts each electron once,
+on its own account, and is indifferent to where any of its neighbors are
+collected, so diffusion cannot touch it.
+The remaining term is a different matter.
+It exists only because the several electrons liberated by a single photon are
+collected together by one pixel, and that is precisely the assumption which
+diffusion undermines.
 
-Two electrons liberated by one photon share an absorption depth and a sub-pixel
-origin, so before diffusion they are always measured together; afterwards they
-are measured together only with probability
+Two electrons liberated by the same photon begin their random walks from a
+common absorption depth and a common position within a pixel,
+so in the absence of diffusion they are always measured together.
+Once the charge is allowed to spread they are measured together only some of the
+time.
+How often depends on how far the charge spreads at the depth where the photon
+was absorbed, expressed in units of the pixel width,
 \begin{equation} \label{eq:probabilitySamePixel}
 \begin{split}
     \mathcal{P}(z) &= p\bigl(\sigma(z) / d\bigr)^2, \\
@@ -517,16 +558,27 @@ are measured together only with probability
 \end{split}
 \end{equation}
 where $p(s)$ is the probability that two electrons displaced independently from
-a common, uniformly distributed sub-pixel origin fall in the same column of
-pixels, and $d$ is the width of a pixel.
-Only the pair term of Equation~\ref{eq:totalVmr} depends on two electrons
-sharing a pixel, so charge diffusion weights that term by $\mathcal{P}(z)$
-inside the average over absorption depth,
+a common, uniformly distributed origin within a pixel are collected by the same
+column of pixels,
+$d$ is the width of a pixel,
+and the square accounts for the two directions across the face of the sensor,
+which spread independently of one another.
+In the limit of a narrow charge cloud this probability approaches unity and the
+electrons remain together;
+in the opposite limit it falls to zero and they are scattered independently.
+
+Charge diffusion therefore acts on Equation~\ref{eq:totalVmr} by discounting the
+pair term by the probability that a pair is in fact measured as a pair,
 \begin{equation} \label{eq:diffusedVmr}
     F_{e,\text{diff}}'' = 1 + \bigl( \E{n} + \mathcal{F} - 1 \bigr)
-        \frac{\E{\mathcal{P} \eta^2}}{\E{\eta}},
+        \frac{\E{\mathcal{P} \eta^2}}{\E{\eta}}.
 \end{equation}
-and leaves the uncorrelated term untouched.
+The discount is applied inside the average over absorption depth rather than
+outside it, since the distance the charge spreads and the fraction of it that
+survives recombination both depend on where in the sensor the photon was
+absorbed, and the two are correlated:
+photons absorbed near the back surface are the ones which both recombine most
+readily and diffuse the furthest.
 Equation~\ref{eq:diffusedVmr} is the form implemented by
 \href{https://optika.readthedocs.io/en/latest/_autosummary/optika.sensors.vmr_signal.html}{\texttt{optika.sensors.vmr\_signal()}}
 and plotted for \IRIS\ in Figure~\ref{fig:Noise}.
