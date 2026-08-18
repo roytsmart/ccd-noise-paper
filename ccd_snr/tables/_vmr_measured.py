@@ -89,10 +89,7 @@ noise model (including charge diffusion).
     result += "\\startdata\n"
 
     for i, index in enumerate(ratio_model_iris.ndindex()):
-        if i == 0:
-            instrument = r"\IRIS"
-        else:
-            instrument = ""
+        instrument = r"\IRIS" if i == 0 else ""
         row = [
             instrument,
             f"{wavelength_iris[index].ndarray.to_value(u.AA):.0f}",

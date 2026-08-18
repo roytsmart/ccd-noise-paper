@@ -1,7 +1,6 @@
 import functools
 import astropy.units as u
 import named_arrays as na
-import optika
 import ccd_snr
 
 __all__ = [
@@ -12,10 +11,7 @@ __all__ = [
     "num_y",
     "shape",
     "photons_expected",
-    "normal",
-    "rays",
     "electrons_measured",
-    "photons_measured",
 ]
 
 axis_x = "detector_x"
@@ -39,24 +35,6 @@ shape = {axis_x: num_x, axis_y: num_y}
 photons_expected = 100 * u.photon
 """The expected number of photons measured by each pixel in the sensor."""
 
-normal = na.Cartesian3dVectorArray(0, 0, -1)
-"""The vector perpendicular to the surface of the sensor."""
-
-
-def rays() -> optika.rays.RayVectorArray:
-    """
-    The geometric light rays incident on the surface of the sensor.
-    """
-    intensity = na.broadcast_to(
-        array=photons_expected,
-        shape=shape,
-    )
-    return optika.rays.RayVectorArray(
-        intensity=intensity,
-        wavelength=ccd_snr.wavelength(),
-        direction=na.Cartesian3dVectorArray(0, 0, 1),
-    )
-
 
 @functools.cache
 def electrons_measured() -> na.ScalarArray:
@@ -72,13 +50,3 @@ def electrons_measured() -> na.ScalarArray:
         axis_xy=axis_xy,
         wrap=True,
     )
-
-
-@functools.cache
-def photons_measured() -> na.ScalarArray:
-    """
-    The number of photons measured by each pixel in the simulation.
-    """
-    ccd = ccd_snr.ccd()
-    qe = ccd.quantum_efficiency(ccd_snr.wavelength())
-    return electrons_measured() / qe
