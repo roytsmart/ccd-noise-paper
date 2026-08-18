@@ -73,18 +73,18 @@ These ratios show that the \AIA\ \qty{94}{\angstrom}
 and \qty{1600}{\angstrom}, \IRIS\ \qty{1330}{\angstrom} and \qty{1400}{\angstrom},
 and \MUSE\ \qty{108}{\angstrom} channels are predicted to have at least 20\% more \SNR\
 than the traditional noise model would suggest.
-These results do not include the influence of charge diffusion,
-so we've included the size of the charge diffusion kernel in the last column
-which can be used in a forward model of these instrument
-to blur the result after the noise has been applied.
+These results include the influence of charge diffusion,
+and we've also tabulated the size of the charge diffusion kernel in the last
+column, since it sets the scale over which the charge from a single photon is
+shared between neighboring pixels.
 
 In Table~\ref{table:measurements},
 we've attempted to reproduce the measurements of \citet{Wulser2018} and
 \citet{Borders2010} by taking the ratio of the \VMR\ of a simulated \UV\ flat-field
 image to the \VMR\ of a simulated visible flat-field image.
-The flat-field images were created by drawing samples from Equation~\ref{eq:measuredElectrons},
-and then convolving with the appropriate charge-diffusion kernel,
-such as Figure~\ref{fig:chargeDiffusionKernel} for \IRIS.
+The flat-field images were created by drawing samples from
+Equation~\ref{eq:measuredElectrons} and then diffusing each measured electron
+individually, using the pixel size of the corresponding instrument.
 This table shows that the discrepancy discussed in the introduction is mostly
 resolved.
 For \IRIS, \citet{Wulser2018} measured \measuredIrisRatio\ at \wavelengthIrisRatio\ expecting about

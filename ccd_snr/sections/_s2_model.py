@@ -340,7 +340,7 @@ Equation~\ref{differential-cce} in a similar fashion to Equation~\ref{cce},
 \end{equation}
 we can use the expressions given by \citet{heropup2019}
 to find the \VMR\ of only the Fano noise and \PCC\ noise as
-\begin{equation}
+\begin{equation} \label{eq:sensorVmr}
     F_{e,\text{sensor}}'' = 1 + (\mathcal{F} - 1) \E{\eta} + \bigl( \E{n} + \mathcal{F} - 1 \bigr) F(\eta).
 \end{equation}
 The contribution from only PCC noise is then
@@ -461,27 +461,45 @@ a manner similar to Equation~\ref{eq:mcc},
 just with different limits of integration.
 We used the \IRIS\ pixel size and a representative wavelength 
 to demonstrate the worst-case scenario for \IRIS.
-This kernel is intended to be convolved with an input image after the noise
-model (described above) has been applied to approximate the effects of charge
-diffusion and complete the forward model of the sensor.
-We have provided the function
+Convolving this kernel with an image approximates the spatial extent of the
+charge diffusion, but it does not describe the process faithfully.
+A convolution assigns a fractional number of electrons to each pixel, whereas
+every electron is in fact collected by exactly one pixel, and it treats the
+displacement of each electron as independent, whereas the electrons liberated
+by a single photon share both an absorption depth and a sub-pixel origin.
+We therefore diffuse each electron individually, displacing it by
+$\mathcal{N}\bigl(0, \sigma^2(z_i)\bigr)$ in each direction and rounding to the
+nearest pixel, which conserves charge exactly and preserves the correlation
+between electrons from the same photon.
+This is implemented by
+\href{https://optika.readthedocs.io/en/latest/_autosummary/optika.sensors.signal.html}{\texttt{optika.sensors.signal()}},
+and the kernel in Figure~\ref{fig:chargeDiffusionKernel} was computed with
 \href{https://optika.readthedocs.io/en/latest/_autosummary/optika.sensors.kernel\_diffusion.html}{\texttt{optika.sensors.kernel\_diffusion()}},
-which can be used to compute the charge diffusion kernel for other wavelengths
-and pixel sizes.
+which can be used to visualize the charge diffusion for other wavelengths and
+pixel sizes.
 
-We can use the definition of a discrete, 2D convolution and Bienaym\'es formula
-to find that for an unblurred flat-field image with a given \VMR, $F_0$,
-the blurring introduced by an even, separable, $3 \times 3$ kernel is
-\begin{equation}
-    F_\text{blurred} = \epsilon F_0,
+Charge diffusion does not add a noise source of its own.
+It moves electrons between pixels without creating or destroying any, so it
+leaves the mean of a flat-field image unchanged, and it reduces the variance
+only by weakening the correlation between electrons that came from the same
+photon.
+Two electrons liberated by one photon share an absorption depth and a sub-pixel
+origin, so before diffusion they are always measured together; afterwards they
+are measured together only with probability
+\begin{equation} \label{eq:probabilitySamePixel}
+    \mathcal{P}(z) = p\bigl(\sigma(z) / d\bigr)^2,
+    \quad
+    p(s) = \text{erf}\left( \frac{1}{2 s} \right)
+         - \frac{2 s}{\sqrt{\pi}} \left( 1 - e^{-1 / 4 s^2} \right),
 \end{equation}
-where
-\begin{equation}
-    \epsilon = \frac{1}{4} \left( 3 m - 2 \sqrt{m} + 1 \right)^2.
-\end{equation}
-Unlike the other noise sources discussed in Section~\ref{subsec:Noise},
-the \VMR\ of the charge diffusion process is multiplicative, instead of additive,
-and cannot be directly compared to these other sources.
+where $p(s)$ is the probability that two electrons displaced independently from
+a common, uniformly distributed sub-pixel origin fall in the same column of
+pixels, and $d$ is the width of a pixel.
+Weighting the photon-correlated term of Equation~\ref{eq:sensorVmr} by
+$\mathcal{P}(z)$ therefore gives the \VMR\ in the presence of charge diffusion,
+which is the form implemented by
+\href{https://optika.readthedocs.io/en/latest/_autosummary/optika.sensors.vmr_signal.html}{\texttt{optika.sensors.vmr\_signal()}}
+and plotted for \IRIS\ in Figure~\ref{fig:Noise}.
 """)
     result.append(subsection_charge_spreading)
 
