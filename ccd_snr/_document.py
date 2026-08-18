@@ -1,4 +1,6 @@
+import matplotlib.pyplot as plt
 import pathlib
+import pylatex
 import aastex
 import ccd_snr
 
@@ -13,8 +15,12 @@ def document() -> aastex.Document:
     An :mod:`aastex` representation of the article.
     """
 
+    plt.rcParams["text.usetex"] = True
+    plt.rcParams["font.family"] = "serif"
+    plt.rcParams["font.size"] = 9
+    plt.rcParams["lines.linewidth"] = 1
+
     doc = aastex.Document(
-        documentclass="aastex631",
         document_options=[
             "twocolumn",
         ],
@@ -22,19 +28,35 @@ def document() -> aastex.Document:
         textcomp=False,
     )
 
-    title = aastex.Title(
-        "On the Signal-to-noise Ratio of Charged-coupled Devices in the "
-        "Extreme Ultraviolet Regime",
+    doc.packages.append(aastex.Package("amsmath"))
+    doc.packages.append(aastex.Package("hyperref"))
+    doc.packages.append(aastex.Package("siunitx"))
+
+    doc.preamble += ccd_snr.acronyms()
+    doc.preamble.append(
+        pylatex.NoEscape(
+            r"""\newcommand{\E}[1]{\makebox[0pt]{$\phantom{#1}\overline{\phantom{#1}}$}#1}"""
+        )
     )
 
+    doc.variables += ccd_snr.variables()
+
+    title = aastex.Title(
+        "The Noise on Ultraviolet Astronomical Images Captured by Back-illuminated Silicon Sensors",
+    )
     doc.append(title)
 
     doc += ccd_snr.authors()
 
-    introduction = aastex.Section("Introduction")
-    introduction.append("testing")
+    doc.append(ccd_snr.sections.abstract())
+    doc.append(ccd_snr.keywords())
+    doc.append(ccd_snr.sections.introduction())
+    doc.append(ccd_snr.sections.model())
+    doc.append(ccd_snr.sections.discussion())
+    doc.append(ccd_snr.sections.conclusion())
+    doc.append(ccd_snr.acknowledgements())
 
-    doc.append(introduction)
+    doc.append(aastex.Bibliography("sources"))
 
     return doc
 
