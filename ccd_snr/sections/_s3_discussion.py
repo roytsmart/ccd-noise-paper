@@ -98,12 +98,29 @@ This is much nearer the measurement than the traditional model,
 but it underestimates it, where the traditional model overestimates it.
 Our model therefore accounts for most of the reported discrepancy in both cases,
 but it overcorrects for \IRIS.
-The reason for the remaining disagreement is not well-understood.
-One possibility is that the \QE\ of the sensors on \WFC\ and \IRIS\
-is slightly different than that of the sensor measured by \citet{Heymes2020}.
-Another is that the thickness of the depletion region differs from the one
-measured by \citet{Stern2004}; a thicker depletion region would imply less
-charge diffusion, which would raise our predicted ratios and improve the
+The remaining disagreement appears to be confined to our treatment of charge
+diffusion.
+Evaluating the same model without charge diffusion raises the predicted \IRIS\
+ratio to approximately the measured value, which suggests that the quantum
+yield and the \PCC\ are not responsible.
+
+Our diffusion model has three limitations, any of which could plausibly
+account for it.
+First, we have adopted the thickness of the depletion region fit to the
+measurements of \citet{Stern2004}, which were made on a different sensor
+operated at a different voltage.
+The depletion thickness depends on both the resistivity of the silicon and the
+applied bias, so it need not carry over between sensors, and since the charge
+diffusion depends only on the difference between the substrate and depletion
+thicknesses, an error in one cannot be distinguished from an error in the other.
+A thicker depletion region implies a thinner field-free region and therefore
+less charge diffusion, which would raise our predicted ratios and improve the
 agreement for \IRIS.
+Second, we model the charge cloud as a Gaussian, whereas \citet{Pavlov1999}
+show that the true radial distribution is peaked more strongly and has heavier
+tails, which would place more of the charge liberated by a single photon in a
+single pixel than we have assumed.
+Third, we neglect the further diffusion that the charge undergoes while
+drifting across the depletion region.
 """)
     return result
