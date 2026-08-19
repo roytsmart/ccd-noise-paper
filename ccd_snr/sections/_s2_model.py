@@ -13,7 +13,7 @@ def model() -> aastex.Section:
 In this work, we will use the back-illuminated CCD model described in 
 \citet{Stern1994} as a basis for our sensor model to make it directly comparable with 
 previous works in the literature.
-Figure 1 is a schematic of our sensor model and it shows
+Figure~\ref{fig:schematic} is a schematic of our sensor model and it shows
 the light-sensitive region of the sensor to be an epitaxial silicon layer with a thickness $D$.
 A fraction of the incident photons are either absorbed in the oxide layer (thickness $\delta$)
 or reflected at the first or second interface.
@@ -147,7 +147,7 @@ In \citet{Stern1994}, the authors define an effective \QE\ as
 \end{equation}
 which is found by taking the ratio of the current measured by the sensor
 to the current measured by a calibrated photodiode
-and is the quantity that is typically measured when calibrating a image sensor
+and is the quantity that is typically measured when calibrating an image sensor
 \citep{Stern1994,Stern2004,Boerner2012}.
 In Figure~\ref{fig:eqe}, we have plotted the measured, effective \QE\ for two
 sources: \citet{Boerner2012} which measured the \AIA\ \CCDs\ at a few
@@ -366,7 +366,7 @@ When the number of absorbed photons is low,
 like in the bottom two rows of Figure~\ref{fig:energySpectrum},
 we can see that the \citet{Stern1986} model (orange) has a comb-like appearance
 caused by the Fano noise slightly blurring the \PMF\ of the photon shot noise.
-In contrast, our model show much less of this comb pattern since the \PCC\
+In contrast, our model shows much less of this comb pattern since the \PCC\
 noise tends to blur the distribution further into a single peak.
 As the number of photons increases,
 both distributions tend towards a Gaussian,
@@ -409,11 +409,11 @@ where $z$ is the distance from the back surface at which the photon is absorbed,
 $z_f = D - z_d$ is the thickness of the field-free region of the sensor,
 and $z_d$ is the thickness of the depletion region.
 Using Equation \ref{eq:chargeDiffusion},
-we can find the average variance of the charge diffusion kernel by taking an
+we can find the average variance of the charge diffusion kernel by taking a
 mean across the entire thickness of the sensor weighted by the probability of
 a photon being absorbed at that depth,
 \begin{equation} \label{eq:chargeDiffusionWidth}
-\E{\sigma}^2 = \frac{z_f \left( \alpha z_f + e^{-\alpha z_f} - 1 \right)}
+\E{\sigma^2} = \frac{z_f \left( \alpha z_f + e^{-\alpha z_f} - 1 \right)}
                               {\alpha \left( 1 - e^{-\alpha D} \right)}.
 \end{equation}
 The thickness of the depletion region or the field-free region is difficult
@@ -433,13 +433,13 @@ extent of a pixel.
 However, since a photon can strike anywhere within the central pixel,
 we need to convolve with a rectangle function the width of a pixel before
 integrating.
-If we assume that the charge diffusion kernel is a Gaussian with variance $\E{\sigma}^2$,
+If we assume that the charge diffusion kernel is a Gaussian with variance $\E{\sigma^2}$,
 then the \MCC\ is
 \begin{equation}
     \label{eq:mcc}
     m = \left[ \frac{1}{\sqrt{\pi a}} \left( e^{-a} - 1 \right) + \text{erf} \left( \sqrt{a} \right) \right]^2,
 \end{equation}
-where $a = d^2 / 2 \E{\sigma}^2$,
+where $a = d^2 / 2 \E{\sigma^2}$,
 $d$ is the width of a pixel, 
 and $\text{erf}(x)$ is the error function.""")
     subsection_charge_spreading.append(ccd_snr.figures.charge_diffusion())
