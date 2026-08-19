@@ -63,7 +63,7 @@ def vmr_measured() -> str:
 {aastex.Variable("measuredIrisRatio", ratio_measured_iris.ndarray[0]).dumps()}
 {aastex.Variable("measuredWfcRatio", np.round(ratio_measured_wfc3.ndarray[0], decimals=2)).dumps()}
 {aastex.Variable("wavelengthIrisRatio", wavelength_iris.ndarray[0]).dumps()}
-{aastex.Variable("wavelengthWfcRatio", wavelength_wfc3.ndarray[0]).dumps()}
+{aastex.Variable("wavelengthWfcRatio", wavelength_wfc3.ndarray[0].to(u.AA)).dumps()}
 """
 
     result += r"""\begin{deluxetable}{lrrrr}
