@@ -36,13 +36,14 @@ wavelength regimes.
 However, this model appears to be less accurate in the \UV.
 For example, \citet{Wulser2018} showed that \IRIS\ measured \textit{less} noise
 in the \FUV\ channel than the traditional model would suggest
-and similar results were found in the \NUV\ by \WFC\ \citep{Borders2010}.
-The \WFC\ instrument handbook reports the same effect as a quantum yield
-measured well below its theoretical value,
-1.07 electrons per photon at \qty{218}{\nano\meter} against a prediction closer
-to 1.7 electrons per photon at \qty{200}{\nano\meter},
-and states that the cause is unclear though it may be due to charge sharing
-\citep{Marinelli2024}.
+and similar results were found in the \NUV\ by \WFC.
+\citet{Borders2010} measured the quantum yield of the \WFC\ \CCDs\ from
+narrowband flat fields between \qty{208}{\nano\meter} and \qty{400}{\nano\meter}
+and found it to be about 30\% smaller than the theoretical prediction,
+which falls from 1.7 electrons per interacting photon at \qty{200}{\nano\meter}
+to unity at \qty{340}{\nano\meter}.
+The \WFC\ instrument handbook, which summarizes this measurement,
+still describes its cause as unclear \citep{Marinelli2024}.
 This discrepancy indicates that the traditional model is incomplete,
 and that a more detailed model is needed to predict the noise measured by
 these sensors in the \UV.
