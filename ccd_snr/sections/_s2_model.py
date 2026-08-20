@@ -342,40 +342,43 @@ In our case that single contribution is the number of electrons delivered by one
 absorbed photon, and the \VMR\ is the mean of the square of that number divided
 by its mean.
 
-It pays to separate this second moment into two pieces, because they behave very
-differently from one another.
-Each measured electron contributes to the variance once on its own account,
-and once again for every \textit{other} electron that the same photon delivered
-alongside it.
-Written out, the second moment is the mean number of electrons plus the mean
-number of ordered pairs of distinct electrons originating from the same photon,
+Both moments of that single contribution follow from
+Equation~\ref{eq:measuredQuantumYield}.
+For a photon which liberates $n'$ electrons at a depth $z$,
+the measured yield $n''$ is binomial,
+with mean $n' \eta(z)$ and variance $n' \eta(z) \bigl( 1 - \eta(z) \bigr)$,
+so its second moment is
+\begin{equation} \label{eq:secondMomentConditional}
+    \E{(n'')^2} \big|_{n', z} = n' \eta (1 - \eta) + \bigl( n' \eta \bigr)^2 .
+\end{equation}
+Averaging over the absorption depth and the quantum yield,
+which are independent at a given wavelength,
+and using $\text{Var}(n') = \mathcal{F} \E{n}$ to evaluate $\E{(n')^2}$,
+gives
 \begin{equation} \label{eq:secondMoment}
-    \E{(n'')^2} = \E{n''} + \E{n''(n'' - 1)}.
+    \E{(n'')^2} = \E{n} \, \E{\eta}
+                + \E{n} \bigl( \E{n} + \mathcal{F} - 1 \bigr) \E{\eta^2} .
 \end{equation}
-The first term is what a stream of mutually independent electrons would produce
-by itself, and it is the reason the \VMR\ measured in electrons can never fall
-below unity.
-The second term is the excess above that floor.
-It is nonzero only because one photon can liberate several electrons at once,
-and because those electrons are all collected by the same pixel.
-
-Both terms are readily evaluated.
-The mean number of electrons measured per absorbed photon is the average quantum
-yield reduced by the average \CCE, $\E{n''} = \E{n} \, \E{\eta}$.
-A photon which liberates $n'$ electrons at a depth $z$ contributes
-$n'(n' - 1) \, \eta^2(z)$ ordered pairs on average,
-so averaging over the quantum yield and the absorption depth in turn gives
-\begin{equation} \label{eq:pairTerm}
-    \E{n''(n'' - 1)} = \E{n} \bigl( \E{n} + \mathcal{F} - 1 \bigr) \E{\eta^2}.
-\end{equation}
-Dividing Equation~\ref{eq:secondMoment} by the mean then gives the \VMR\ of the
-electrons measured by the sensor,
+The mean is simply $\E{n''} = \E{n} \, \E{\eta}$,
+so dividing Equation~\ref{eq:secondMoment} by it gives the \VMR\ of the electrons
+measured by the sensor,
 \begin{equation} \label{eq:totalVmr}
-    F_e'' = 1 + \bigl( \E{n} + \mathcal{F} - 1 \bigr) \frac{\E{\eta^2}}{\E{\eta}},
+    F_e'' = 1 + \bigl( \E{n} + \mathcal{F} - 1 \bigr) \frac{\E{\eta^2}}{\E{\eta}} .
 \end{equation}
-in which the leading unity is the uncorrelated floor and the remaining term
-carries all of the excess noise.
-Note that the two moments of the \CCE\ enter only through their ratio.
+
+The two terms of Equation~\ref{eq:secondMoment} are worth distinguishing,
+since they respond differently to charge diffusion in
+Section~\ref{subsec:ChargeDiffusion}.
+Each factor of $\eta$ is the probability that one electron survives
+recombination, so the number of factors counts the electrons a term describes.
+The first term carries a single factor and is the contribution of the electrons
+taken one at a time;
+it becomes the leading unity of Equation~\ref{eq:totalVmr},
+which is why the \VMR\ measured in electrons can never fall below one.
+The second term carries two factors, through $\E{\eta^2}$,
+and describes the electrons two at a time.
+It is nonzero only because a single photon can liberate more than one electron,
+and it is the entire excess above the Poisson floor.
 
 It is conventional to express this result in terms of the \VMR\ of the \CCE\
 rather than its second moment.
@@ -535,13 +538,12 @@ only by weakening the correlation between electrons that came from the same
 photon.
 Its effect on the noise is confined to one of the two terms identified in
 Section~\ref{subsec:Noise}.
-The leading unity of Equation~\ref{eq:totalVmr} counts each electron once,
-on its own account, and is indifferent to where any of its neighbors are
-collected, so diffusion cannot touch it.
-The remaining term is a different matter.
-It exists only because the several electrons liberated by a single photon are
-collected together by one pixel, and that is precisely the assumption which
-diffusion undermines.
+The leading unity of Equation~\ref{eq:totalVmr} describes the electrons one at a
+time, and a single electron is collected by some pixel no matter how far it
+wanders, so diffusion cannot touch it.
+The remaining term describes them two at a time, and it takes for granted that
+both electrons are collected by the same pixel.
+That is precisely the assumption which diffusion undermines.
 
 Two electrons liberated by the same photon begin their random walks from a
 common absorption depth and a common position within a pixel,
@@ -568,7 +570,7 @@ electrons remain together;
 in the opposite limit it falls to zero and they are scattered independently.
 
 Charge diffusion therefore acts on Equation~\ref{eq:totalVmr} by discounting the
-pair term by the probability that a pair is in fact measured as a pair,
+two-electron term by the probability that the two are in fact measured together,
 \begin{equation} \label{eq:diffusedVmr}
     F_{e,\text{diff}}'' = 1 + \bigl( \E{n} + \mathcal{F} - 1 \bigr)
         \frac{\E{\mathcal{P} \eta^2}}{\E{\eta}}.
