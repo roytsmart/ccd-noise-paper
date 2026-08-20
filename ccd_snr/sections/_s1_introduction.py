@@ -59,14 +59,22 @@ The second effect is charge diffusion (or charge spreading),
 the tendency for photoelectrons to migrate into neighboring pixels \citep{Janesick2001},
 a mechanism suggested by both \citet{Wulser2018} and \citet{Borders2010} to
 explain the discrepancies they measured.
-That charge which is shared between pixels suppresses the variance of a flat
-field, and appears instead as a covariance between neighboring pixels,
-is well established in the visible,
-where it is studied as the brighter-fatter effect
-\citep{Guyonnet2015,Astier2019};
-what distinguishes the \UV\ is that a single photon liberates several electrons
-which are correlated from the moment they are created,
-independently of the signal level.
+Flat fields are already known to depart from Poisson statistics in the visible,
+where the variance is suppressed and reappears as a covariance between
+neighboring pixels, an effect attributed to the electrostatic repulsion of
+charge already collected and known as the brighter-fatter effect
+\citep{Guyonnet2015,Astier2019}.
+That mechanism is distinct from the one considered here.
+It distorts the pixel boundaries by an amount which grows with the accumulated
+signal, whereas charge diffusion displaces each electron independently of every
+other, and independently displacing the points of a Poisson process yields
+another Poisson process.
+Charge diffusion by itself therefore cannot alter the variance of a flat field
+at all.
+It becomes a noise term only when a single photon liberates several electrons
+which would otherwise be collected together,
+so it switches on with the quantum yield in the \UV\ rather than with the
+signal level.
 The closest treatment of this combination that we are aware of is
 \citet{Givans2022}, who extended a flat-field correlation formalism to include
 both quantum yield and charge diffusion for the infrared detectors of the

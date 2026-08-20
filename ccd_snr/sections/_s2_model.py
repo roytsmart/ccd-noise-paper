@@ -392,13 +392,15 @@ depletion region where they can then be conducted to the terminals and measured
 \citep{Janesick2001}.
 This random walk generally leads to a loss of spatial resolution measured by
 the sensor since electrons can diffuse to adjacent pixels.
-It also leads to a reduction in the variance of a flat field measured by the sensor since
-the blurring due to this diffusion induces a correlation between neighboring
-pixels.
-The same trade of variance for covariance is well documented in the visible,
-where charge redistribution between pixels is understood to be the origin of
-the departure of flat fields from Poisson statistics
-\citep{Guyonnet2015,Astier2019}.
+It can also lead to a reduction in the variance of a flat field measured by the
+sensor, but only where a single photon liberates more than one electron.
+The random walk displaces each electron independently of every other,
+so for a quantum yield of unity it carries one Poisson distribution of electrons
+into another and leaves the variance of a flat field unchanged.
+Where the quantum yield exceeds unity, the electrons liberated by a single
+photon would otherwise be collected together,
+and spreading them across neighboring pixels both reduces the variance and
+induces a covariance between those pixels.
 
 Using Monte Carlo modeling, \citet{Janesick2001} found the following
 expression for the standard deviation of the charge diffusion kernel:
