@@ -334,16 +334,37 @@ At first glance the \VMR\ of this process looks intractable,
 since Equation~\ref{eq:measuredElectrons} is a sum of binomial draws in which
 both the number of trials and the probability of success vary from one term to
 the next.
-It is made tractable by the fact that the number of terms is itself Poisson.
-The \VMR\ of a sum of independent contributions drawn a Poisson number of times
-does not depend on how many contributions arrive;
-it is fixed entirely by the statistics of a single one.
-In our case that single contribution is the number of electrons delivered by one
-absorbed photon, and the \VMR\ is the mean of the square of that number divided
-by its mean.
+It is made tractable by the observation made at the start of this section,
+that the \VMR\ is constant as a function of signal,
+which leaves us free to evaluate it at whichever illumination is most
+convenient.
+The most convenient is the faintest.
+Consider an exposure so brief that the entire pixel array receives a single
+photon with probability $\varepsilon$ and no photon at all otherwise.
+Let $X$ be the number of electrons collected by a given pixel,
+and $X_1$ the number that same pixel collects on those occasions when the photon
+is present.
+The empty exposures contribute nothing to either average, so
+\begin{equation} \label{eq:faintMoments}
+    \E{X} = \varepsilon \, \E{X_1},
+    \qquad
+    \E{X^2} = \varepsilon \, \E{X_1^2},
+\end{equation}
+and the \VMR\ of the exposure is
+\begin{equation} \label{eq:faintVmr}
+    F(X) = \frac{\E{X^2} - \E{X}^2}{\E{X}}
+         = \frac{\E{X_1^2}}{\E{X_1}} - \varepsilon \, \E{X_1} .
+\end{equation}
+As the exposure is made fainter the second term vanishes,
+and the \VMR\ is fixed entirely by the first two moments of what a single photon
+delivers to a single pixel.
+Since the \VMR\ does not depend on the illumination,
+this limit is the answer at any illumination.
 
-Both moments of that single contribution follow from
-Equation~\ref{eq:measuredQuantumYield}.
+In this subsection charge diffusion is neglected,
+so the electrons liberated by that photon are all collected by the pixel it
+struck, and $X_1$ is simply the measured quantum yield $n''$.
+Both of its moments follow from Equation~\ref{eq:measuredQuantumYield}.
 For a photon which liberates $n'$ electrons at a depth $z$,
 the measured yield $n''$ is binomial,
 with mean $n' \eta(z)$ and variance $n' \eta(z) \bigl( 1 - \eta(z) \bigr)$,
@@ -536,10 +557,12 @@ It moves electrons between pixels without creating or destroying any, so it
 leaves the mean of a flat-field image unchanged, and it reduces the variance
 only by weakening the correlation between electrons that came from the same
 photon.
-To find its effect on the noise we repeat the calculation of
-Section~\ref{subsec:Noise},
-now asking how many of a photon's electrons are collected by each \textit{pixel}
-rather than by the sensor as a whole.
+To find its effect on the noise we return to the faint exposure of
+Section~\ref{subsec:Noise}, in which the array receives at most one photon.
+The image is then nothing but the charge liberated by that photon,
+and the only thing diffusion changes is how it is divided between the pixels,
+so we now ask how many of the photon's electrons each \textit{pixel} collects
+rather than how many survive in total.
 Let $q_j$ be the probability that any one electron liberated by the photon is
 collected by pixel $j$, so that $\sum_j q_j = 1$.
 The electrons are displaced independently of one another,
