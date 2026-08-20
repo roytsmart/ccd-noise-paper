@@ -587,6 +587,14 @@ Where no charge is shared, $\sum_j q_j^2 = 1$,
 Equation~\ref{eq:diffusedSecondMoment} collapses to $m^2$,
 and the result of Section~\ref{subsec:Noise} is recovered;
 this is why the pairs are invisible there and unavoidable here.
+The opposite extreme is equally simple.
+Where the charge is spread so widely that no two electrons share a pixel,
+$\sum_j q_j^2$ falls to zero and the sum of squares collapses to $m$,
+which is to say the image becomes a set of electrons bearing no relation to one
+another and the \VMR\ falls to unity.
+Between these limits the \VMR\ measured in electrons is nothing more than the
+ratio of the sum of the squares of a single-photon image to the sum of that same
+image, and charge diffusion moves it from one end of that range to the other.
 
 It remains to evaluate $\sum_j q_j^2$ for the charge diffusion described by
 Equation~\ref{eq:chargeDiffusion}.
