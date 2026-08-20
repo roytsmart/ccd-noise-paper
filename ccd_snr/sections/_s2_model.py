@@ -536,22 +536,42 @@ It moves electrons between pixels without creating or destroying any, so it
 leaves the mean of a flat-field image unchanged, and it reduces the variance
 only by weakening the correlation between electrons that came from the same
 photon.
-Its effect on the noise is confined to one of the two terms identified in
+To find its effect on the noise we repeat the calculation of
+Section~\ref{subsec:Noise},
+now asking how many of a photon's electrons are collected by each \textit{pixel}
+rather than by the sensor as a whole.
+Let $q_j$ be the probability that any one electron liberated by the photon is
+collected by pixel $j$, so that $\sum_j q_j = 1$.
+The electrons are displaced independently of one another,
+so a photon which delivers $m$ of them contributes
+$X_j \leftarrow \text{Binomial}(m, q_j)$ to pixel $j$,
+and the second moment summed over the pixels is
+\begin{equation} \label{eq:diffusedSecondMoment}
+    \sum_j \E{X_j^2} = m \sum_j q_j - m \sum_j q_j^2 + m^2 \sum_j q_j^2
+                     = m + m (m - 1) \sum_j q_j^2 .
+\end{equation}
+Two quantities have appeared which were not present in
 Section~\ref{subsec:Noise}.
-The leading unity of Equation~\ref{eq:totalVmr} describes the electrons one at a
-time, and a single electron is collected by some pixel no matter how far it
-wanders, so diffusion cannot touch it.
-The remaining term describes them two at a time, and it takes for granted that
-both electrons are collected by the same pixel.
-That is precisely the assumption which diffusion undermines.
+The sum $\sum_j q_j^2$ is the probability that two electrons displaced
+independently are collected by the same pixel,
+and the factor $m(m-1)$ multiplying it is the number of ordered pairs of
+distinct electrons the photon delivered.
+Neither was introduced by hand.
+Both are produced by the algebra, and they arrive together,
+because the only way that spreading the charge can alter the second moment is by
+separating electrons which would otherwise have been counted in the same pixel.
+Where no charge is shared, $\sum_j q_j^2 = 1$,
+Equation~\ref{eq:diffusedSecondMoment} collapses to $m^2$,
+and the result of Section~\ref{subsec:Noise} is recovered;
+this is why the pairs are invisible there and unavoidable here.
 
+It remains to evaluate $\sum_j q_j^2$ for the charge diffusion described by
+Equation~\ref{eq:chargeDiffusion}.
 Two electrons liberated by the same photon begin their random walks from a
 common absorption depth and a common position within a pixel,
-so in the absence of diffusion they are always measured together.
-Once the charge is allowed to spread they are measured together only some of the
-time.
-How often depends on how far the charge spreads at the depth where the photon
-was absorbed, expressed in units of the pixel width,
+so how often they are collected together depends on how far the charge spreads
+at the depth where the photon was absorbed,
+expressed in units of the pixel width,
 \begin{equation} \label{eq:probabilitySamePixel}
 \begin{split}
     \mathcal{P}(z) &= p\bigl(\sigma(z) / d\bigr)^2, \\
@@ -559,9 +579,9 @@ was absorbed, expressed in units of the pixel width,
             - \frac{2 s}{\sqrt{\pi}} \left( 1 - e^{-1 / 4 s^2} \right),
 \end{split}
 \end{equation}
-where $p(s)$ is the probability that two electrons displaced independently from
-a common, uniformly distributed origin within a pixel are collected by the same
-column of pixels,
+where $\mathcal{P}(z)$ is $\sum_j q_j^2$ averaged over the position of the photon
+within its pixel,
+$p(s)$ is the corresponding probability for a single axis,
 $d$ is the width of a pixel,
 and the square accounts for the two directions across the face of the sensor,
 which spread independently of one another.
@@ -569,12 +589,20 @@ In the limit of a narrow charge cloud this probability approaches unity and the
 electrons remain together;
 in the opposite limit it falls to zero and they are scattered independently.
 
-Charge diffusion therefore acts on Equation~\ref{eq:totalVmr} by discounting the
-two-electron term by the probability that the two are in fact measured together,
+Averaging Equation~\ref{eq:diffusedSecondMoment} over the quantum yield and the
+absorption depth, exactly as in Section~\ref{subsec:Noise},
+requires $\E{m} = \E{n} \, \E{\eta}$ as before,
+and $\E{m(m-1)} = \E{n} \bigl( \E{n} + \mathcal{F} - 1 \bigr) \E{\eta^2}$,
+since a pair survives recombination only if both of its electrons do.
+Dividing by the mean gives the \VMR\ measured by a sensor with charge diffusion,
 \begin{equation} \label{eq:diffusedVmr}
     F_{e,\text{diff}}'' = 1 + \bigl( \E{n} + \mathcal{F} - 1 \bigr)
         \frac{\E{\mathcal{P} \eta^2}}{\E{\eta}}.
 \end{equation}
+Comparing with Equation~\ref{eq:totalVmr},
+the effect of charge diffusion is to discount the two-electron term by the
+probability that the two electrons are in fact measured together,
+and to leave the one-electron term untouched.
 The discount is applied inside the average over absorption depth rather than
 outside it, since the distance the charge spreads and the fraction of it that
 survives recombination both depend on where in the sensor the photon was
