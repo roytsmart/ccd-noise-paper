@@ -37,8 +37,14 @@ However, this model appears to be less accurate in the \UV.
 For example, \citet{Wulser2018} showed that \IRIS\ measured \textit{less} noise
 in the \FUV\ channel than the traditional model would suggest
 and similar results were found in the \NUV\ by \WFC\ \citep{Borders2010}.
-This discrepancy indicates that the traditional model is incomplete, 
-and that a more detailed model is needed to predict the noise measured by 
+The \WFC\ instrument handbook reports the same effect as a quantum yield
+measured well below its theoretical value,
+1.07 electrons per photon at \qty{218}{\nano\meter} against a prediction closer
+to 1.7 electrons per photon at \qty{200}{\nano\meter},
+and states that the cause is unclear though it may be due to charge sharing
+\citep{Marinelli2024}.
+This discrepancy indicates that the traditional model is incomplete,
+and that a more detailed model is needed to predict the noise measured by
 these sensors in the \UV.
 
 In this work, we aim to resolve the \UV\ noise discrepancy by developing a noise model
@@ -53,6 +59,18 @@ The second effect is charge diffusion (or charge spreading),
 the tendency for photoelectrons to migrate into neighboring pixels \citep{Janesick2001},
 a mechanism suggested by both \citet{Wulser2018} and \citet{Borders2010} to
 explain the discrepancies they measured.
+That charge which is shared between pixels suppresses the variance of a flat
+field, and appears instead as a covariance between neighboring pixels,
+is well established in the visible,
+where it is studied as the brighter-fatter effect
+\citep{Guyonnet2015,Astier2019};
+what distinguishes the \UV\ is that a single photon liberates several electrons
+which are correlated from the moment they are created,
+independently of the signal level.
+The closest treatment of this combination that we are aware of is
+\citet{Givans2022}, who extended a flat-field correlation formalism to include
+both quantum yield and charge diffusion for the infrared detectors of the
+Nancy Grace Roman Space Telescope.
 We will model the contribution of each of theses effects to the total noise
 and compare our predicted noise to the noise measured by \IRIS\ and \WFC.
 We will also provide noise predictions for \AIA\ and \MUSE\ 

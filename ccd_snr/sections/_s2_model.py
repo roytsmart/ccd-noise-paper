@@ -393,8 +393,12 @@ depletion region where they can then be conducted to the terminals and measured
 This random walk generally leads to a loss of spatial resolution measured by
 the sensor since electrons can diffuse to adjacent pixels.
 It also leads to a reduction in the variance of a flat field measured by the sensor since
-the blurring due to this diffusion induces a correlation between neighboring 
+the blurring due to this diffusion induces a correlation between neighboring
 pixels.
+The same trade of variance for covariance is well documented in the visible,
+where charge redistribution between pixels is understood to be the origin of
+the departure of flat fields from Poisson statistics
+\citep{Guyonnet2015,Astier2019}.
 
 Using Monte Carlo modeling, \citet{Janesick2001} found the following
 expression for the standard deviation of the charge diffusion kernel:
