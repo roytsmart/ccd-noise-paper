@@ -563,10 +563,16 @@ The image is then nothing but the charge liberated by that photon,
 and the only thing diffusion changes is how it is divided between the pixels,
 so we now ask how many of the photon's electrons each \textit{pixel} collects
 rather than how many survive in total.
-Let $q_j$ be the probability that any one electron liberated by the photon is
-collected by pixel $j$, so that $\sum_j q_j = 1$.
+Let $m$ be the number of electrons which survive recombination,
+as in Section~\ref{subsec:Noise},
+and let $q_j$ be the probability that any one of \textit{those} electrons is
+collected by pixel $j$.
+Recombination has therefore already been accounted for in $m$,
+and $q_j$ describes only where the surviving charge is delivered,
+so that $\sum_j q_j = 1$;
+the \CCE\ enters this section through $m$ and not through $q_j$.
 The electrons are displaced independently of one another,
-so a photon which delivers $m$ of them contributes
+so the photon contributes
 $X_j \leftarrow \text{Binomial}(m, q_j)$ to pixel $j$,
 and the second moment summed over the pixels is
 \begin{equation} \label{eq:diffusedSecondMoment}
