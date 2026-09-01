@@ -17,7 +17,9 @@ def vmr_measured() -> str:
 
     wavelength_iris = [
         1350 * u.AA,
-        4500 * u.AA,
+        # the onboard blue LED used by \citet{Wulser2018} to measure the
+        # visible-light gain, 430 nm for the SXI flight units \citep{Stern2004}
+        4300 * u.AA,
     ]
     wavelength_iris = na.ScalarArray(
         ndarray=u.Quantity(wavelength_iris),
@@ -63,16 +65,22 @@ def vmr_measured() -> str:
 {aastex.Variable("measuredIrisRatio", ratio_measured_iris.ndarray[0]).dumps()}
 {aastex.Variable("measuredWfcRatio", np.round(ratio_measured_wfc3.ndarray[0], decimals=2)).dumps()}
 {aastex.Variable("wavelengthIrisRatio", wavelength_iris.ndarray[0]).dumps()}
-{aastex.Variable("wavelengthWfcRatio", wavelength_wfc3.ndarray[0]).dumps()}
+{aastex.Variable("wavelengthWfcRatio", wavelength_wfc3.ndarray[0].to(u.AA)).dumps()}
 """
 
     result += r"""\begin{deluxetable}{lrrrr}
 \tablecaption{
 \label{table:measurements}
-The ratio of the \VMR\ of a \UV\ flat-field image to the \VMR\ of visible light
-flat-field image.
+The ratio of the \VMR\ of a \UV\ flat-field image to the \VMR\ of a
+visible-light flat-field image.
 The second column from the right is the value of this ratio
 measured by \citet{Borders2010} and \citet{Wulser2018}.
+For \IRIS\ this is the ratio of the inverse camera gains measured from
+photon-transfer curves, 12 photons per data number using a deuterium lamp at
+\qty{1350}{\angstrom} and 18 photons per data number using the onboard blue
+light-emitting diode \citep{Wulser2018}, which we take to be the
+\qty{430}{\nano\meter} device flown on the GOES Soft X-ray Imager
+\citep{Stern2004}.
 The rightmost column is the value of this quantity predicted by our
 noise model (including charge diffusion).
 }

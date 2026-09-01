@@ -53,7 +53,7 @@ The second effect is charge diffusion (or charge spreading),
 the tendency for photoelectrons to migrate into neighboring pixels \citep{Janesick2001},
 a mechanism suggested by both \citet{Wulser2018} and \citet{Borders2010} to
 explain the discrepancies they measured.
-We will model the contribution of each of theses effects to the total noise
+We will model the contribution of each of these effects to the total noise
 and compare our predicted noise to the noise measured by \IRIS\ and \WFC.
 We will also provide noise predictions for \AIA\ and \MUSE\ 
 \citep{DePontieu2020} which can be used for estimating the uncertainty

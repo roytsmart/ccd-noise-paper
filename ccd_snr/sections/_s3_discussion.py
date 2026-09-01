@@ -52,8 +52,6 @@ The blue line is the improvement ratio for the undiffused model and it shows
 that there are two regions,
 one from \qtyrange[range-units=single,range-phrase=-]{30}{100}{\angstrom} 
 and another from \qtyrange[range-units=single,range-phrase=-]{500}{2000}{\angstrom},
-where 
-
 where the noise statistics deviate from the traditional model,
 in some cases by up to ${\sim}30\%$.
 This figure can be used to quickly estimate the importance of \PCC\ noise
