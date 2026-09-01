@@ -13,7 +13,7 @@ While the noise in these sensors is typically assumed to be dominated by photon 
 measurements from \WFC\ and \IRIS\ reveal a significant discrepancy:
 the noise measured in the \UV\ is systematically lower than theoretical predictions.
 We propose that this discrepancy is caused by \PCC,
-a whereby a fraction of photogenerated electron-hole pairs recombine before they can be measured.
+whereby a fraction of photogenerated electron-hole pairs recombine before they can be measured.
 We present a simple theoretical model,
 valid for wavelengths from \qtyrange{1}{10000}{\angstrom},
 that incorporates the effects of \PCC\
