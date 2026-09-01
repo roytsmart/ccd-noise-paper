@@ -36,9 +36,16 @@ wavelength regimes.
 However, this model appears to be less accurate in the \UV.
 For example, \citet{Wulser2018} showed that \IRIS\ measured \textit{less} noise
 in the \FUV\ channel than the traditional model would suggest
-and similar results were found in the \NUV\ by \WFC\ \citep{Borders2010}.
-This discrepancy indicates that the traditional model is incomplete, 
-and that a more detailed model is needed to predict the noise measured by 
+and similar results were found in the \NUV\ by \WFC.
+\citet{Borders2010} measured the quantum yield of the \WFC\ \CCDs\ from
+narrowband flat fields between \qty{208}{\nano\meter} and \qty{400}{\nano\meter}
+and found it to be about 30\% smaller than the theoretical prediction,
+which falls from 1.7 electrons per interacting photon at \qty{200}{\nano\meter}
+to unity at \qty{340}{\nano\meter}.
+The \WFC\ instrument handbook, which summarizes this measurement,
+still describes its cause as unclear \citep{Marinelli2024}.
+This discrepancy indicates that the traditional model is incomplete,
+and that a more detailed model is needed to predict the noise measured by
 these sensors in the \UV.
 
 In this work, we aim to resolve the \UV\ noise discrepancy by developing a noise model
@@ -53,6 +60,26 @@ The second effect is charge diffusion (or charge spreading),
 the tendency for photoelectrons to migrate into neighboring pixels \citep{Janesick2001},
 a mechanism suggested by both \citet{Wulser2018} and \citet{Borders2010} to
 explain the discrepancies they measured.
+Flat fields are already known to depart from Poisson statistics in the visible,
+where the variance is suppressed and reappears as a covariance between
+neighboring pixels, an effect attributed to the electrostatic repulsion of
+charge already collected and known as the brighter-fatter effect
+\citep{Guyonnet2015,Astier2019}.
+That mechanism is distinct from the one considered here.
+It distorts the pixel boundaries by an amount which grows with the accumulated
+signal, whereas charge diffusion displaces each electron independently of every
+other, and independently displacing the points of a Poisson process yields
+another Poisson process.
+Charge diffusion by itself therefore cannot alter the variance of a flat field
+at all.
+It becomes a noise term only when a single photon liberates several electrons
+which would otherwise be collected together,
+so it switches on with the quantum yield in the \UV\ rather than with the
+signal level.
+The closest treatment of this combination that we are aware of is
+\citet{Givans2022}, who extended a flat-field correlation formalism to include
+both quantum yield and charge diffusion for the infrared detectors of the
+Nancy Grace Roman Space Telescope.
 We will model the contribution of each of these effects to the total noise
 and compare our predicted noise to the noise measured by \IRIS\ and \WFC.
 We will also provide noise predictions for \AIA\ and \MUSE\ 
