@@ -102,8 +102,9 @@ Evaluating the same model without charge diffusion raises the predicted \IRIS\
 ratio to approximately the measured value, which suggests that the quantum
 yield and the \PCC\ are not responsible.
 
-Our diffusion model has three limitations, any of which could plausibly
-account for it.
+Our diffusion model has three limitations.
+The first two would each raise our predicted ratios and could therefore account
+for the disagreement.
 First, we have adopted the thickness of the depletion region fit to the
 measurements of \citet{Stern2004}, which were made on a different sensor
 operated at a different voltage.
@@ -118,7 +119,12 @@ Second, we model the charge cloud as a Gaussian, whereas \citet{Pavlov1999}
 show that the true radial distribution is peaked more strongly and has heavier
 tails, which would place more of the charge liberated by a single photon in a
 single pixel than we have assumed.
-Third, we neglect the further diffusion that the charge undergoes while
-drifting across the depletion region.
+The third limitation works in the opposite direction:
+we neglect the further diffusion that the charge undergoes while drifting across
+the depletion region.
+Including it would spread the charge liberated by a single photon over more
+pixels and lower our predicted ratios further, so it cannot explain the
+underestimate, and it implies that the first two effects would have to be larger
+still to account for the disagreement on their own.
 """)
     return result
