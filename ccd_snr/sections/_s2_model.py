@@ -334,48 +334,72 @@ At first glance the \VMR\ of this process looks intractable,
 since Equation~\ref{eq:measuredElectrons} is a sum of binomial draws in which
 both the number of trials and the probability of success vary from one term to
 the next.
-It is made tractable by the fact that the number of terms is itself Poisson.
-The \VMR\ of a sum of independent contributions drawn a Poisson number of times
-does not depend on how many contributions arrive;
-it is fixed entirely by the statistics of a single one.
-In our case that single contribution is the number of electrons delivered by one
-absorbed photon, and the \VMR\ is the mean of the square of that number divided
-by its mean.
+It is made tractable by the observation made at the start of this section,
+that the \VMR\ is constant as a function of signal,
+which leaves us free to evaluate it at whichever illumination is most
+convenient.
+The most convenient is the faintest.
+Consider an exposure so brief that the entire pixel array receives a single
+photon with probability $\varepsilon$ and no photon at all otherwise.
+Let $X$ be the number of electrons collected by a given pixel,
+and $X_1$ the number that same pixel collects on those occasions when the photon
+is present.
+The empty exposures contribute nothing to either average, so
+\begin{equation} \label{eq:faintMoments}
+    \E{X} = \varepsilon \, \E{X_1},
+    \qquad
+    \E{X^2} = \varepsilon \, \E{X_1^2},
+\end{equation}
+and the \VMR\ of the exposure is
+\begin{equation} \label{eq:faintVmr}
+    F(X) = \frac{\E{X^2} - \E{X}^2}{\E{X}}
+         = \frac{\E{X_1^2}}{\E{X_1}} - \varepsilon \, \E{X_1} .
+\end{equation}
+As the exposure is made fainter the second term vanishes,
+and the \VMR\ is fixed entirely by the first two moments of what a single photon
+delivers to a single pixel.
+Since the \VMR\ does not depend on the illumination,
+this limit is the answer at any illumination.
 
-It pays to separate this second moment into two pieces, because they behave very
-differently from one another.
-Each measured electron contributes to the variance once on its own account,
-and once again for every \textit{other} electron that the same photon delivered
-alongside it.
-Written out, the second moment is the mean number of electrons plus the mean
-number of ordered pairs of distinct electrons originating from the same photon,
+In this subsection charge diffusion is neglected,
+so the electrons liberated by that photon are all collected by the pixel it
+struck, and $X_1$ is simply the measured quantum yield $n''$.
+Both of its moments follow from Equation~\ref{eq:measuredQuantumYield}.
+For a photon which liberates $n'$ electrons at a depth $z$,
+the measured yield $n''$ is binomial,
+with mean $n' \eta(z)$ and variance $n' \eta(z) \bigl( 1 - \eta(z) \bigr)$,
+so its second moment is
+\begin{equation} \label{eq:secondMomentConditional}
+    \E{(n'')^2} \big|_{n', z} = n' \eta (1 - \eta) + \bigl( n' \eta \bigr)^2 .
+\end{equation}
+Averaging over the absorption depth and the quantum yield,
+which are independent at a given wavelength,
+and using $\text{Var}(n') = \mathcal{F} \E{n}$ to evaluate $\E{(n')^2}$,
+gives
 \begin{equation} \label{eq:secondMoment}
-    \E{(n'')^2} = \E{n''} + \E{n''(n'' - 1)}.
+    \E{(n'')^2} = \E{n} \, \E{\eta}
+                + \E{n} \bigl( \E{n} + \mathcal{F} - 1 \bigr) \E{\eta^2} .
 \end{equation}
-The first term is what a stream of mutually independent electrons would produce
-by itself, and it is the reason the \VMR\ measured in electrons can never fall
-below unity.
-The second term is the excess above that floor.
-It is nonzero only because one photon can liberate several electrons at once,
-and because those electrons are all collected by the same pixel.
-
-Both terms are readily evaluated.
-The mean number of electrons measured per absorbed photon is the average quantum
-yield reduced by the average \CCE, $\E{n''} = \E{n} \, \E{\eta}$.
-A photon which liberates $n'$ electrons at a depth $z$ contributes
-$n'(n' - 1) \, \eta^2(z)$ ordered pairs on average,
-so averaging over the quantum yield and the absorption depth in turn gives
-\begin{equation} \label{eq:pairTerm}
-    \E{n''(n'' - 1)} = \E{n} \bigl( \E{n} + \mathcal{F} - 1 \bigr) \E{\eta^2}.
-\end{equation}
-Dividing Equation~\ref{eq:secondMoment} by the mean then gives the \VMR\ of the
-electrons measured by the sensor,
+The mean is simply $\E{n''} = \E{n} \, \E{\eta}$,
+so dividing Equation~\ref{eq:secondMoment} by it gives the \VMR\ of the electrons
+measured by the sensor,
 \begin{equation} \label{eq:totalVmr}
-    F_e'' = 1 + \bigl( \E{n} + \mathcal{F} - 1 \bigr) \frac{\E{\eta^2}}{\E{\eta}},
+    F_e'' = 1 + \bigl( \E{n} + \mathcal{F} - 1 \bigr) \frac{\E{\eta^2}}{\E{\eta}} .
 \end{equation}
-in which the leading unity is the uncorrelated floor and the remaining term
-carries all of the excess noise.
-Note that the two moments of the \CCE\ enter only through their ratio.
+
+The two terms of Equation~\ref{eq:secondMoment} are worth distinguishing,
+since they respond differently to charge diffusion in
+Section~\ref{subsec:ChargeDiffusion}.
+Each factor of $\eta$ is the probability that one electron survives
+recombination, so the number of factors counts the electrons a term describes.
+The first term carries a single factor and is the contribution of the electrons
+taken one at a time;
+it becomes the leading unity of Equation~\ref{eq:totalVmr},
+which is why the \VMR\ measured in electrons can never fall below one.
+The second term carries two factors, through $\E{\eta^2}$,
+and describes the electrons two at a time.
+It is nonzero only because a single photon can liberate more than one electron,
+and it is the entire excess above the Poisson floor.
 
 It is conventional to express this result in terms of the \VMR\ of the \CCE\
 rather than its second moment.
@@ -539,23 +563,58 @@ It moves electrons between pixels without creating or destroying any, so it
 leaves the mean of a flat-field image unchanged, and it reduces the variance
 only by weakening the correlation between electrons that came from the same
 photon.
-Its effect on the noise is confined to one of the two terms identified in
+To find its effect on the noise we return to the faint exposure of
+Section~\ref{subsec:Noise}, in which the array receives at most one photon.
+The image is then nothing but the charge liberated by that photon,
+and the only thing diffusion changes is how it is divided between the pixels,
+so we now ask how many of the photon's electrons each \textit{pixel} collects
+rather than how many survive in total.
+Let $m$ be the number of electrons which survive recombination,
+as in Section~\ref{subsec:Noise},
+and let $q_j$ be the probability that any one of \textit{those} electrons is
+collected by pixel $j$.
+Recombination has therefore already been accounted for in $m$,
+and $q_j$ describes only where the surviving charge is delivered,
+so that $\sum_j q_j = 1$;
+the \CCE\ enters this section through $m$ and not through $q_j$.
+The electrons are displaced independently of one another,
+so the photon contributes
+$X_j \leftarrow \text{Binomial}(m, q_j)$ to pixel $j$,
+and the second moment summed over the pixels is
+\begin{equation} \label{eq:diffusedSecondMoment}
+    \sum_j \E{X_j^2} = m \sum_j q_j - m \sum_j q_j^2 + m^2 \sum_j q_j^2
+                     = m + m (m - 1) \sum_j q_j^2 .
+\end{equation}
+Two quantities have appeared which were not present in
 Section~\ref{subsec:Noise}.
-The leading unity of Equation~\ref{eq:totalVmr} counts each electron once,
-on its own account, and is indifferent to where any of its neighbors are
-collected, so diffusion cannot touch it.
-The remaining term is a different matter.
-It exists only because the several electrons liberated by a single photon are
-collected together by one pixel, and that is precisely the assumption which
-diffusion undermines.
+The sum $\sum_j q_j^2$ is the probability that two electrons displaced
+independently are collected by the same pixel,
+and the factor $m(m-1)$ multiplying it is the number of ordered pairs of
+distinct electrons the photon delivered.
+Neither was introduced by hand.
+Both are produced by the algebra, and they arrive together,
+because the only way that spreading the charge can alter the second moment is by
+separating electrons which would otherwise have been counted in the same pixel.
+Where no charge is shared, $\sum_j q_j^2 = 1$,
+Equation~\ref{eq:diffusedSecondMoment} collapses to $m^2$,
+and the result of Section~\ref{subsec:Noise} is recovered;
+this is why the pairs are invisible there and unavoidable here.
+The opposite extreme is equally simple.
+Where the charge is spread so widely that no two electrons share a pixel,
+$\sum_j q_j^2$ falls to zero and the sum of squares collapses to $m$,
+which is to say the image becomes a set of electrons bearing no relation to one
+another and the \VMR\ falls to unity.
+Between these limits the \VMR\ measured in electrons is nothing more than the
+ratio of the sum of the squares of a single-photon image to the sum of that same
+image, and charge diffusion moves it from one end of that range to the other.
 
+It remains to evaluate $\sum_j q_j^2$ for the charge diffusion described by
+Equation~\ref{eq:chargeDiffusion}.
 Two electrons liberated by the same photon begin their random walks from a
 common absorption depth and a common position within a pixel,
-so in the absence of diffusion they are always measured together.
-Once the charge is allowed to spread they are measured together only some of the
-time.
-How often depends on how far the charge spreads at the depth where the photon
-was absorbed, expressed in units of the pixel width,
+so how often they are collected together depends on how far the charge spreads
+at the depth where the photon was absorbed,
+expressed in units of the pixel width,
 \begin{equation} \label{eq:probabilitySamePixel}
 \begin{split}
     \mathcal{P}(z) &= p\bigl(\sigma(z) / d\bigr)^2, \\
@@ -563,9 +622,9 @@ was absorbed, expressed in units of the pixel width,
             - \frac{2 s}{\sqrt{\pi}} \left( 1 - e^{-1 / 4 s^2} \right),
 \end{split}
 \end{equation}
-where $p(s)$ is the probability that two electrons displaced independently from
-a common, uniformly distributed origin within a pixel are collected by the same
-column of pixels,
+where $\mathcal{P}(z)$ is $\sum_j q_j^2$ averaged over the position of the photon
+within its pixel,
+$p(s)$ is the corresponding probability for a single axis,
 $d$ is the width of a pixel,
 and the square accounts for the two directions across the face of the sensor,
 which spread independently of one another.
@@ -573,12 +632,20 @@ In the limit of a narrow charge cloud this probability approaches unity and the
 electrons remain together;
 in the opposite limit it falls to zero and they are scattered independently.
 
-Charge diffusion therefore acts on Equation~\ref{eq:totalVmr} by discounting the
-pair term by the probability that a pair is in fact measured as a pair,
+Averaging Equation~\ref{eq:diffusedSecondMoment} over the quantum yield and the
+absorption depth, exactly as in Section~\ref{subsec:Noise},
+requires $\E{m} = \E{n} \, \E{\eta}$ as before,
+and $\E{m(m-1)} = \E{n} \bigl( \E{n} + \mathcal{F} - 1 \bigr) \E{\eta^2}$,
+since a pair survives recombination only if both of its electrons do.
+Dividing by the mean gives the \VMR\ measured by a sensor with charge diffusion,
 \begin{equation} \label{eq:diffusedVmr}
     F_{e,\text{diff}}'' = 1 + \bigl( \E{n} + \mathcal{F} - 1 \bigr)
         \frac{\E{\mathcal{P} \eta^2}}{\E{\eta}}.
 \end{equation}
+Comparing with Equation~\ref{eq:totalVmr},
+the effect of charge diffusion is to discount the two-electron term by the
+probability that the two electrons are in fact measured together,
+and to leave the one-electron term untouched.
 The discount is applied inside the average over absorption depth rather than
 outside it, since the distance the charge spreads and the fraction of it that
 survives recombination both depend on where in the sensor the photon was
