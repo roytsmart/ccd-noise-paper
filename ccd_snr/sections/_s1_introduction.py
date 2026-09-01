@@ -80,7 +80,7 @@ The closest treatment of this combination that we are aware of is
 \citet{Givans2022}, who extended a flat-field correlation formalism to include
 both quantum yield and charge diffusion for the infrared detectors of the
 Nancy Grace Roman Space Telescope.
-We will model the contribution of each of theses effects to the total noise
+We will model the contribution of each of these effects to the total noise
 and compare our predicted noise to the noise measured by \IRIS\ and \WFC.
 We will also provide noise predictions for \AIA\ and \MUSE\ 
 \citep{DePontieu2020} which can be used for estimating the uncertainty

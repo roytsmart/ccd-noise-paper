@@ -19,9 +19,11 @@ on the noise by developing a simple model of a back-illuminated sensor
 based on the \CCE\ introduced by \citet{Stern1994} and a charge diffusion model
 found by \citet{Janesick2001}.
 By analyzing these effects in a self-consistent manner, we were able to mostly
-resolve the discrepancy and propose that \PCC\ is the most important effect
-to consider since we predict that the charge diffusion in visible and
-\UV\ is nearly identical.
+resolve the discrepancy, and we propose that \PCC\ is the most important
+effect to consider in the \UV.
+The width of the charge diffusion kernel is nearly independent of wavelength,
+but its effect on the \VMR\ is not, since diffusion suppresses the
+photon-correlated term, which grows with the quantum yield.
 
 Our sensor model predicts that there are two \UV\ bands, 
 \qtyrange[range-units=single,range-phrase=-]{30}{100}{\angstrom} 
@@ -40,7 +42,7 @@ This work does not consider read noise or other noise sources since those
 will be specific to the particular camera electronics of each instrument,
 and also cannot be characterized using a \VMR.
 Instead, this work focuses only on the noise intrinsic to the charge-generation
-process, since this comparatively consistent across different instruments.
+process, since this is comparatively consistent across different instruments.
 
 We plan to use this work to model the noise for \ESIS\ \citep{Parker2022},
 as well as \FURST, sounding-rocket-based spectrographs developed by our
