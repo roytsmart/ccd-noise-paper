@@ -56,4 +56,32 @@ def variables() -> list[aastex.Command]:
             name="expectedWfcRatio",
             value=1.7,
         ),
+    ] + _tracks()
+
+
+def _tracks() -> list[aastex.Command]:
+    """The variables describing the particle-track measurement of the appendix."""
+    chips = ["FUV1", "FUV2", "SJI"]
+    sji = ccd_snr.tracks.summary("SJI")
+    num_frames = sum(ccd_snr.tables.num_frames(c)[0] for c in ["FUV1", "SJI"])
+    return [
+        aastex.Variable("numTrackFrames", num_frames),
+        aastex.Variable(
+            "numTracks",
+            sum(ccd_snr.tracks.summary(c).num_tracks for c in chips),
+        ),
+        aastex.Variable(
+            "numFlatTracks",
+            sum(ccd_snr.tracks.summary(c).num_flat for c in chips),
+        ),
+        aastex.Variable("numFlatTracksSji", sji.num_flat),
+        aastex.Variable("sjiSamePixel", f"{sji.same_pixel:.2f}"),
+        aastex.Variable("sjiSamePixelError", f"{sji.same_pixel_error:.2f}"),
+        aastex.Variable("sjiSamePixelModel", f"{sji.same_pixel_paper:.2f}"),
+        aastex.Variable("sjiCriticalDepth", f"{sji.critical_depth[1]:.2f}"),
+        aastex.Variable("sjiWidthMax", f"{sji.width_max[1].to_value(u.um):.1f}"),
+        aastex.Variable(
+            "modelCriticalDepth",
+            f"{ccd_snr.tracks.paper_model()[0]:.2f}",
+        ),
     ]
