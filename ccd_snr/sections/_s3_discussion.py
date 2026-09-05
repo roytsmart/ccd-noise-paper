@@ -96,35 +96,46 @@ This is much nearer the measurement than the traditional model,
 but it underestimates it, where the traditional model overestimates it.
 Our model therefore accounts for most of the reported discrepancy in both cases,
 but it overcorrects for \IRIS.
-The remaining disagreement appears to be confined to our treatment of charge
-diffusion.
 Evaluating the same model without charge diffusion raises the predicted \IRIS\
-ratio to approximately the measured value, which suggests that the quantum
-yield and the \PCC\ are not responsible.
-
-Our diffusion model has three limitations.
-The first two would each raise our predicted ratios and could therefore account
-for the disagreement.
-First, we have adopted the thickness of the depletion region fit to the
-measurements of \citet{Stern2004}, which were made on a different sensor
-operated at a different voltage.
-The depletion thickness depends on both the resistivity of the silicon and the
-applied bias, so it need not carry over between sensors, and since the charge
-diffusion depends only on the difference between the substrate and depletion
-thicknesses, an error in one cannot be distinguished from an error in the other.
-A thicker depletion region implies a thinner field-free region and therefore
-less charge diffusion, which would raise our predicted ratios and improve the
-agreement for \IRIS.
-Second, we model the charge cloud as a Gaussian, whereas \citet{Pavlov1999}
+ratio to approximately the measured value, so the disagreement could be
+explained if we had overestimated the charge diffusion of the \IRIS\ \CCDs.
+There are two reasons to suspect that we might have.
+The thickness of the depletion region was fit to the measurements of
+\citet{Stern2004}, which were made on a different sensor operated at a
+different voltage, and the depletion thickness depends on both the resistivity
+of the silicon and the applied bias.
+Furthermore, we model the charge cloud as a Gaussian, whereas \citet{Pavlov1999}
 show that the true radial distribution is peaked more strongly and has heavier
 tails, which would place more of the charge liberated by a single photon in a
 single pixel than we have assumed.
-The third limitation works in the opposite direction:
-we neglect the further diffusion that the charge undergoes while drifting across
-the depletion region.
-Including it would spread the charge liberated by a single photon over more
-pixels and lower our predicted ratios further, so it cannot explain the
-underestimate, and it implies that the first two effects would have to be larger
-still to account for the disagreement on their own.
+To test this, we measured the charge diffusion of the \IRIS\ \CCDs\ directly
+using the tracks left by energetic particles (Appendix~\ref{appendix:tracks}).
+On the \SJI\ \CCD, the sensor on which \citet{Wulser2018} measured the
+photon-transfer curves, the probability that two electrons liberated at the
+back surface are collected in the same pixel is
+$\sjiSamePixel \pm \sjiSamePixelError$, compared to \sjiSamePixelModel\ for our
+model.
+This probability is measured without assuming a shape for the kernel and is the
+quantity which enters Equation~\ref{eq:diffusedVmr}, so neither the depletion
+thickness nor the shape of the kernel can account for the disagreement.
+
+With the charge diffusion fixed by measurement, the measured ratio constrains
+the remaining ingredients of Equation~\ref{eq:diffusedVmr}:
+the quantum yield, which is well established at \wavelengthIrisRatio,
+and the \CCE.
+Reproducing the measured ratio would require the \CCE\ at the back surface to
+be closer to unity than the \backsurfaceCCE\ implied by the \QE\ measurements
+of \citet{Heymes2020}, so that nearly every photon liberates a full electron
+and the \PCC\ contributes little to the variance.
+Alternatively, the measurement itself may be biased.
+The photon-transfer curve at \wavelengthIrisRatio\ was measured with a
+deuterium lamp, whose illumination is less uniform and less stable than that of
+the visible light-emitting diode used for the other curves, and any spatial or temporal
+nonuniformity in the illumination adds variance which a photon-transfer curve
+interprets as a larger \VMR.
+We cannot distinguish between these possibilities with the published data,
+and a photon-transfer measurement with a monochromatic, spatially uniform
+\UV\ source on a sensor whose \CCE\ is independently known would settle the
+question.
 """)
     return result
