@@ -58,7 +58,7 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store', '**.ipynb_checkpoints']
 # Execute every notebook under docs/reports/ during the build, so the figures
 # are regenerated from the code and data in the package.
 nbsphinx_execute = 'always'
-nbsphinx_timeout = 600
+nbsphinx_timeout = 900
 
 # -- Options for HTML output -------------------------------------------------
 
