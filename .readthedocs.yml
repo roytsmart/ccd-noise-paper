@@ -6,6 +6,7 @@ build:
     python: "3.12"
   apt_packages:
     - graphviz
+    - pandoc
     - latexmk
     - texlive-publishers
     - texlive-science

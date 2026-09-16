@@ -37,6 +37,7 @@ extensions = [
     'sphinx.ext.viewcode',
     'sphinxcontrib.bibtex',
     'jupyter_sphinx',
+    'nbsphinx',
 ]
 autosummary_generate = True  # Turn on sphinx.ext.autosummary
 autosummary_imported_members = True
@@ -52,7 +53,12 @@ templates_path = ['_templates']
 # List of patterns, relative to source directory, that match files and
 # This pattern also affects html_static_path and html_extra_path.
 # directories to ignore when looking for source files.
-exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
+exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store', '**.ipynb_checkpoints']
+
+# Execute every notebook under docs/reports/ during the build, so the figures
+# are regenerated from the code and data in the package.
+nbsphinx_execute = 'always'
+nbsphinx_timeout = 600
 
 # -- Options for HTML output -------------------------------------------------
 
