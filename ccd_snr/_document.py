@@ -56,6 +56,9 @@ def document() -> aastex.Document:
     doc.append(ccd_snr.sections.conclusion())
     doc.append(ccd_snr.acknowledgements())
 
+    doc.append(aastex.Appendix())
+    doc.append(ccd_snr.sections.tracks())
+
     doc.append(aastex.Bibliography("sources"))
 
     return doc

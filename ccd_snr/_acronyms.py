@@ -25,6 +25,8 @@ def acronyms() -> list[aastex.Acronym]:
         aastex.Acronym("SDO", "NASA's Solar Dynamics Observatory"),
         aastex.Acronym("AIA", "the Atmospheric Imaging Assembly"),
         aastex.Acronym("IRIS", "the Interface Region Imaging Spectrograph"),
+        aastex.Acronym("SJI", "the Slit-Jaw Imager"),
+        aastex.Acronym("SAA", "the South Atlantic Anomaly"),
         aastex.Acronym("MUSE", "the Multi-slit Solar Explorer"),
         aastex.Acronym("WFC", "HST's Wide Field Camera 3", name_short="WFC3"),
         aastex.Acronym("PCC", "partial charge collection"),

@@ -533,6 +533,14 @@ we have plotted the corresponding standard deviation of the charge diffusion
 kernel as a function of wavelength which predicts that the charge diffusion is
 reasonably constant over much of the \SXR\ and ultraviolet wavelengths
 since the penetration depth is low in this regime.
+Since the depletion thickness depends on the resistivity and bias voltage of
+a particular device, in Appendix~\ref{appendix:tracks} we check this model
+against the charge diffusion measured directly on the \IRIS\ \CCDs\ using the
+tracks left by energetic particles.
+The probability that two electrons liberated at the back surface are collected
+in the same pixel, which is the quantity that enters our noise model below,
+is $\sjiSamePixel \pm \sjiSamePixelError$ on the \IRIS\ \SJI\ \CCD,
+compared to \sjiSamePixelModel\ predicted by this model.
 
 To visualize the extent of this charge diffusion,
 we've included Figure~\ref{fig:chargeDiffusionKernel},

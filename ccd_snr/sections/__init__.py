@@ -3,6 +3,7 @@ from ._s1_introduction import introduction
 from ._s2_model import model
 from ._s3_discussion import discussion
 from ._s4_conclusion import conclusion
+from ._a1_tracks import tracks
 
 __all__ = [
     "abstract",
@@ -10,4 +11,5 @@ __all__ = [
     "model",
     "discussion",
     "conclusion",
+    "tracks",
 ]

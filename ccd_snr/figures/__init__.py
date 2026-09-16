@@ -11,6 +11,7 @@ from ._penetration_depth import penetration_depth
 from ._charge_diffusion import charge_diffusion
 from ._kernel import diffusion_kernel
 from ._snr_improvement import snr_improvement
+from ._tracks import tracks
 
 __all__ = [
     "schematic",
@@ -22,4 +23,5 @@ __all__ = [
     "charge_diffusion",
     "diffusion_kernel",
     "snr_improvement",
+    "tracks",
 ]

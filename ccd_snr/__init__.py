@@ -8,6 +8,7 @@ from . import diffusion
 from ._vmr import vmr_stern
 from . import simulations
 from . import instruments
+from . import tracks
 from ._acronyms import acronyms
 from ._variables import variables
 from ._authors import authors
@@ -27,6 +28,7 @@ __all__ = [
     "vmr_stern",
     "simulations",
     "instruments",
+    "tracks",
     "acronyms",
     "variables",
     "authors",
