@@ -26,6 +26,7 @@ def document() -> aastex.Document:
         ],
         lmodern=False,
         textcomp=False,
+        linenumbers=False,
     )
 
     doc.packages.append(aastex.Package("amsmath"))
@@ -55,8 +56,9 @@ def document() -> aastex.Document:
     doc.append(ccd_snr.sections.discussion())
     doc.append(ccd_snr.sections.conclusion())
     doc.append(ccd_snr.acknowledgements())
+    doc.append(aastex.Software([ccd_snr.optika]))
 
-    doc.append(aastex.Bibliography("sources"))
+    doc.append(aastex.Bibliography("sources,software"))
 
     return doc
 
@@ -69,6 +71,7 @@ def pdf() -> pathlib.Path:
     doc = document()
 
     path = pathlib.Path(__file__).parent / "ccd-euv-snr"
+
     doc.generate_pdf(
         filepath=path,
         clean_tex=False,
