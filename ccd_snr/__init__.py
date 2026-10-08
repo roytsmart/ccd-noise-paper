@@ -2,8 +2,7 @@
 Create the figures and compile the LaTeX files for this article.
 """
 
-from ._urls import url_docs_optika
-from ._citations import bibtex_optika
+from ._software import optika
 from ._wavelength import wavelength, energy
 from ._ccd import ccd, ccd_aia
 from . import diffusion
@@ -21,8 +20,7 @@ from ._acknowledgements import acknowledgements
 from ._document import document, pdf
 
 __all__ = [
-    "url_docs_optika",
-    "bibtex_optika",
+    "optika",
     "wavelength",
     "energy",
     "ccd",

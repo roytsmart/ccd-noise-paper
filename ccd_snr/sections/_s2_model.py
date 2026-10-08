@@ -449,7 +449,7 @@ but our model remains narrower.
 To ease adoption of this model,
 we've provided a reference implementation of Equation~\ref{eq:measuredElectrons}
 in Python,
-\href{\optikaDocs/_autosummary/optika.sensors.signal.html}{\texttt{optika.sensors.signal()}},
+\href{\docs{optika}/_autosummary/optika.sensors.signal.html}{\texttt{optika.sensors.signal()}},
 which is designed to be simple to use for existing and future instrument pipelines.
 """)
     subsection_noise.append(subsubsection_noise_recombination)
@@ -552,9 +552,9 @@ $\mathcal{N}\bigl(0, \sigma^2(z_i)\bigr)$ in each direction and rounding to the
 nearest pixel, which conserves charge exactly and preserves the correlation
 between electrons from the same photon.
 This is implemented by
-\href{\optikaDocs/_autosummary/optika.sensors.signal.html}{\texttt{optika.sensors.signal()}},
+\href{\docs{optika}/_autosummary/optika.sensors.signal.html}{\texttt{optika.sensors.signal()}},
 and the kernel in Figure~\ref{fig:chargeDiffusionKernel} was computed with
-\href{\optikaDocs/_autosummary/optika.sensors.kernel\_diffusion.html}{\texttt{optika.sensors.kernel\_diffusion()}},
+\href{\docs{optika}/_autosummary/optika.sensors.kernel\_diffusion.html}{\texttt{optika.sensors.kernel\_diffusion()}},
 which can be used to visualize the charge diffusion for other wavelengths and
 pixel sizes.
 
@@ -653,7 +653,7 @@ absorbed, and the two are correlated:
 photons absorbed near the back surface are the ones which both recombine most
 readily and diffuse the furthest.
 Equation~\ref{eq:diffusedVmr} is the form implemented by
-\href{\optikaDocs/_autosummary/optika.sensors.vmr_signal.html}{\texttt{optika.sensors.vmr\_signal()}}
+\href{\docs{optika}/_autosummary/optika.sensors.vmr_signal.html}{\texttt{optika.sensors.vmr\_signal()}}
 and plotted for \IRIS\ in Figure~\ref{fig:Noise}.
 It assumes the illumination is uniform, so that the charge leaving each pixel is
 balanced on average by the charge arriving from its neighbors;
