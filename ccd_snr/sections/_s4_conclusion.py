@@ -34,7 +34,7 @@ astronomical instruments and found that there are a few channels in each
 instrument where our model implies that the \SNR\ is better than the traditional
 model would suggest.
 We also have provided a reference implementation of our sensor model in Python,
-\href{https://optika.readthedocs.io/en/latest/_autosummary/optika.sensors.html}{\texttt{optika.sensors}},
+\href{\optikaDocs/_autosummary/optika.sensors.html}{\texttt{optika.sensors}},
 to make this noise model simple to integrate with existing instrument data
 processing pipelines.
 

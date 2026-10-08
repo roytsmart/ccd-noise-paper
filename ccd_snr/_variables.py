@@ -56,4 +56,8 @@ def variables() -> list[aastex.Command]:
             name="expectedWfcRatio",
             value=1.7,
         ),
+        aastex.Variable(
+            name="optikaDocs",
+            value=ccd_snr.url_docs_optika(),
+        ),
     ]
