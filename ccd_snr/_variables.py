@@ -1,6 +1,7 @@
 import numpy as np
 import astropy.units as u
 import aastex
+import optika
 import ccd_snr
 
 __all__ = [
@@ -38,11 +39,11 @@ def variables() -> list[aastex.Command]:
         ),
         aastex.Variable(
             name="goesCcdThickness",
-            value=ccd.depletion.thickness_substrate,
+            value=optika.sensors.diffusion.mcc_stern2004("thick").thickness_substrate,
         ),
         aastex.Variable(
             name="depletionThickness",
-            value=np.round(ccd.depletion.thickness, 1),
+            value=np.round(ccd.diffusion.thickness_depletion, 1),
         ),
         aastex.Variable(
             name="irisMeasuredVmr",

@@ -26,12 +26,11 @@ def snr_improvement() -> pathlib.Path:
         temperature=ccd.temperature,
     )
 
-    vmr_total = optika.sensors.vmr_signal(**kwargs_vmr, diffusion=False)
+    vmr_total = optika.sensors.vmr_signal(**kwargs_vmr)
 
     kwargs_diffusion = kwargs_vmr | dict(
-        thickness_depletion=ccd.depletion.thickness,
         thickness_substrate=ccd.thickness_substrate,
-        diffusion=True,
+        diffusion=ccd.diffusion,
     )
     vmr_iris = optika.sensors.vmr_signal(
         **kwargs_diffusion,

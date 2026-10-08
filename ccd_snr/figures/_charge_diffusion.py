@@ -2,6 +2,7 @@ import matplotlib.pyplot as plt
 import aastex
 import astropy.visualization
 import named_arrays as na
+import optika
 import ccd_snr
 
 __all__ = [
@@ -14,14 +15,20 @@ def charge_diffusion() -> aastex.Figure:
     ccd = ccd_snr.ccd()
     # ccd_aia = ccd_snr.ccd_aia()
 
-    wavelength_measured = ccd.depletion.mcc_measured.inputs
+    measured = optika.sensors.diffusion.mcc_stern2004("thick")
 
-    mcc_measured = ccd.depletion.mcc_measured.outputs
+    wavelength_measured = measured.inputs
+
+    mcc_measured = measured.outputs
 
     wavelength_fit = ccd_snr.wavelength()
     energy_fit = ccd_snr.energy()
 
-    mcc_fit = ccd.depletion.mean_charge_capture(wavelength_fit)
+    mcc_fit = ccd.diffusion.mean_charge_capture(
+        absorption=optika.chemicals.Chemical("Si").absorption(wavelength_fit),
+        thickness_substrate=measured.thickness_substrate,
+        width_pixel=measured.width_pixel,
+    )
 
     width = ccd.width_charge_diffusion(wavelength_fit)
     # width_aia = ccd_aia.width_charge_diffusion(rays, normal)

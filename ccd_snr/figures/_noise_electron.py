@@ -22,7 +22,6 @@ def noise_electron(
         thickness_implant=ccd.thickness_implant,
         cce_backsurface=ccd.cce_backsurface,
         temperature=ccd.temperature,
-        diffusion=False,
     )
     vmr_shot = optika.sensors.vmr_signal(fano=False, pcc=False, **kwargs_vmr)
     vmr_fano = optika.sensors.vmr_signal(shot=False, pcc=False, **kwargs_vmr)
@@ -30,10 +29,9 @@ def noise_electron(
     vmr_total = optika.sensors.vmr_signal(**kwargs_vmr)
 
     kwargs_diffusion = kwargs_vmr | dict(
-        thickness_depletion=ccd.depletion.thickness,
         thickness_substrate=ccd.thickness_substrate,
         width_pixel=ccd_snr.instruments.iris.width_pixel,
-        diffusion=True,
+        diffusion=ccd.diffusion,
     )
     vmr_iris = optika.sensors.vmr_signal(**kwargs_diffusion)
 
