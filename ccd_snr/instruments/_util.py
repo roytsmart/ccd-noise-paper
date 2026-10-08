@@ -25,8 +25,8 @@ def _vmr_electron(
     result = optika.sensors.vmr_signal(
         wavelength=wavelength,
         thickness_implant=ccd.thickness_implant,
-        thickness_depletion=ccd.depletion.thickness,
         thickness_substrate=ccd.thickness_substrate,
+        diffusion=ccd.diffusion,
         width_pixel=width_pixel,
         cce_backsurface=ccd.cce_backsurface,
         temperature=ccd.temperature,

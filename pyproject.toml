@@ -16,7 +16,7 @@ classifiers = [
 dependencies = [
     "pylatex",
     "aastex~=0.4.0",
-    "optika~=2.2",
+    "optika @ git+https://github.com/sun-data/optika.git@feature/diffusion-depleted",
 ]
 dynamic = ["version"]
 
