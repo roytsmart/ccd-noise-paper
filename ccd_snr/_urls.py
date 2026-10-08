@@ -1,5 +1,5 @@
-import re
 import importlib.metadata
+from ._versions import _is_release
 
 __all__ = [
     "url_docs_optika",
@@ -25,7 +25,7 @@ def url_docs_optika(version: None | str = None) -> str:
     if version is None:
         version = importlib.metadata.version("optika")
 
-    if re.fullmatch(r"\d+\.\d+\.\d+", version):
+    if _is_release(version):
         slug = f"v{version}"
     else:
         slug = "latest"

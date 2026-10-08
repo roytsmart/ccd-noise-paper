@@ -1,3 +1,4 @@
+import re
 import pathlib
 import pymupdf
 import pylatex
@@ -39,3 +40,8 @@ def test_pdf():
     assert uris_api
     for uri in uris_api:
         assert uri.startswith(f"{ccd_snr.url_docs_optika()}/_autosummary/")
+
+    # optika is cited by the archive of the version the article was built with.
+    # The bibliography style links to DOIs over http, not https.
+    doi = re.search(r"doi = \{(.+)\}", ccd_snr.bibtex_optika()).group(1)
+    assert f"http://doi.org/{doi}" in uris
