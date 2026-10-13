@@ -6,14 +6,18 @@ import ccd_snr
 
 
 def test_document():
-    doc = ccd_snr.document()
+    doc = ccd_snr.document(linenumbers=True)
     assert isinstance(doc, pylatex.Document)
+    assert "linenumbers" in doc.documentclass.dumps()
 
 
 def test_pdf():
     pdf = ccd_snr.pdf()
     assert isinstance(pdf, pathlib.Path)
     assert pdf.exists()
+
+    tex = pdf.with_suffix(".tex").read_text(encoding="utf-8")
+    assert r"\documentclass[twocolumn]{aastex701}" in tex
 
     with pymupdf.open(pdf) as document:
         text = "".join(page.get_text() for page in document)
