@@ -114,7 +114,10 @@ at 100%.
 
 Pushes to `main` publish the article to the link above. Pull requests get their
 own rendered preview at `…/pr/<number>/ccd-euv-snr.pdf`, posted as a comment on
-the pull request and removed when it closes.
+the pull request and removed when it closes. The formatted bibliography and the
+BibTeX file of the article are published beside it, as `ccd-euv-snr.bbl` and
+`ccd-euv-snr.bib`, for the cumulative References Cited of the dissertation that
+includes it.
 
 ## Status
 

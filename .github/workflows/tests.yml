@@ -42,7 +42,12 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: article
-          path: ccd_snr/ccd-euv-snr.pdf
+          # The formatted bibliography of the pdf, and the BibTeX files it was
+          # formatted from, are published with it.
+          path: |
+            ccd_snr/ccd-euv-snr.pdf
+            ccd_snr/ccd-euv-snr.bbl
+            ccd_snr/*.bib
           if-no-files-found: error
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v7
