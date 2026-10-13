@@ -1,0 +1,336 @@
+\begin{thebibliography}{}
+\expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
+\providecommand{\url}[1]{\href{#1}{#1}}
+\providecommand{\dodoi}[1]{doi:~\href{http://doi.org/#1}{\nolinkurl{#1}}}
+\providecommand{\doeprint}[1]{\href{http://ascl.net/#1}{\nolinkurl{http://ascl.net/#1}}}
+\providecommand{\doarXiv}[1]{\href{https://arxiv.org/abs/#1}{\nolinkurl{https://arxiv.org/abs/#1}}}
+
+% type= article
+\bibitem[{P. {Astier} {et~al.}(2019){Astier}, {Antilogus}, {Juramy}, {Le
+  Breton}, {Le Guillou}, \& {Sepulveda}}]{Astier2019}
+{Astier}, P., {Antilogus}, P., {Juramy}, C., {et~al.} 2019,
+  \bibinfo{title}{{The shape of the photon transfer curve of CCD sensors},}
+  \aap, 629, A36, \dodoi{10.1051/0004-6361/201935508}
+
+% type= article
+\bibitem[{P.~S. {Athiray} {et~al.}(2020){Athiray}, {Winebarger}, {Champey},
+  {Kobayashi}, {Vigil}, {Haight}, {Johnson}, {Bethge}, {Rachmeler}, {Savage},
+  {Beabout}, {Beabout}, {Hogue}, {Guillory}, {Siler}, {Wright}, \&
+  {Kegley}}]{Athiray2020}
+{Athiray}, P.~S., {Winebarger}, A.~R., {Champey}, P., {et~al.} 2020,
+  \bibinfo{title}{{Calibration of the MaGIXS Experiment. I. Calibration of the
+  X-Ray Source at the X-Ray and Cryogenic Facility},} \apj, 905, 66,
+  \dodoi{10.3847/1538-4357/abc268}
+
+% type= article
+\bibitem[{P. {Boerner} {et~al.}(2012){Boerner}, {Edwards}, {Lemen}, {Rausch},
+  {Schrijver}, {Shine}, {Shing}, {Stern}, {Tarbell}, {Title}, {Wolfson},
+  {Soufli}, {Spiller}, {Gullikson}, {McKenzie}, {Windt}, {Golub}, {Podgorski},
+  {Testa}, \& {Weber}}]{Boerner2012}
+{Boerner}, P., {Edwards}, C., {Lemen}, J., {et~al.} 2012,
+  \bibinfo{title}{{Initial Calibration of the Atmospheric Imaging Assembly
+  (AIA) on the Solar Dynamics Observatory (SDO)},} \solphys, 275, 41,
+  \dodoi{10.1007/s11207-011-9804-8}
+
+% type= misc
+\bibitem[{T. {Borders} {et~al.}(2010){Borders}, {McCullough}, \&
+  {Baggett}}]{Borders2010}
+{Borders}, T., {McCullough}, P., \& {Baggett}, S. 2010, {WFC3 TV3 Testing:
+  Quantum Yield of the UVIS CCDs},, WFC3 Instrument Science Report 2010-11, 9
+  pages
+
+% type= article
+\bibitem[{L.~V.~R. de~Marcos {et~al.}(2016)de~Marcos, Larruquert, M\'{e}ndez,
+  \& Azn\'{a}rez}]{Rodriguez-deMarcos2016}
+de~Marcos, L. V.~R., Larruquert, J.~I., M\'{e}ndez, J.~A., \& Azn\'{a}rez,
+  J.~A. 2016, \bibinfo{title}{Self-consistent optical constants of SiO2 and
+  Ta2O5 films,} Opt. Mater. Express, 6, 3622, \dodoi{10.1364/OME.6.003622}
+
+% type= article
+\bibitem[{B. {De Pontieu} {et~al.}(2020){De Pontieu}, {Mart{\'\i}nez-Sykora},
+  {Testa}, {Winebarger}, {Daw}, {Hansteen}, {Cheung}, \&
+  {Antolin}}]{DePontieu2020}
+{De Pontieu}, B., {Mart{\'\i}nez-Sykora}, J., {Testa}, P., {et~al.} 2020,
+  \bibinfo{title}{{The Multi-slit Approach to Coronal Spectroscopy with the
+  Multi-slit Solar Explorer (MUSE)},} \apj, 888, 3,
+  \dodoi{10.3847/1538-4357/ab5b03}
+
+% type= article
+\bibitem[{B. {De Pontieu} {et~al.}(2014){De Pontieu}, {Title}, {Lemen},
+  {Kushner}, {Akin}, {Allard}, {Berger}, {Boerner}, {Cheung}, {Chou}, {Drake},
+  {Duncan}, {Freeland}, {Heyman}, {Hoffman}, {Hurlburt}, {Lindgren}, {Mathur},
+  {Rehse}, {Sabolish}, {Seguin}, {Schrijver}, {Tarbell}, {W{\"u}lser},
+  {Wolfson}, {Yanari}, {Mudge}, {Nguyen-Phuc}, {Timmons}, {van Bezooijen},
+  {Weingrod}, {Brookner}, {Butcher}, {Dougherty}, {Eder}, {Knagenhjelm},
+  {Larsen}, {Mansir}, {Phan}, {Boyle}, {Cheimets}, {DeLuca}, {Golub}, {Gates},
+  {Hertz}, {McKillop}, {Park}, {Perry}, {Podgorski}, {Reeves}, {Saar}, {Testa},
+  {Tian}, {Weber}, {Dunn}, {Eccles}, {Jaeggli}, {Kankelborg}, {Mashburn},
+  {Pust}, {Springer}, {Carvalho}, {Kleint}, {Marmie}, {Mazmanian}, {Pereira},
+  {Sawyer}, {Strong}, {Worden}, {Carlsson}, {Hansteen}, {Leenaarts},
+  {Wiesmann}, {Aloise}, {Chu}, {Bush}, {Scherrer}, {Brekke}, {Martinez-Sykora},
+  {Lites}, {McIntosh}, {Uitenbroek}, {Okamoto}, {Gummin}, {Auker}, {Jerram},
+  {Pool}, \& {Waltham}}]{DePontieu2014}
+{De Pontieu}, B., {Title}, A.~M., {Lemen}, J.~R., {et~al.} 2014,
+  \bibinfo{title}{{The Interface Region Imaging Spectrograph (IRIS)},}
+  \solphys, 289, 2733, \dodoi{10.1007/s11207-014-0485-y}
+
+% type= article
+\bibitem[{J. {Fang} {et~al.}(2019){Fang}, {Reaz}, {Weeden-Wright}, {Schrimpf},
+  {Reed}, {Weller}, {Fischetti}, \& {Pantelides}}]{Fang2019}
+{Fang}, J., {Reaz}, M., {Weeden-Wright}, S.~L., {et~al.} 2019,
+  \bibinfo{title}{{Understanding the Average Electron-Hole Pair-Creation Energy
+  in Silicon and Germanium Based on Full-Band Monte Carlo Simulations},} IEEE
+  Transactions on Nuclear Science, 66, 444, \dodoi{10.1109/TNS.2018.2879593}
+
+% type= article
+\bibitem[{U. {Fano}(1947){Fano}}]{Fano1947}
+{Fano}, U. 1947, \bibinfo{title}{{Ionization Yield of Radiations. II. The
+  Fluctuations of the Number of Ions},} Physical Review, 72, 26,
+  \dodoi{10.1103/PhysRev.72.26}
+
+% type= article
+\bibitem[{G.~W. {Fraser} {et~al.}(1994){Fraser}, {Abbey}, {Holland},
+  {McCarthy}, {Owens}, \& {Wells}}]{Fraser1994}
+{Fraser}, G.~W., {Abbey}, A.~F., {Holland}, A., {et~al.} 1994,
+  \bibinfo{title}{{The X-ray energy response of silicon Part A. Theory},}
+  Nuclear Instruments and Methods in Physics Research A, 350, 368,
+  \dodoi{10.1016/0168-9002(94)91185-1}
+
+% type= article
+\bibitem[{F. Gao \& L. Han(2010)Gao \& Han}]{Gao2010}
+Gao, F., \& Han, L. 2010, \bibinfo{title}{Implementing the Nelder-Mead simplex
+  algorithm with adaptive parameters,} Computational Optimization and
+  Applications, 51, 259 .
+\newblock \url{https://api.semanticscholar.org/CorpusID:9211872}
+
+% type= article
+\bibitem[{J. Geist(1996)Geist}]{Geist1996}
+Geist, J. 1996, \bibinfo{title}{Quantum yield of silicon near the LII,III-shell
+  absorption edge,} Nuclear Instruments and Methods in Physics Research Section
+  A: Accelerators, Spectrometers, Detectors and Associated Equipment, 378, 343,
+  \dodoi{https://doi.org/10.1016/0168-9002(96)00439-1}
+
+% type= article
+\bibitem[{J.~J. {Givans} {et~al.}(2022){Givans}, {Choi}, {Porredon},
+  {Freudenburg}, {Hirata}, {Hill}, {Bennett}, {Foltz}, \& {Meier}}]{Givans2022}
+{Givans}, J.~J., {Choi}, A., {Porredon}, A., {et~al.} 2022,
+  \bibinfo{title}{{Quantum Yield and Charge Diffusion in the Nancy Grace Roman
+  Space Telescope Infrared Detectors},} \pasp, 134, 014001,
+  \dodoi{10.1088/1538-3873/ac46ba}
+
+% type= article
+\bibitem[{A. {Guyonnet} {et~al.}(2015){Guyonnet}, {Astier}, {Antilogus},
+  {Regnault}, \& {Doherty}}]{Guyonnet2015}
+{Guyonnet}, A., {Astier}, P., {Antilogus}, P., {Regnault}, N., \& {Doherty}, P.
+  2015, \bibinfo{title}{{Evidence for self-interaction of charge distribution
+  in charge-coupled devices},} \aap, 575, A41,
+  \dodoi{10.1051/0004-6361/201424897}
+
+% type= article
+\bibitem[{B. Henke {et~al.}(1993)Henke, Gullikson, \& Davis}]{Henke1993}
+Henke, B., Gullikson, E., \& Davis, J. 1993, \bibinfo{title}{X-Ray
+  Interactions: Photoabsorption, Scattering, Transmission, and Reflection at E
+  = 50-30,000 eV, Z = 1-92,} Atomic Data and Nuclear Data Tables, 54, 181,
+  \dodoi{https://doi.org/10.1006/adnd.1993.1013}
+
+% type= article
+\bibitem[{J. {Heymes} {et~al.}(2020){Heymes}, {Soman}, {Randall}, {Gottwald},
+  {Harris}, {Kelt}, {Moody}, {Meng}, \& {Holland}}]{Heymes2020}
+{Heymes}, J., {Soman}, M., {Randall}, G., {et~al.} 2020,
+  \bibinfo{title}{{Comparison of Back-Thinned Detector Ultraviolet Quantum
+  Efficiency for Two Commercially Available Passivation Treatments},} IEEE
+  Transactions on Nuclear Science, 67, 1962, \dodoi{10.1109/TNS.2020.3001622}
+
+% type= article
+\bibitem[{S. {Ishikawa} {et~al.}(2011){Ishikawa}, {Saito}, {Tajima}, {Tanaka},
+  {Watanabe}, {Odaka}, {Fukuyama}, {Kokubun}, {Takahashi}, {Terada}, {Krucker},
+  {Christe}, {McBride}, \& {Glesener}}]{Ishikawa2011}
+{Ishikawa}, S., {Saito}, S., {Tajima}, H., {et~al.} 2011,
+  \bibinfo{title}{{Fine-Pitch Semiconductor Detector for the FOXSI Mission},}
+  IEEE Transactions on Nuclear Science, 58, 2039,
+  \dodoi{10.1109/TNS.2011.2154342}
+
+% type= book
+\bibitem[{J.~R. {Janesick}(2001){Janesick}}]{Janesick2001}
+{Janesick}, J.~R. 2001, {Scientific charge-coupled devices}
+
+% type= inproceedings
+\bibitem[{R.~A. {Kimble} {et~al.}(2008){Kimble}, {MacKenty}, {O'Connell}, \&
+  {Townsend}}]{Kimble2008}
+{Kimble}, R.~A., {MacKenty}, J.~W., {O'Connell}, R.~W., \& {Townsend}, J.~A.
+  2008, \bibinfo{title}{{Wide Field Camera 3: a powerful new imager for the
+  Hubble Space Telescope},} in Society of Photo-Optical Instrumentation
+  Engineers (SPIE) Conference Series, Vol. 7010, Space Telescopes and
+  Instrumentation 2008: Optical, Infrared, and Millimeter, ed. J.~M.
+  {Oschmann}, Jr., M.~W.~M. {de Graauw}, \& H.~A. {MacEwen}, 70101E,
+  \dodoi{10.1117/12.789581}
+
+% type= article
+\bibitem[{I.~V. {Kotov} {et~al.}(2018){Kotov}, {Neal}, \&
+  {O'Connor}}]{Kotov2018}
+{Kotov}, I.~V., {Neal}, H., \& {O'Connor}, P. 2018, \bibinfo{title}{{Pair
+  creation energy and Fano factor of silicon measured at 185 K using $^{55}$ Fe
+  X-rays},} Nuclear Instruments and Methods in Physics Research A, 901, 126,
+  \dodoi{10.1016/j.nima.2018.06.022}
+
+% type= article
+\bibitem[{J. {Lasser}(2020){Lasser}}]{Lasser2020}
+{Lasser}, J. 2020, \bibinfo{title}{{Creating an executable paper is a journey
+  through Open Science},} Communications Physics, 3, 143,
+  \dodoi{10.1038/s42005-020-00403-4}
+
+% type= article
+\bibitem[{J.~R. {Lemen} {et~al.}(2012){Lemen}, {Title}, {Akin}, {Boerner},
+  {Chou}, {Drake}, {Duncan}, {Edwards}, {Friedlaender}, {Heyman}, {Hurlburt},
+  {Katz}, {Kushner}, {Levay}, {Lindgren}, {Mathur}, {McFeaters}, {Mitchell},
+  {Rehse}, {Schrijver}, {Springer}, {Stern}, {Tarbell}, {Wuelser}, {Wolfson},
+  {Yanari}, {Bookbinder}, {Cheimets}, {Caldwell}, {Deluca}, {Gates}, {Golub},
+  {Park}, {Podgorski}, {Bush}, {Scherrer}, {Gummin}, {Smith}, {Auker},
+  {Jerram}, {Pool}, {Soufli}, {Windt}, {Beardsley}, {Clapp}, {Lang}, \&
+  {Waltham}}]{Lemen2012}
+{Lemen}, J.~R., {Title}, A.~M., {Akin}, D.~J., {et~al.} 2012,
+  \bibinfo{title}{{The Atmospheric Imaging Assembly (AIA) on the Solar Dynamics
+  Observatory (SDO)},} \solphys, 275, 17, \dodoi{10.1007/s11207-011-9776-8}
+
+% type= article
+\bibitem[{B. Lowe(1997)Lowe}]{Lowe1997}
+Lowe, B. 1997, \bibinfo{title}{Measurements of Fano factors in silicon and
+  germanium in the low-energy X-ray region,} Nuclear Instruments and Methods in
+  Physics Research Section A: Accelerators, Spectrometers, Detectors and
+  Associated Equipment, 399, 354,
+  \dodoi{https://doi.org/10.1016/S0168-9002(97)00965-0}
+
+% type= incollection
+\bibitem[{M. {Marinelli} \& J. {Green}(2024){Marinelli} \&
+  {Green}}]{Marinelli2024}
+{Marinelli}, M., \& {Green}, J. 2024, \bibinfo{title}{{WFC3 Instrument Handbook
+  for Cycle 33 v. 17.0},} in WFC3 Instrument Handbook for Cycle 33 v. 17,
+  Vol.~17, 17
+
+% type= article
+\bibitem[{M.~N. {Mazziotta}(2008){Mazziotta}}]{Mazziotta2008}
+{Mazziotta}, M.~N. 2008, \bibinfo{title}{{Electron hole pair creation energy
+  and Fano factor temperature dependence in silicon},} Nuclear Instruments and
+  Methods in Physics Research A, 584, 436, \dodoi{10.1016/j.nima.2007.10.043}
+
+% type= book
+\bibitem[{E.~D. Palik(1997)Palik}]{Palik1997}
+Palik, E.~D. 1997, Handbook of Optical Constants of Solids, ed. E.~D. Palik
+  (Burlington: Academic Press),
+  \dodoi{https://doi.org/10.1016/B978-012544415-6.50004-2}
+
+% type= article
+\bibitem[{J.~D. {Parker} {et~al.}(2022){Parker}, {Smart}, {Kankelborg},
+  {Winebarger}, \& {Goldsworth}}]{Parker2022}
+{Parker}, J.~D., {Smart}, R.~T., {Kankelborg}, C., {Winebarger}, A., \&
+  {Goldsworth}, N. 2022, \bibinfo{title}{{First Flight of the EUV Snapshot
+  Imaging Spectrograph (ESIS)},} \apj, 938, 116,
+  \dodoi{10.3847/1538-4357/ac8eaa}
+
+% type= article
+\bibitem[{G.~G. {Pavlov} \& J.~A. {Nousek}(1999){Pavlov} \&
+  {Nousek}}]{Pavlov1999}
+{Pavlov}, G.~G., \& {Nousek}, J.~A. 1999, \bibinfo{title}{{Charge diffusion in
+  CCD X-ray detectors},} Nuclear Instruments and Methods in Physics Research A,
+  428, 348, \dodoi{10.1016/S0168-9002(99)00045-5}
+
+% type= article
+\bibitem[{K. {Ramanathan} \& N. {Kurinsky}(2020){Ramanathan} \&
+  {Kurinsky}}]{Ramanathan2020}
+{Ramanathan}, K., \& {Kurinsky}, N. 2020, \bibinfo{title}{{Ionization yield in
+  silicon for eV-scale electron-recoil processes},} \prd, 102, 063026,
+  \dodoi{10.1103/PhysRevD.102.063026}
+
+% type= article
+\bibitem[{D. {Rodrigues} {et~al.}(2021){Rodrigues}, {Andersson}, {Cababie},
+  {Donadon}, {Botti}, {Cancelo}, {Estrada}, {Fernandez-Moroni}, {Piegaia},
+  {Senger}, {Haro}, {Stefanazzi}, {Tiffenberg}, \& {Uemura}}]{Rodrigues2021}
+{Rodrigues}, D., {Andersson}, K., {Cababie}, M., {et~al.} 2021,
+  \bibinfo{title}{{Absolute measurement of the Fano factor using a
+  Skipper-CCD},} Nuclear Instruments and Methods in Physics Research A, 1010,
+  165511, \dodoi{10.1016/j.nima.2021.165511}
+
+% type= article
+\bibitem[{D. {Rodrigues} {et~al.}(2023){Rodrigues}, {Cababie}, {Florenciano},
+  {Botti}, {Estrada}, {Fernandez-Moroni}, {Magnoni}, {Tiffenberg}, \&
+  {Uemura}}]{Rodrigues2023}
+{Rodrigues}, D., {Cababie}, M., {Florenciano}, I.~G., {et~al.} 2023,
+  \bibinfo{title}{{Unraveling Fano noise and the partial-charge-collection
+  effect in x-ray spectra below 1 keV},} Physical Review Applied, 20, 054014,
+  \dodoi{10.1103/PhysRevApplied.20.054014}
+
+% type= article
+\bibitem[{F. Scholze {et~al.}(1998)Scholze, Rabus, \& Ulm}]{Scholze1998}
+Scholze, F., Rabus, H., \& Ulm, G. 1998, \bibinfo{title}{{Mean energy required
+  to produce an electron-hole pair in silicon for photons of energies between
+  50 and 1500 eV},} Journal of Applied Physics, 84, 2926,
+  \dodoi{10.1063/1.368398}
+
+% type= article
+\bibitem[{W. Schottky(1918)Schottky}]{Schottky1918}
+Schottky, W. 1918, \bibinfo{title}{Über spontane Stromschwankungen in
+  verschiedenen Elektrizitätsleitern,} Annalen der Physik, 362, 541,
+  \dodoi{https://doi.org/10.1002/andp.19183622304}
+
+% type= article
+\bibitem[{B.~D. {Schwab} {et~al.}(2020){Schwab}, {Sewell}, {Woods}, {Caspi},
+  {Mason}, \& {Moore}}]{Schwab2020}
+{Schwab}, B.~D., {Sewell}, R. H.~A., {Woods}, T.~N., {et~al.} 2020,
+  \bibinfo{title}{{Soft X-Ray Observations of Quiescent Solar Active Regions
+  Using the Novel Dual-zone Aperture X-Ray Solar Spectrometer},} \apj, 904, 20,
+  \dodoi{10.3847/1538-4357/abba2a}
+
+% type=
+\bibitem[{R.~T. Smart {et~al.}(2026)Smart, Parker, \& Kankelborg}]{optika}
+Smart, R.~T., Parker, J.~D., \& Kankelborg, C.~C. 2026, {optika}, v2.11.1
+  Zenodo, \dodoi{10.5281/zenodo.23074622}
+
+% type= inproceedings
+\bibitem[{R.~A. {Stern} {et~al.}(1986){Stern}, {Catura}, {Blouke}, \&
+  {Winzenread}}]{Stern1986}
+{Stern}, R.~A., {Catura}, R.~C., {Blouke}, M.~M., \& {Winzenread}, M. 1986,
+  \bibinfo{title}{{EUV astronomical spectroscopy with CCD detectors.},} in
+  Society of Photo-Optical Instrumentation Engineers (SPIE) Conference Series,
+  Vol. 627, Instrumentation in astronomy VI, ed. D.~L. {Crawford}, 583--590,
+  \dodoi{10.1117/12.968135}
+
+% type= article
+\bibitem[{R.~A. {Stern} {et~al.}(1994){Stern}, {Shing}, \&
+  {Blouke}}]{Stern1994}
+{Stern}, R.~A., {Shing}, L., \& {Blouke}, M.~M. 1994, \bibinfo{title}{{Quantum
+  efficiency measurements and modeling of ion-implanted, laser annealed
+  chage-coupled and optical data},} \ao, 33, 2521, \dodoi{10.1364/AO.33.002521}
+
+% type= inproceedings
+\bibitem[{R.~A. {Stern} {et~al.}(2004){Stern}, {Shing}, {Catura}, {Morrison},
+  {Duncan}, {Lemen}, {Eaton}, {Pool}, {Steward}, {Walton}, \&
+  {Smith}}]{Stern2004}
+{Stern}, R.~A., {Shing}, L., {Catura}, P.~R., {et~al.} 2004,
+  \bibinfo{title}{{Characterization of the flight CCD detectors for the GOES N
+  and O solar x-ray imagers},} in Society of Photo-Optical Instrumentation
+  Engineers (SPIE) Conference Series, Vol. 5171, Telescopes and Instrumentation
+  for Solar Astrophysics, ed. S.~{Fineschi} \& M.~A. {Gummin}, 77--88,
+  \dodoi{10.1117/12.506346}
+
+% type= article
+\bibitem[{D.~L. {Windt}(1998){Windt}}]{Windt1998}
+{Windt}, D.~L. 1998, \bibinfo{title}{{IMD{\textemdash}Software for modeling the
+  optical properties of multilayer films},} Computers in Physics, 12, 360,
+  \dodoi{10.1063/1.168689}
+
+% type= article
+\bibitem[{J.~P. {W{\"u}lser} {et~al.}(2018){W{\"u}lser}, {Jaeggli}, {De
+  Pontieu}, {Tarbell}, {Boerner}, {Freeland}, {Liu}, {Timmons}, {Brannon},
+  {Kankelborg}, {Madsen}, {McKillop}, {Prchlik}, {Saar}, {Schanche}, {Testa},
+  {Bryans}, \& {Wiesmann}}]{Wulser2018}
+{W{\"u}lser}, J.~P., {Jaeggli}, S., {De Pontieu}, B., {et~al.} 2018,
+  \bibinfo{title}{{Instrument Calibration of the Interface Region Imaging
+  Spectrograph (IRIS) Mission},} \solphys, 293, 149,
+  \dodoi{10.1007/s11207-018-1364-8}
+
+% type= book
+\bibitem[{P. Yeh(1988)Yeh}]{Yeh1988}
+Yeh, P. 1988, Optical waves in layered media, The Wiley series in pure and
+  applied optics (New York: Wiley)
+
+\end{thebibliography}
